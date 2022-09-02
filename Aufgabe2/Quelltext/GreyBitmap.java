@@ -29,10 +29,6 @@ public class GreyBitmap {
         bitmap[y][x] = byteGreyValue;
     }
 
-    boolean isZero(int x, int y) {
-        return bitmap[y][x] == zero;
-    }
-
     public int getWidth() {
         return width;
     }
