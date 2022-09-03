@@ -34,7 +34,7 @@ public class GreyBitmapRenderer {
         return image;
     }
 
-    void render() throws IOException {
+    void renderToFile() throws IOException {
         RenderedImage image = createImage();
         if (!new File(fileDirPath).exists()) {
             Files.createDirectory(Path.of(fileDirPath));
