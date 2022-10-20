@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Main {
+    /**
+     * Knoten von: index im array
+     *
+     * Knoten zu: index im BitSet
+     */
     private static final List<BitSet[]> graphs = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -17,6 +22,7 @@ public class Main {
             int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
             //TODO: check if this variable is needed
             int countOfArrows = Integer.parseInt(lines.get(0).split(" ")[1]);
+            lines.remove(0);
             //initialisation of the graph
             BitSet[] graph = new BitSet[countOfNodes];
             //declaration of the graph
@@ -25,10 +31,9 @@ public class Main {
             }
             //writing input
             for (String line : lines) {
-                int output_field, target_field;
-                output_field = Integer.parseInt(line.split(" ")[0]);
-                target_field = Integer.parseInt(line.split(" ")[1]);
-                graph[output_field].set(target_field);
+                int outputField = Integer.parseInt(line.split(" ")[0]);
+                int targetField = Integer.parseInt(line.split(" ")[1]);
+                graph[outputField - 1].set(targetField - 1);
             }
             graphs.add(graph);
         }
@@ -36,10 +41,10 @@ public class Main {
             //solving the parcours
             int[][] routes = solve(graph);
             //evaluating the result
-            if(routes == null) System.out.println("Der Parcours hat keine Lösung!");
+            if (routes == null) System.out.println("Der Parcours hat keine Lösung!");
             else {
                 System.out.println("Der Parcours hat folgende Lösung:");
-                System.out.println("Zielfeld: " + routes[0][routes[0].length-1]);
+                System.out.println("Zielfeld: " + routes[0][routes[0].length - 1]);
                 System.out.println("Sasha's Weg: " + Arrays.toString(routes[0]));
                 System.out.println("Mika's Weg: " + Arrays.toString(routes[1]));
             }
@@ -51,22 +56,32 @@ public class Main {
      * @return
      */
     private static int[][] solve(BitSet[] graph) {
-        int[][] routes = new int[2][];// [0][x] for sasha and [1][x] for mika
-        List<BitSet> sasha_timeline = new ArrayList<>();
-        List<BitSet> mika_timeline = new ArrayList<>();
-        int target = -1;
-        int steps = 0;
-        while (validParcours(sasha_timeline, mika_timeline) && target < 0) {
+        List<BitSet> sashaTimeline = new ArrayList<>();
+        List<BitSet> mikaTimeline = new ArrayList<>();
+        BitSet sashaFirst = new BitSet(graph.length);
+        BitSet mikaFirst = new BitSet(graph.length);
+        sashaFirst.set(0, true);
+        mikaFirst.set(1, true);
+        sashaTimeline.add(sashaFirst);
+        mikaTimeline.add(mikaFirst);
+        int target = -1, steps = 0;
+        while (
+                validParcours(sashaTimeline, mikaTimeline) &&
+                        target < 0 &&
+                        sashaTimeline.get(sashaTimeline.size() - 1).isEmpty()
+                        && mikaTimeline.get(mikaTimeline.size() - 1).isEmpty()
+        ) {
             //build both timelines stepwise
             // until a solution is found or the parcours is invalid
             steps++;
         }
-        if(target < 0) return null;
+        if (target < 0) return null;
         else {
+            int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
             //calculate the pathway for mika and sasha
             // and store them in the routes array
+            return routes;
         }
-        return routes;
     }
 
     /**
