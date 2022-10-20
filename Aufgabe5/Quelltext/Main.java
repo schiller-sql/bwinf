@@ -2,10 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Main {
@@ -15,9 +12,14 @@ public class Main {
      * Knoten zu: index im BitSet
      */
     private static final List<BitSet[]> graphs = new ArrayList<>();
+    private static final String[] filenames = new String[5];
 
     public static void main(String[] args) {
-        for (Path path : getPaths()) {
+        List<Path> paths = getPaths();
+        for (int i = 0; i < paths.size(); i++) {
+            Path path = paths.get(i);
+            filenames[i] = path.getFileName().toString();
+
             List<String> lines = getLines(path);
             int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
             //TODO: check if this variable is needed
@@ -26,8 +28,8 @@ public class Main {
             //initialisation of the graph
             BitSet[] graph = new BitSet[countOfNodes];
             //declaration of the graph
-            for (int i = 0; i < countOfNodes; i++) {
-                graph[i] = new BitSet(countOfNodes);
+            for (int k = 0; k < countOfNodes; k++) {
+                graph[k] = new BitSet(countOfNodes);
             }
             //writing input
             for (String line : lines) {
@@ -37,10 +39,12 @@ public class Main {
             }
             graphs.add(graph);
         }
-        for (BitSet[] graph : graphs) {
+        for (int i = 0; i < graphs.size(); i++) {
+            BitSet[] graph = graphs.get(i);
             //solving the parcours
             int[][] routes = solve(graph);
             //evaluating the result
+            System.out.println("Ergebnis für " + filenames[i]);
             if (routes == null) System.out.println("Der Parcours hat keine Lösung!");
             else {
                 System.out.println("Der Parcours hat folgende Lösung:");
@@ -63,7 +67,6 @@ public class Main {
         targets.and(timelines[1].get(timelines[1].size() - 1));
         int target = targets.nextSetBit(0);
         int steps = timelines[0].size();
-
         int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
         //calculate the pathway for mika and sasha
         // and store them in the routes array
@@ -99,6 +102,8 @@ public class Main {
         do {
             //build both timelines stepwise
             // until a solution is found or the parcours is invalid
+            timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size()-1), graph));
+            timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size()-1), graph));
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
                     .isEmpty() || !validParcours(timelines[0], timelines[1])) {
@@ -114,7 +119,7 @@ public class Main {
      * @return A BitSet containing all the neighbors of the nodes
      */
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
-        BitSet neighbours = new BitSet();
+        BitSet neighbours = new BitSet(); //TODO: Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
         //inspired by https://stackoverflow.com/a/15393089
         for (int i = nodes.nextSetBit(0); i != -1; i = nodes.nextSetBit(i + 1)) {
             for (int j = graph[i].nextSetBit(0); j != -1; j = graph[i].nextSetBit(j + 1)) {
@@ -130,6 +135,7 @@ public class Main {
      * @return
      */
     private static boolean validParcours(List<BitSet> sasha_timeline, List<BitSet> mika_timeline) {
+
         return true;
     }
 
