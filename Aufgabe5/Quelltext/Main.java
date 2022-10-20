@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,6 +32,50 @@ public class Main {
             }
             graphs.add(graph);
         }
+        for (BitSet[] graph : graphs) {
+            //solving the parcours
+            int[][] routes = solve(graph);
+            //evaluating the result
+            if(routes == null) System.out.println("Der Parcours hat keine Lösung!");
+            else {
+                System.out.println("Der Parcours hat folgende Lösung:");
+                System.out.println("Zielfeld: " + routes[0][routes[0].length-1]);
+                System.out.println("Sasha's Weg: " + Arrays.toString(routes[0]));
+                System.out.println("Mika's Weg: " + Arrays.toString(routes[1]));
+            }
+        }
+    }
+
+    /**
+     * @param graph
+     * @return
+     */
+    private static int[][] solve(BitSet[] graph) {
+        int[][] routes = new int[2][];// [0][x] for sasha and [1][x] for mika
+        List<BitSet> sasha_timeline = new ArrayList<>();
+        List<BitSet> mika_timeline = new ArrayList<>();
+        int target = -1;
+        int steps = 0;
+        while (validParcours(sasha_timeline, mika_timeline) && target < 0) {
+            //build both timelines stepwise
+            // until a solution is found or the parcours is invalid
+            steps++;
+        }
+        if(target < 0) return null;
+        else {
+            //calculate the pathway for mika and sasha
+            // and store them in the routes array
+        }
+        return routes;
+    }
+
+    /**
+     * @param sasha_timeline
+     * @param mika_timeline
+     * @return
+     */
+    private static boolean validParcours(List<BitSet> sasha_timeline, List<BitSet> mika_timeline) {
+        return true;
     }
 
     /**
