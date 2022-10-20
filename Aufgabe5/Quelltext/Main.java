@@ -56,36 +56,49 @@ public class Main {
      * @return
      */
     private static int[][] solve(BitSet[] graph) {
-        int target = -1, steps = 0;
-        while (
-                validParcours(sashaTimeline, mikaTimeline) &&
-                        target < 0 &&
-                        sashaTimeline.get(sashaTimeline.size() - 1).isEmpty()
-                        && mikaTimeline.get(mikaTimeline.size() - 1).isEmpty()
-        ) {
-            //build both timelines stepwise
-            // until a solution is found or the parcours is invalid
-            steps++;
-        }
-        if (target < 0) return null;
-        else {
-            int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
-            //calculate the pathway for mika and sasha
-            // and store them in the routes array
-            return routes;
-        }
+        List<BitSet>[] timelines = generateTimeline(graph);
+        if (timelines == null) return null;
+        //TODO: make sure that this works
+        BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
+        targets.and(timelines[1].get(timelines[1].size() - 1));
+        int target = targets.nextSetBit(0);
+        int steps = timelines[0].size();
+
+        int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
+        //calculate the pathway for mika and sasha
+        // and store them in the routes array
+        /*
+        TODO: pseudocode verbessern, unklar wie die int[]'s (hier: routes[2][steps+1]) aufgebaut werden?!
+        Pseudocode:
+        -merke targets-bitset(s.o.) als 'last'
+        -xLoop i=steps-1:
+        -für jeden set aus timeline-eintrag bei index i
+        -prüfe, ob nachbar von target
+        -merke alle matches als 'last'
+        -sobald ein nachbar 1 oder 2 ist, wurde der jeweilige weg gefunden
+        -rechne i-1
+        -xLoop
+         */
+        return routes;
+
     }
 
-    List<BitSet>[] generateStepwiseTimeline(BitSet[] graph) {
+    /**
+     * @param graph
+     * @return
+     */
+    private static List<BitSet>[] generateTimeline(BitSet[] graph) {
         BitSet sashaFirst = new BitSet(graph.length);
         BitSet mikaFirst = new BitSet(graph.length);
-        sashaFirst.set(0, true);
-        mikaFirst.set(1, true);
+        sashaFirst.set(0);
+        mikaFirst.set(1);
+        @SuppressWarnings("unchecked")
         List<BitSet>[] timelines = new ArrayList[2];
         timelines[0] = new ArrayList<>(List.of(sashaFirst));
         timelines[1] = new ArrayList<>(List.of(mikaFirst));
         do {
-            // use neighbouringNodes to get next step in timeline
+            //build both timelines stepwise
+            // until a solution is found or the parcours is invalid
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
                     .isEmpty() || !validParcours(timelines[0], timelines[1])) {
@@ -95,8 +108,20 @@ public class Main {
         return timelines;
     }
 
-    private static BitSet neighbouringNodes(BitSet nodes, BitSet[] graph) {
-
+    /**
+     * @param nodes All current Nodes
+     * @param graph The Graph
+     * @return A BitSet containing all the neighbors of the nodes
+     */
+    private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
+        BitSet neighbours = new BitSet();
+        //inspired by https://stackoverflow.com/a/15393089
+        for (int i = nodes.nextSetBit(0); i != -1; i = nodes.nextSetBit(i + 1)) {
+            for (int j = graph[i].nextSetBit(0); j != -1; j = graph[i].nextSetBit(j + 1)) {
+                neighbours.set(j);
+            }
+        }
+        return neighbours;
     }
 
     /**
