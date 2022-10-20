@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class Main {
     /**
      * Knoten von: index im array
-     *
+     * <p>
      * Knoten zu: index im BitSet
      */
     private static final List<BitSet[]> graphs = new ArrayList<>();
@@ -56,14 +56,6 @@ public class Main {
      * @return
      */
     private static int[][] solve(BitSet[] graph) {
-        List<BitSet> sashaTimeline = new ArrayList<>();
-        List<BitSet> mikaTimeline = new ArrayList<>();
-        BitSet sashaFirst = new BitSet(graph.length);
-        BitSet mikaFirst = new BitSet(graph.length);
-        sashaFirst.set(0, true);
-        mikaFirst.set(1, true);
-        sashaTimeline.add(sashaFirst);
-        mikaTimeline.add(mikaFirst);
         int target = -1, steps = 0;
         while (
                 validParcours(sashaTimeline, mikaTimeline) &&
@@ -84,6 +76,29 @@ public class Main {
         }
     }
 
+    List<BitSet>[] generateStepwiseTimeline(BitSet[] graph) {
+        BitSet sashaFirst = new BitSet(graph.length);
+        BitSet mikaFirst = new BitSet(graph.length);
+        sashaFirst.set(0, true);
+        mikaFirst.set(1, true);
+        List<BitSet>[] timelines = new ArrayList[2];
+        timelines[0] = new ArrayList<>(List.of(sashaFirst));
+        timelines[1] = new ArrayList<>(List.of(mikaFirst));
+        do {
+            // use neighbouringNodes to get next step in timeline
+            if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
+                    .get(timelines[1].size() - 1)
+                    .isEmpty() || !validParcours(timelines[0], timelines[1])) {
+                return null;
+            }
+        } while (!timelines[0].get(timelines[0].size() - 1).intersects(timelines[1].get(timelines[1].size() - 1)));
+        return timelines;
+    }
+
+    private static BitSet neighbouringNodes(BitSet nodes, BitSet[] graph) {
+
+    }
+
     /**
      * @param sasha_timeline
      * @param mika_timeline
@@ -99,7 +114,10 @@ public class Main {
     private static List<Path> getPaths() {
         List<Path> paths;
         try (Stream<Path> walk = Files.walk(Paths.get("Aufgabe5/", "Eingabedateien/"))) {
-            paths = walk.filter(Files::isRegularFile).filter(path -> path.getFileName().toString().endsWith(".txt")).toList();
+            paths = walk
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                    .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
