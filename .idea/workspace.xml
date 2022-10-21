@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Eingabedateien einlesen" />
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Eingabedateien einlesen">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +23,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -29,21 +37,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Documents/Coding/Fork/bwinf41&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.23776224&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Documents\Coding\Fork\test" />
+      <recent name="E:\Documents\Coding\Fork\bwinf41" />
+      <recent name="E:\Documents\Coding\Fork\bwinf41\Aufgabe1" />
       <recent name="$PROJECT_DIR$/Aufgabe1/Eingabedateien" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Documents\Coding\Fork\bwinf41\Aufgabe1\Quelltext" />
       <recent name="$PROJECT_DIR$/Aufgabe1/Eingabedateien/Stoerungen" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Aufgabe1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -54,6 +78,16 @@
       <option name="presentableId" value="Default" />
       <updated>1662292344871</updated>
       <workItem from="1662292346509" duration="2804000" />
+      <workItem from="1662297280512" duration="3663000" />
+      <workItem from="1662359025360" duration="3054000" />
+      <workItem from="1662385449039" duration="2153000" />
+      <workItem from="1662476059994" duration="84000" />
+      <workItem from="1662489579650" duration="1621000" />
+      <workItem from="1662492756995" duration="1681000" />
+      <workItem from="1662557735537" duration="1075000" />
+      <workItem from="1666191938245" duration="4687000" />
+      <workItem from="1666283472462" duration="2218000" />
+      <workItem from="1666332570141" duration="4061000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
