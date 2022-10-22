@@ -12,13 +12,12 @@ public class Main {
      * Knoten zu: index im BitSet
      */
     private static final List<BitSet[]> graphs = new ArrayList<>();
-    private static final String[] filenames = new String[5];
+    private static final List<String> filenames = new ArrayList<>(5);
 
     public static void main(String[] args) {
         List<Path> paths = getPaths();
-        for (int i = 0; i < paths.size(); i++) {
-            Path path = paths.get(i);
-            filenames[i] = path.getFileName().toString();
+        for (Path path : paths) {
+            filenames.add(path.getFileName().toString());
 
             List<String> lines = getLines(path);
             int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
@@ -44,7 +43,7 @@ public class Main {
             //solving the parcours
             int[][] routes = solve(graph);
             //evaluating the result
-            System.out.println("Ergebnis für " + filenames[i]);
+            System.out.println("Ergebnis für " + filenames.get(i));
             if (routes == null) System.out.println("Der Parcours hat keine Lösung!");
             else {
                 System.out.println("Der Parcours hat folgende Lösung:");
@@ -106,7 +105,7 @@ public class Main {
             timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size()-1), graph));
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
-                    .isEmpty() || !validParcours(timelines[0], timelines[1])) {
+                    .isEmpty() || !timelineRepeats(timelines)) {
                 return null;
             }
         } while (!timelines[0].get(timelines[0].size() - 1).intersects(timelines[1].get(timelines[1].size() - 1)));
@@ -129,12 +128,28 @@ public class Main {
     }
 
     /**
-     * @param sasha_timeline
-     * @param mika_timeline
+     * @param timelines
      * @return
      */
-    private static boolean validParcours(List<BitSet> sasha_timeline, List<BitSet> mika_timeline) {
-
+    private static boolean timelineRepeats(List<BitSet>[] timelines) {
+        BitSet last0 = timelines[0].get(timelines[0].size() - 1);
+        int i = 0;
+        int repeat = -1;
+        for (BitSet set :
+                timelines[0]) {
+            if(set != last0) {
+                if(set.equals(last0)) {
+                    repeat = i;
+                    break;
+                }
+            }
+            i++;
+        }
+        if(repeat != -1) {
+            BitSet last1 = timelines[1].get(timelines[1].size() - 1);
+            BitSet repeating = timelines[1].get(repeat);
+            return !last1.equals(repeating);
+        }
         return true;
     }
 
