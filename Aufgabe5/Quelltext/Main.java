@@ -119,11 +119,10 @@ public class Main {
      * @return A BitSet containing all the neighbors of the nodes
      */
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
-        BitSet neighbours = new BitSet(); //TODO: Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
-        //inspired by https://stackoverflow.com/a/15393089
-        for (int i = nodes.nextSetBit(0); i != -1; i = nodes.nextSetBit(i + 1)) {
-            for (int j = graph[i].nextSetBit(0); j != -1; j = graph[i].nextSetBit(j + 1)) {
-                neighbours.set(j);
+        BitSet neighbours = new BitSet();
+        for (int i = 0; i < graph.length; i++) {
+            if(nodes.get(i)) {
+                neighbours.or(graph[i]);
             }
         }
         return neighbours;
