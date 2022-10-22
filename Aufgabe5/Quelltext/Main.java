@@ -65,7 +65,7 @@ public class Main {
         BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
         targets.and(timelines[1].get(timelines[1].size() - 1));
         int target = targets.nextSetBit(0);
-        int steps = timelines[0].size();
+        int steps = timelines[0].size() - 1;
         int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
         //calculate the pathway for mika and sasha
         // and store them in the routes array
