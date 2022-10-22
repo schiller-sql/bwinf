@@ -104,13 +104,13 @@ public class Main {
         timelines[0] = new ArrayList<>(List.of(sashaFirst));
         timelines[1] = new ArrayList<>(List.of(mikaFirst));
         do {
-            System.out.println("\nstep " + timelines[0].size() + ":");
-            System.out.println("Sasha checked out " + timelines[0].get(timelines[0].size()-1).toString());
-            System.out.println("Mika checked out " + timelines[1].get(timelines[1].size()-1).toString());
             //build both timelines stepwise
             // until a solution is found or the parcours is invalid
             timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size()-1), graph));
             timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size()-1), graph));
+            //System.out.println("current timelines:");
+            //System.out.println("Sasha's Weg: ");
+            //timelines[0].forEach(e -> { for(int i = 0; i < e.size(); i++) System.out.print(e.get(i) + ":");});
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
                     .isEmpty() || !timelineRepeats(timelines)) {
@@ -133,15 +133,6 @@ public class Main {
             }
         }
         return neighbours;
-
-        /*BitSet neighbours = new BitSet(); //TODO: Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
-        //inspired by https://stackoverflow.com/a/15393089
-        for (int i = nodes.nextSetBit(0); i != -1; i = nodes.nextSetBit(i + 1)) {
-            for (int j = graph[i].nextSetBit(0); j != -1; j = graph[i].nextSetBit(j + 1)) {
-                neighbours.set(j);
-            }
-        }
-        return neighbours;*/
     }
 
     /**
