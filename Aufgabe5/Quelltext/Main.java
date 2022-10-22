@@ -15,11 +15,10 @@ public class Main {
     private static final List<String> filenames = new ArrayList<>(5);
 
     public static void main(String[] args) {
-        List<Path> paths = getPaths();
+        List<Path> paths = new ArrayList<>(getPaths());
         for (Path path : paths) {
             filenames.add(path.getFileName().toString());
-
-            List<String> lines = getLines(path);
+            List<String> lines = new ArrayList<>(getLines(path));
             int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
             //TODO: check if this variable is needed
             int countOfArrows = Integer.parseInt(lines.get(0).split(" ")[1]);
@@ -48,6 +47,7 @@ public class Main {
             else {
                 System.out.println("Der Parcours hat folgende Lösung:");
                 System.out.println("Zielfeld: " + routes[0][routes[0].length - 1]);
+                System.out.println("Anzahl an Schritten: " + routes[0].length);
                 System.out.println("Sasha's Weg: " + Arrays.toString(routes[0]));
                 System.out.println("Mika's Weg: " + Arrays.toString(routes[1]));
             }
@@ -55,8 +55,9 @@ public class Main {
     }
 
     /**
-     * @param graph
-     * @return
+     *
+     * @param graph The graph
+     * @return the pathway for both players
      */
     private static int[][] solve(BitSet[] graph) {
         List<BitSet>[] timelines = generateTimeline(graph);
@@ -86,8 +87,9 @@ public class Main {
     }
 
     /**
-     * @param graph
-     * @return
+     * Generates for both players the timeline of checked waypoints
+     * @param graph The Graph
+     * @return Both timelines as List of BitSet's
      */
     private static List<BitSet>[] generateTimeline(BitSet[] graph) {
         BitSet sashaFirst = new BitSet(graph.length);
@@ -113,6 +115,7 @@ public class Main {
     }
 
     /**
+     * Makes a checkout on all neighbouring nodes of the current nodes for the given graph
      * @param nodes All current Nodes
      * @param graph The Graph
      * @return A BitSet containing all the neighbors of the nodes
@@ -128,8 +131,9 @@ public class Main {
     }
 
     /**
-     * @param timelines
-     * @return
+     * Checks if there is a repetition in both timelines
+     * @param timelines The timelines for both players
+     * @return true if both timelines repeat themselves, otherwise false
      */
     private static boolean timelineRepeats(List<BitSet>[] timelines) {
         BitSet last0 = timelines[0].get(timelines[0].size() - 1);
@@ -154,6 +158,7 @@ public class Main {
     }
 
     /**
+     * Get all paths in Aufgabe5/Eingabedateien/*
      * @return A list of paths to all files with the .txt extension in the Aufgabe5/Eingabedateien/ directory.
      */
     private static List<Path> getPaths() {
@@ -171,6 +176,7 @@ public class Main {
     }
 
     /**
+     * Get all lines for the given path
      * @param path The file from which the lines are read
      * @return A list of strings representing the lines
      */
