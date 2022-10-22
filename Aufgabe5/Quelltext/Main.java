@@ -162,6 +162,7 @@ public class Main {
             paths = walk
                     .filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().endsWith(".txt"))
+                    .sorted()
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
