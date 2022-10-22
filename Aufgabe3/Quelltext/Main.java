@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
@@ -47,6 +48,8 @@ public class Main {
 
 
         for(byte[][][] maps : tasklist) {
+            HashMap<Byte, boolean[]> map = exchangeHashes(maps[0], maps[1]);
+            map.forEach((key, value) -> System.out.println(key + " " + Arrays.toString(value)));
             //create list of all possible block permutations of maps[0]
             //compare each index with all four rotations of the permutation and stop if equal,
             //if not equal continue with the following
@@ -55,6 +58,7 @@ public class Main {
             //if not equal return false
 
             //
+            break; //TODO: for debugging
         }
 
 
