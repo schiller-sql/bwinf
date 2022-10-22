@@ -60,9 +60,6 @@ public class Main {
      */
     private static int[][] solve(BitSet[] graph) {
         List<BitSet>[] timelines = generateTimeline(graph);
-        //System.out.println("timelines:");
-        //Arrays.stream(timelines).toList().forEach(t -> t.forEach(e -> { for(int i = 0; i < e.size(); i++) System.out.print(e.get(i) + ":");}));
-
         if (timelines == null) return null;
         //TODO: make sure that this works
         BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
@@ -70,8 +67,6 @@ public class Main {
         int target = targets.nextSetBit(0);
         int steps = timelines[0].size();
         int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
-        System.out.println("target: "+target);
-        System.out.println("steps: "+steps);
         //calculate the pathway for mika and sasha
         // and store them in the routes array
         /*
@@ -108,9 +103,6 @@ public class Main {
             // until a solution is found or the parcours is invalid
             timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size()-1), graph));
             timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size()-1), graph));
-            //System.out.println("current timelines:");
-            //System.out.println("Sasha's Weg: ");
-            //timelines[0].forEach(e -> { for(int i = 0; i < e.size(); i++) System.out.print(e.get(i) + ":");});
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
                     .isEmpty() || !timelineRepeats(timelines)) {
