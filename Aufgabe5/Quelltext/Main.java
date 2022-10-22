@@ -42,7 +42,7 @@ public class Main {
             //solving the parcours
             int[][] routes = solve(graph);
             //evaluating the result
-            System.out.println("Ergebnis für " + filenames.get(i));
+            System.out.println("\nErgebnis für " + filenames.get(i));
             if (routes == null) System.out.println("Der Parcours hat keine Lösung!");
             else {
                 System.out.println("Der Parcours hat folgende Lösung:");
@@ -62,12 +62,11 @@ public class Main {
     private static int[][] solve(BitSet[] graph) {
         List<BitSet>[] timelines = generateTimeline(graph);
         if (timelines == null) return null;
-        //TODO: make sure that this works
         BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
         targets.and(timelines[1].get(timelines[1].size() - 1));
         int target = targets.nextSetBit(0);
         int steps = timelines[0].size() - 1;
-        int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika
+        int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika //TODO: should be maybe plus two, because steps is size()-1 ?!
         //calculate the pathway for mika and sasha
         // and store them in the routes array
         /*
