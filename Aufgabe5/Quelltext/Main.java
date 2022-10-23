@@ -41,7 +41,7 @@ public class Main {
                 System.out.println("Der Parcours hat keine Lösung!");
             } else {
                 System.out.println("Der Parcours hat folgende Lösung:");
-                System.out.println("Zielfeld: " + routes[0][routes[0].length - 1]);
+                System.out.println("Zielfeld: " + (routes[0][routes[0].length - 1] + 1));
                 System.out.println("Anzahl an Schritten: " + routes[0].length);
                 for (int person = 0; person < 2; person++) {
                     System.out.println((person == 0 ? "Sasha" : "Mika") + "'s Weg: ");
