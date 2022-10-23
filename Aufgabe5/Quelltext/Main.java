@@ -10,8 +10,8 @@ public class Main {
         for (Path path : getPaths()) {
             String fileName = path.getFileName().toString();
             List<String> lines = getLines(path);
-            BitSet[] graph = generateGraphFromString(lines);
-            int[][] routes = solveGraphForRouteOnSameField(graph);
+            BitSet[] graph = graphFromLines(lines);
+            int[][] routes = sameTargetRoute(graph);
 
             System.out.println("\nErgebnis für " + fileName);
             if (routes == null) {
@@ -31,7 +31,7 @@ public class Main {
         }
     }
 
-    private static BitSet[] generateGraphFromString(List<String> lines) {
+    private static BitSet[] graphFromLines(List<String> lines) {
         int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
         BitSet[] graph = new BitSet[countOfNodes];
         for (int i = 0; i < countOfNodes; i++) {
@@ -46,10 +46,10 @@ public class Main {
         return graph;
     }
 
-    private static int[][] solveGraphForRouteOnSameField(BitSet[] graph) {
-        List<BitSet>[] timelines = generateTimelines(graph);
+    private static int[][] sameTargetRoute(BitSet[] graph) {
+        List<BitSet>[] timelines = generatesTimelines(graph);
         if (timelines == null) return null;
-        int target = target(timelines);
+        int target = firstSameTargetOfTimelines(timelines);
         int[][] routes = new int[2][];
         //calculate the pathway for mika and sasha
         // and store them in the routes array
@@ -59,7 +59,7 @@ public class Main {
         return routes;
     }
 
-    private static int target(List<BitSet>[] timelines) {
+    private static int firstSameTargetOfTimelines(List<BitSet>[] timelines) {
         BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
         targets.and(timelines[1].get(timelines[1].size() - 1));
         return targets.nextSetBit(0);
@@ -85,7 +85,7 @@ public class Main {
         return route;
     }
 
-    private static List<BitSet>[] generateTimelines(BitSet[] graph) {
+    private static List<BitSet>[] generatesTimelines(BitSet[] graph) {
         BitSet sashaFirst = new BitSet(graph.length);
         BitSet mikaFirst = new BitSet(graph.length);
         sashaFirst.set(0);
