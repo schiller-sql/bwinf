@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Github ist *******">
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Finishing algorithm and starting printing method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
     </list>
@@ -64,7 +64,7 @@
       <workItem from="1662292346509" duration="2804000" />
       <workItem from="1666378000906" duration="22000" />
       <workItem from="1666444288824" duration="5402000" />
-      <workItem from="1666511729228" duration="7702000" />
+      <workItem from="1666511729228" duration="8377000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
@@ -80,7 +80,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662295345222</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Finishing algorithm and starting printing method">
+      <created>1666519504827</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1666519504827</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,7 +110,8 @@
     <MESSAGE value="Eingabedateien einlesen" />
     <MESSAGE value="Adding searching and checking algorithm" />
     <MESSAGE value="Github ist *******" />
-    <option name="LAST_COMMIT_MESSAGE" value="Github ist *******" />
+    <MESSAGE value="Finishing algorithm and starting printing method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finishing algorithm and starting printing method" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

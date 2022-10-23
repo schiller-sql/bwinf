@@ -59,7 +59,7 @@ public class Main {
                 if (position[0] + counter >= book.size()) {
                     return;
                 }
-                text.append(" ").append(book.get(position[0] + counter).toLowerCase()); // TODO: bei punkt oder zwei neuen Zeilen abrechen
+                text.append(" ").append(book.get(position[0] + counter).toLowerCase()); // TODO: bei Punkt oder zwei neuen Zeilen abbrechen
                 counter++;
             }
             String[] lines = text.toString().split(" ");
@@ -84,8 +84,8 @@ public class Main {
     }
     private static String getText(int line, int column) {
         StringBuilder text = new StringBuilder(book.get(line));
-        int startIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").lastIndexOf("#", column);
-        int endIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").indexOf("#", column);
+        int startIndex = text.toString().replaceAll("[.!?,»«'\"()\\[\\]]", "#").lastIndexOf("#", column);
+        int endIndex = text.toString().replaceAll("[.!?,»«'\"()\\[\\]]", "#").indexOf("#", column);
         int counter = 1;
         while (startIndex < 0 || endIndex < 0) {
             if (startIndex < 0) {
@@ -94,8 +94,8 @@ public class Main {
             if (endIndex < 0) {
                 text.append(" ").append(book.get(line + counter));
             }
-            startIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").lastIndexOf("#", column);
-            endIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").indexOf("#", column);
+            startIndex = text.toString().replaceAll("[.!?,»«'\"()\\[\\]]", "#").lastIndexOf("#", column);
+            endIndex = text.toString().replaceAll("[.!?,»«'\"()\\[\\]]", "#").indexOf("#", column);
             counter++;
         }
         return text.substring(startIndex + 1, endIndex + 1).trim();
