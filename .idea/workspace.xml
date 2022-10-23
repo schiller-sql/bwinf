@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="rectifying Tonys spelling">
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Adding some improvements and starting with comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
     </list>
@@ -35,19 +35,18 @@
       <ranges>
         <range start1="7" end1="7" start2="7" end2="10" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
         <range start1="9" end1="9" start2="12" end2="13" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="39" end1="39" start2="43" end2="47" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="52" end1="52" start2="60" end2="65" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="54" end1="55" start2="67" end2="69" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="57" end1="58" start2="71" end2="72" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="59" end1="60" start2="73" end2="74" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="61" end1="62" start2="75" end2="76" changelist="46fcac30-b3b6-41f6-8fea-4f9087a54f14" />
-        <range start1="64" end1="64" start2="78" end2="81" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="81" end1="82" start2="98" end2="99" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="84" end1="84" start2="101" end2="107" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="86" end1="88" start2="109" end2="111" changelist="46fcac30-b3b6-41f6-8fea-4f9087a54f14" />
-        <range start1="96" end1="98" start2="119" end2="121" changelist="46fcac30-b3b6-41f6-8fea-4f9087a54f14" />
-        <range start1="102" end1="102" start2="125" end2="133" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="113" end1="113" start2="144" end2="148" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="12" end1="24" start2="16" end2="17" changelist="46fcac30-b3b6-41f6-8fea-4f9087a54f14" />
+        <range start1="26" end1="27" start2="19" end2="20" changelist="46fcac30-b3b6-41f6-8fea-4f9087a54f14" />
+        <range start1="39" end1="39" start2="32" end2="36" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="52" end1="52" start2="49" end2="54" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="54" end1="55" start2="56" end2="58" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="57" end1="58" start2="60" end2="61" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
+        <range start1="59" end1="60" start2="62" end2="63" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="64" end1="64" start2="67" end2="70" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
+        <range start1="81" end1="82" start2="87" end2="88" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="84" end1="84" start2="90" end2="96" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
+        <range start1="103" end1="103" start2="115" end2="145" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
+        <range start1="113" end1="113" start2="155" end2="160" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
       </ranges>
     </file>
   </component>
@@ -90,7 +89,7 @@
       <workItem from="1662292346509" duration="2804000" />
       <workItem from="1666378000906" duration="22000" />
       <workItem from="1666444288824" duration="5402000" />
-      <workItem from="1666511729228" duration="10184000" />
+      <workItem from="1666511729228" duration="11838000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
@@ -120,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666520214657</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Adding some improvements and starting with comments">
+      <created>1666521953774</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666521953774</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,7 +151,8 @@
     <MESSAGE value="Github ist *******" />
     <MESSAGE value="Finishing algorithm and starting printing method" />
     <MESSAGE value="rectifying Tonys spelling" />
-    <option name="LAST_COMMIT_MESSAGE" value="rectifying Tonys spelling" />
+    <MESSAGE value="Adding some improvements and starting with comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding some improvements and starting with comments" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -10,21 +10,10 @@ public class Main {
     private static final List<String>[] stoerungen = new ArrayList[6];
 
     public static void main(String[] args) {
-        for (Path path : getPaths()) {
-            if (path.getFileName().toString().equals("Alice_im_Wunderland.txt")) {
-                book.addAll(getLines(path));
-            } else {
-                for (String line : getLines(path)) {
-                    List<String> wordsList = new ArrayList<>();
-                    String[] words = line.split(" ");
-                    Collections.addAll(wordsList, words);
-                    stoerungen[Integer.parseInt(path.getFileName().toString().replaceAll("[^0-9]+", ""))] = wordsList;
-                }
-            }
-        }
+        evaluatingFiles();
         for (int i = 0; i < stoerungen.length; i++) {
             List<int[]> results = checkPositions(getPositions(stoerungen[i]), stoerungen[i]);
-            System.out.println("Störung Nr." + (i + 1) + ":");
+            System.out.println("Störung Nr." + i + ":");
             for (int index = 0; index < stoerungen[i].size(); index++) {
                 System.out.print(stoerungen[i].get(index) + " ");
             }
