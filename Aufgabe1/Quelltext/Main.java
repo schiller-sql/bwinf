@@ -22,57 +22,83 @@ public class Main {
                 }
             }
         }
-        checkLocations(getLocations(stoerungen[0]), stoerungen[0]).forEach(position -> Arrays.stream(position).toList().forEach(System.out::println));
-        //getLocations(stoerungen[0].get(0)).forEach(position -> Arrays.stream(position).toList().forEach(System.out::println));
+        for (int i = 0; i < stoerungen.length; i++) {
+            List<int[]> results = checkPositions(getPositions(stoerungen[i]), stoerungen[i]);
+            System.out.println("Störung Nr." + (i + 1) + ":");
+            for (int index = 0; index < stoerungen[i].size(); index++) {
+                System.out.print(stoerungen[i].get(index) + " ");
+            }
+            System.out.println();
+            for (int[] result : results) {
+                System.out.println("Zeile: " + result[0]);
+                System.out.println("'" + getText(result[0], result[1]) + "'");
+            }
+            System.out.println();
+        }
     }
 
-    private static List<Integer[]> getLocations(List<String> stoerung) {
-        List<Integer[]> positions = new ArrayList<>();
+    private static List<int[]> getPositions(List<String> stoerung) {
+        List<int[]> positions = new ArrayList<>();
         for (int lineNumber = 0; lineNumber < book.size(); lineNumber++) {
             String line = book.get(lineNumber).toLowerCase();
-            //System.out.println(line + "   ");
-            if (line.contains(stoerung.get(0))) {
-                Integer[] position = new Integer[]{lineNumber, line.indexOf(stoerung.get(0))};
-                positions.add(position);
-                //Arrays.stream(position).toList().forEach(System.out::println);
-                //System.out.println();
+            int index = line.indexOf(stoerung.get(0));
+            while (index >= 0) {
+                positions.add(new int[]{lineNumber, index});
+                index = line.indexOf(stoerung.get(0), index + 1);
             }
         }
         return positions;
     }
 
-    private static List<Integer[]> checkLocations(List<Integer[]> positions, List<String> stoerung) {
-        List<Integer[]> rightPositions = new ArrayList<>();
+    private static List<int[]> checkPositions(List<int[]> positions, List<String> stoerung) {
+        List<int[]> rightPositions = new ArrayList<>();
         positions.forEach(position -> {
-            //Arrays.stream(position).toList().forEach(System.out::println);
             StringBuilder text = new StringBuilder(book.get(position[0]).substring(position[1]).toLowerCase());
             int counter = 1;
-            while (text.toString().split(" ").length < stoerung.size()) {
-                text.append(book.get(position[0] + counter).toLowerCase());
+             while (text.toString().split(" ").length < stoerung.size()) {
+                if (position[0] + counter >= book.size()) {
+                    return;
+                }
+                text.append(" ").append(book.get(position[0] + counter).toLowerCase()); // TODO: bei punkt oder zwei neuen Zeilen abrechen
                 counter++;
             }
             String[] lines = text.toString().split(" ");
             for (int index = 0; index < lines.length; index++) {
-                lines[index] = lines[index].replaceAll("[^a-zA-Z0-9]", "");
+                lines[index] = lines[index].replaceAll("[^[a-zA-Z0-9äöüß]]", "");
             }
-            //Arrays.stream(lines).toList().forEach(System.out::print);
-            //System.out.println();
-            for (int index = 0; index < stoerung.size(); index++) {
-                if (Objects.equals(stoerung.get(index), "_") && !Objects.equals(stoerung.get(index), lines[index])) {
-
+            for (int index = 1; index < stoerung.size(); index++) {
+                if (Objects.equals(stoerung.get(index), lines[index])) {
+                    if (index == stoerung.size() - 1) {
+                        rightPositions.add(position);
+                    }
+                } else if (!Objects.equals(stoerung.get(index), "_")) {
+                    break;
+                } else {
+                    if (index == stoerung.size() - 1) {
+                        rightPositions.add(position);
+                    }
                 }
-
             }
         });
         return rightPositions;
     }
-
-    private static void printBook(List<String> book) {
-        book.forEach(System.out::println);
-    }
-
-    private static void printStoerungen(List<String>[] stoerungen) {
-        Arrays.stream(stoerungen).forEach(System.out::println);
+    private static String getText(int line, int column) {
+        StringBuilder text = new StringBuilder(book.get(line));
+        int startIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").lastIndexOf("#", column);
+        int endIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").indexOf("#", column);
+        int counter = 1;
+        while (startIndex < 0 || endIndex < 0) {
+            if (startIndex < 0) {
+                text.insert(0, (book.get(line - counter) + " "));
+            }
+            if (endIndex < 0) {
+                text.append(" ").append(book.get(line + counter));
+            }
+            startIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").lastIndexOf("#", column);
+            endIndex = text.toString().replaceAll("[.!?,»«()\\[\\]]", "#").indexOf("#", column);
+            counter++;
+        }
+        return text.substring(startIndex + 1, endIndex + 1).trim();
     }
 
     private static List<Path> getPaths() {

@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Github ist *******">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
     </list>
+    <list id="91344497-ad05-493c-a7ef-e31e9be011e9" name="Changes by tonyborchert" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,14 +36,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Aufgabe1/Eingabedateien" />
@@ -62,6 +63,8 @@
       <updated>1662292344871</updated>
       <workItem from="1662292346509" duration="2804000" />
       <workItem from="1666378000906" duration="22000" />
+      <workItem from="1666444288824" duration="5402000" />
+      <workItem from="1666511729228" duration="7702000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
@@ -101,5 +104,12 @@
     <MESSAGE value="Adding searching and checking algorithm" />
     <MESSAGE value="Github ist *******" />
     <option name="LAST_COMMIT_MESSAGE" value="Github ist *******" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="positions" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
