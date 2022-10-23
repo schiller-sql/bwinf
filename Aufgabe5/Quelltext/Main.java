@@ -6,11 +6,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class Main {
-    /**
-     * Knoten von: index im array
-     * <p>
-     * Knoten zu: index im BitSet
-     */
+
     private static final List<BitSet[]> graphs = new ArrayList<>();
     private static final List<String> filenames = new ArrayList<>(5);
 
@@ -20,8 +16,6 @@ public class Main {
             filenames.add(path.getFileName().toString());
             List<String> lines = new ArrayList<>(getLines(path));
             int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
-            //TODO: check if this variable is needed
-            int countOfArrows = Integer.parseInt(lines.get(0).split(" ")[1]);
             lines.remove(0);
             //initialisation of the graph
             BitSet[] graph = new BitSet[countOfNodes];
@@ -54,42 +48,45 @@ public class Main {
         }
     }
 
-    /**
-     *
-     * @param graph The graph
-     * @return the pathway for both players
-     */
     private static int[][] solve(BitSet[] graph) {
         List<BitSet>[] timelines = generateTimeline(graph);
         if (timelines == null) return null;
-        BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
-        targets.and(timelines[1].get(timelines[1].size() - 1));
-        int target = targets.nextSetBit(0);
-        int steps = timelines[0].size() - 1;
-        int[][] routes = new int[2][steps + 1]; // [0][x] for sasha and [1][x] for mika //TODO: should be maybe plus two, because steps is size()-1 ?!
+        int target = target(timelines);
+        int[][] routes = new int[2][];
         //calculate the pathway for mika and sasha
         // and store them in the routes array
-        /*
-        TODO: pseudocode verbessern, unklar wie die int[]'s (hier: routes[2][steps+1]) aufgebaut werden?!
-        Pseudocode:
-        -merke targets-bitset(s.o.) als 'last'
-        -xLoop i=steps-1:
-        -für jeden set aus timeline-eintrag bei index i
-        -prüfe, ob nachbar von target
-        -merke alle matches als 'last'
-        -sobald ein nachbar 1 oder 2 ist, wurde der jeweilige weg gefunden
-        -rechne i-1
-        -xLoop
-         */
+        for(int i = 0; i < 2; i++) {
+            routes[i] = findSingleRouteInTimeline(timelines[i], target, graph);
+        }
         return routes;
-
     }
 
-    /**
-     * Generates for both players the timeline of checked waypoints
-     * @param graph The Graph
-     * @return Both timelines as List of BitSet's
-     */
+    private static int target(List<BitSet>[] timelines) {
+        BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
+        targets.and(timelines[1].get(timelines[1].size() - 1));
+        return targets.nextSetBit(0);
+    }
+
+    private static int[] findSingleRouteInTimeline(List<BitSet> timeline, int target, BitSet[] graph) {
+        int[] route = new int[timeline.size()];
+        steps:
+        for (int currentStep = timeline.size() - 1; currentStep > 0; currentStep--) {
+            route[currentStep] = target;
+            BitSet currentNodes = timeline.get(currentStep - 1);
+            for(int i = 0; i < graph.length; i++) {
+                if(currentNodes.get(i)) {
+                    BitSet arrows = graph[i];
+                    if(arrows.get(target)) {
+                        target = i;
+                        continue steps;
+                    }
+                }
+            }
+        }
+        route[0] = target;
+        return route;
+    }
+
     private static List<BitSet>[] generateTimeline(BitSet[] graph) {
         BitSet sashaFirst = new BitSet(graph.length);
         BitSet mikaFirst = new BitSet(graph.length);
@@ -113,12 +110,6 @@ public class Main {
         return timelines;
     }
 
-    /**
-     * Makes a checkout on all neighbouring nodes of the current nodes for the given graph
-     * @param nodes All current Nodes
-     * @param graph The Graph
-     * @return A BitSet containing all the neighbors of the nodes
-     */
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
         BitSet neighbours = new BitSet();
         for (int i = 0; i < graph.length; i++) {
@@ -129,11 +120,6 @@ public class Main {
         return neighbours;
     }
 
-    /**
-     * Checks if there is a repetition in both timelines
-     * @param timelines The timelines for both players
-     * @return true if both timelines repeat themselves, otherwise false
-     */
     private static boolean timelineRepeats(List<BitSet>[] timelines) {
         BitSet last0 = timelines[0].get(timelines[0].size() - 1);
         int i = 0;
@@ -156,10 +142,6 @@ public class Main {
         return true;
     }
 
-    /**
-     * Get all paths in Aufgabe5/Eingabedateien/*
-     * @return A list of paths to all files with the .txt extension in the Aufgabe5/Eingabedateien/ directory.
-     */
     private static List<Path> getPaths() {
         List<Path> paths;
         try (Stream<Path> walk = Files.walk(Paths.get("Aufgabe5/", "Eingabedateien/"))) {
@@ -174,11 +156,6 @@ public class Main {
         return paths;
     }
 
-    /**
-     * Get all lines for the given path
-     * @param path The file from which the lines are read
-     * @return A list of strings representing the lines
-     */
     private static List<String> getLines(Path path) {
         List<String> data;
         try (Stream<String> lines = Files.lines(path)) {
