@@ -37,13 +37,19 @@ public class Main {
             int[][] routes = solve(graph);
             //evaluating the result
             System.out.println("\nErgebnis für " + filenames.get(i));
-            if (routes == null) System.out.println("Der Parcours hat keine Lösung!");
-            else {
+            if (routes == null) {
+                System.out.println("Der Parcours hat keine Lösung!");
+            } else {
                 System.out.println("Der Parcours hat folgende Lösung:");
                 System.out.println("Zielfeld: " + routes[0][routes[0].length - 1]);
                 System.out.println("Anzahl an Schritten: " + routes[0].length);
-                System.out.println("Sasha's Weg: " + Arrays.toString(routes[0]));
-                System.out.println("Mika's Weg: " + Arrays.toString(routes[1]));
+                for (int person = 0; person < 2; person++) {
+                    System.out.println((person == 0 ? "Sasha" : "Mika") + "'s Weg: ");
+                    for (int step = 0; step < routes[person].length; step++) {
+                        System.out.print(routes[person][step] + 1 + (step != routes[person].length - 1 ? " -> " : ""));
+                    }
+                    System.out.println();
+                }
             }
         }
     }
@@ -55,7 +61,7 @@ public class Main {
         int[][] routes = new int[2][];
         //calculate the pathway for mika and sasha
         // and store them in the routes array
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             routes[i] = findSingleRouteInTimeline(timelines[i], target, graph);
         }
         return routes;
@@ -73,10 +79,10 @@ public class Main {
         for (int currentStep = timeline.size() - 1; currentStep > 0; currentStep--) {
             route[currentStep] = target;
             BitSet currentNodes = timeline.get(currentStep - 1);
-            for(int i = 0; i < graph.length; i++) {
-                if(currentNodes.get(i)) {
+            for (int i = 0; i < graph.length; i++) {
+                if (currentNodes.get(i)) {
                     BitSet arrows = graph[i];
-                    if(arrows.get(target)) {
+                    if (arrows.get(target)) {
                         target = i;
                         continue steps;
                     }
@@ -99,8 +105,8 @@ public class Main {
         do {
             //build both timelines stepwise
             // until a solution is found or the parcours is invalid
-            timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size()-1), graph));
-            timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size()-1), graph));
+            timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size() - 1), graph));
+            timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size() - 1), graph));
             if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
                     .get(timelines[1].size() - 1)
                     .isEmpty() || !timelineRepeats(timelines)) {
@@ -113,7 +119,7 @@ public class Main {
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
         BitSet neighbours = new BitSet();
         for (int i = 0; i < graph.length; i++) {
-            if(nodes.get(i)) {
+            if (nodes.get(i)) {
                 neighbours.or(graph[i]);
             }
         }
@@ -126,15 +132,15 @@ public class Main {
         int repeat = -1;
         for (BitSet set :
                 timelines[0]) {
-            if(set != last0) {
-                if(set.equals(last0)) {
+            if (set != last0) {
+                if (set.equals(last0)) {
                     repeat = i;
                     break;
                 }
             }
             i++;
         }
-        if(repeat != -1) {
+        if (repeat != -1) {
             BitSet last1 = timelines[1].get(timelines[1].size() - 1);
             BitSet repeating = timelines[1].get(repeat);
             return !last1.equals(repeating);
