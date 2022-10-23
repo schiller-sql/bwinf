@@ -6,37 +6,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class Main {
-
-    private static final List<BitSet[]> graphs = new ArrayList<>();
-    private static final List<String> filenames = new ArrayList<>(5);
-
     public static void main(String[] args) {
-        List<Path> paths = new ArrayList<>(getPaths());
-        for (Path path : paths) {
-            filenames.add(path.getFileName().toString());
-            List<String> lines = new ArrayList<>(getLines(path));
-            int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
-            lines.remove(0);
-            //initialisation of the graph
-            BitSet[] graph = new BitSet[countOfNodes];
-            //declaration of the graph
-            for (int k = 0; k < countOfNodes; k++) {
-                graph[k] = new BitSet(countOfNodes);
-            }
-            //writing input
-            for (String line : lines) {
-                int outputField = Integer.parseInt(line.split(" ")[0]);
-                int targetField = Integer.parseInt(line.split(" ")[1]);
-                graph[outputField - 1].set(targetField - 1);
-            }
-            graphs.add(graph);
-        }
-        for (int i = 0; i < graphs.size(); i++) {
-            BitSet[] graph = graphs.get(i);
-            //solving the parcours
-            int[][] routes = solve(graph);
-            //evaluating the result
-            System.out.println("\nErgebnis für " + filenames.get(i));
+        for (Path path : getPaths()) {
+            String fileName = path.getFileName().toString();
+            List<String> lines = getLines(path);
+            BitSet[] graph = generateGraphFromString(lines);
+            int[][] routes = solveGraphForRouteOnSameField(graph);
+
+            System.out.println("\nErgebnis für " + fileName);
             if (routes == null) {
                 System.out.println("Der Parcours hat keine Lösung!");
             } else {
@@ -54,8 +31,23 @@ public class Main {
         }
     }
 
-    private static int[][] solve(BitSet[] graph) {
-        List<BitSet>[] timelines = generateTimeline(graph);
+    private static BitSet[] generateGraphFromString(List<String> lines) {
+        int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
+        BitSet[] graph = new BitSet[countOfNodes];
+        for (int i = 0; i < countOfNodes; i++) {
+            graph[i] = new BitSet(countOfNodes);
+        }
+        List<String> rawArrows = lines.subList(1, lines.size());
+        for (String rawArrow : rawArrows) {
+            int arrowBegin = Integer.parseInt(rawArrow.split(" ")[0]);
+            int arrowEnd = Integer.parseInt(rawArrow.split(" ")[1]);
+            graph[arrowBegin - 1].set(arrowEnd - 1);
+        }
+        return graph;
+    }
+
+    private static int[][] solveGraphForRouteOnSameField(BitSet[] graph) {
+        List<BitSet>[] timelines = generateTimelines(graph);
         if (timelines == null) return null;
         int target = target(timelines);
         int[][] routes = new int[2][];
@@ -93,7 +85,7 @@ public class Main {
         return route;
     }
 
-    private static List<BitSet>[] generateTimeline(BitSet[] graph) {
+    private static List<BitSet>[] generateTimelines(BitSet[] graph) {
         BitSet sashaFirst = new BitSet(graph.length);
         BitSet mikaFirst = new BitSet(graph.length);
         sashaFirst.set(0);
@@ -103,7 +95,7 @@ public class Main {
         timelines[0] = new ArrayList<>(List.of(sashaFirst));
         timelines[1] = new ArrayList<>(List.of(mikaFirst));
         do {
-            //build both timelines stepwise
+            // build both timelines stepwise
             // until a solution is found or the parcours is invalid
             timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size() - 1), graph));
             timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size() - 1), graph));
