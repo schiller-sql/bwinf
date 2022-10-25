@@ -1,0 +1,273 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten vier Felder bitte anpassen:
+\newcommand{\Aufgabe}{Aufgabe 1: \LaTeX-Dokument} % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamId}{?????}                       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{Team-Name}                 % Team-Namen angeben
+\newcommand{\Namen}{Vor- und Nachnamen}           % Namen der Bearbeiter/-innen dieser Aufgabe angeben
+
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamId}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+% Position des Titels
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+    keywordstyle=\color{blue},commentstyle=\color{mygreen},
+    stringstyle=\color{mymauve},rulecolor=\color{black},
+    basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+    captionpos=b, % sets the caption-position to bottom
+    keepspaces=true, % keeps spaces in text
+    numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
+    showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+}
+\lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
+    keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]",
+    sensitive=true
+}
+
+% Diese beiden Pakete müssen zuletzt geladen werden
+%\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamId \\\\
+\LARGE Team-Name: \LARGE \TeamName \\\\
+\LARGE Bearbeiter/-innen dieser Aufgabe: \\
+\LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+
+    \maketitle
+    \tableofcontents
+
+    \vspace{0.5cm}
+
+    \textbf{Anleitung:} Trage oben in den Zeilen 8 bis 11 die Aufgabennummer, die Team-ID, den Team-Namen und alle Bearbeiter/-innen dieser Aufgabe mit Vor- und Nachnamen ein.
+    Vergiss nicht, auch den Aufgabennamen anzupassen (statt "`\LaTeX-Dokument"')!
+
+    Dann kannst du dieses Dokument mit deiner \LaTeX-Umgebung übersetzen.
+
+    Die Texte, die hier bereits stehen, geben ein paar Hinweise zur Einsendung.
+    Du solltest sie aber in deiner Einsendung wieder entfernen!
+
+    \section{Lösungsidee}\label{sec:losungsidee}
+    Die Idee der Lösung sollte hieraus vollkommen ersichtlich werden, ohne dass auf die eigentliche Implementierung Bezug genommen wird.
+    Hier sollte eben die Idee der L¨osung beschrieben werden.
+    Dazu geh¨ort meistens die Abstraktion des Problems, die Idee selbst und die Argumentation, wieso die Idee richtig ist.
+    Der erste Teil der L¨osungsidee sollte ublicherweise darin bestehen, das gegebene Problem ¨
+    formalisieren, Mehrdeutigkeiten entscheiden zu formalisieren.
+    Dazu geh¨ort auch, dass eventuelle Uneindeutigkeiten in der Aufgabenstellung entschieden und klar dokumentiert werden.
+    Das Ergebnis sollte eine formale, mathematische Darstellung des Problems sein – so einfach wie m¨oglich und nicht unn¨otig kompliziert.
+    Es geht nicht darum, irgendjemanden davon zu uberzeugen, dass das Pro- ¨ blem schwierig ist.
+    Vielmehr gl¨anzen gute L¨osungen dadurch, dass sie das Problem erstaunlich einfach darstellen.
+    Gute, veranschaulichende Beispiele sind naturlich erlaubt ¨ und erwunscht.
+    Es ist einerseits wichtig, die Algorithmen in Worten so zu beschreiben, dass der Leser
+    die richtige Intuition und Vorstellung bekommt.
+    Andererseits sollten die Beschreibungen so pr¨azise sein, dass der Leser den Algorithmus ohne viel nachzudenken selbst implementieren kann.
+    Fur eine pr ¨ ¨azise Beschreibung eignet sich Pseudocode besonders gut.
+    Triviale Schritte im Algorithmus mussen nat ¨ urlich nicht als Pseudocode ausgef ¨ uhrt wer- ¨ den.
+    Wie immer gilt: weniger ist mehr.
+    Echter Quelltext oder Implementationsdetails
+    haben in der L¨osungsidee nichts zu suchen.
+    Es kann interessant sein, alternative L¨osungsverfahren zu kurz zu beschreiben und zu
+    erkl¨aren, weshalb diese nicht verwendet worden sind.
+    Wenn dies von der Aufgabenstellung impliziert ist, kann es auch n¨otig sein, mehrere L¨osungsverfahren zu implementieren
+    und diese zu vergleichen.
+    In einem solchen Fall ist es sehr wichtig, die Vergleichsergebnisse ubersichtlich im Kapitel „Programm-Ablaufprotokolle“ zu pr¨asentieren
+    ( zum Beispiel in einer Tabelle)und zu interpretieren.
+    Wenn die vergleichsrelevanten Ergebnisse auf mehreren Seiten verteilt sind,
+    wird sich kaum ein Bewerter die Muhe machen und diese ¨ zusammensuchen.
+    Nachdem die L¨osungsidee beschrieben wurde, muss in den allermeisten F¨allen eine theoretische Analyse folgen.
+    Oft sollte hier die Laufzeitkomplexit¨at des Algorithmus genannt und begrundet werden.
+    ¨ 12 Auch die Speicherkomplexit¨at ist interessant, falls diese nicht trivial ist.
+    Wenn nachgewiesen werden kann, dass das vorliegende Problem NPvollst¨andig ist, ist dies meistens Extrapunkte wert.
+    Die Analyse sollte knapp und richtig
+    sein: es ist nicht hilfreich, wenn die Anzahl der Zyklen auf einer selbst-definierten Rechnerarchitektur auf zehn Seiten genau berechnet wird.
+    Vielmehr sollten eine oder mehrere
+    Variablen definiert werden, die die Gr¨oße der Eingabe beschreiben.
+    Mithilfe dieser Variablen kann die Laufzeit- bzw.
+    Speicherkomplexit¨at dann in O-Notation13 angegeben
+    werden.
+    Wenn man von der Laufzeit einer ”
+    durchschnittlichen Eingabe“ sprechen m¨ochte
+    (dieser Begriff muss naturlich definiert sein) und die Analyse dieser Laufzeit zu kompli- ¨
+    ziert ist, kann man mithilfe von Zeitmessungen eine Hypothese aufstellen (diese sollte
+    selbstverst¨andlich auch als reine Hypothese dargestellt werden).
+    In der ersten Runde sind solche Messungen selten sinnvoll.
+    Nicht nur in der theoretischen Analyse ist es erlaubt und sinnvoll, mathematische
+    Symbole wie P oder Q
+    zu verwenden, wenn ein Zusammenhang nicht einfacher dargestellt werden kann – Ausdrucke mit diesen Symbolen sind meistens leichter zu verstehen ¨
+    als andere Konstruktionen oder umst¨andliche S¨atze, die den Zusammenhang beschreiben.
+    Oft k¨onnen (und sollten) kompliziertere Ausdrucke mit einem einfachen Beispiel ¨
+    erl¨autert werden.
+
+    \section{Umsetzung}\label{sec:umsetzung}
+    Hier wird kurz erläutert, wie die Lösungsidee im Programm tatsächlich umgesetzt wurde.
+    Hier können auch Implementierungsdetails erwähnt werden.
+    Nachdem unter „L¨osungsidee“ das Problem theoretisch gel¨ost wurde, muss die L¨osung nun durch ein Programm realisiert werden.
+    Diese Transformation von Idee ins Programm soll hier vermittelt werden.
+    Beim Verst¨andnis kann Pseudocode oder zum Teil auch ein UML-Diagramm enorm helfen.
+    In der Umsetzung geht es darum, den Bezug zwischen der L¨osungsidee und der ImpleL¨osungsidee und
+    Implementation mentation herzustellen.
+    Nur selten sollte hier der tats¨achliche Quelltext abgedruckt sein.
+    Auf gar keinen Fall soll der Code Zeile fur Zeile erkl ¨ ¨art werden.
+    Wenn der Quelltext nicht selbst-erkl¨arend ist (und damit ist nicht eine Flut von Kommentaren gemeint!), ist er
+    oft in schlechtem Zustand.
+    In den allermeisten F¨allen reicht es anzugeben, in welchen
+    Methoden die Algorithmen aus der L¨osungsidee implementiert sind.
+    Dies ist der richtige Abschnitt, um darauf einzugehen, wie bestimmte Konzepte der
+    L¨osungsidee elegant im Programm modelliert wurden (in diesem Fall durfen nat ¨ urlich ¨
+    auch kurze Ausschnitte des Quelltextes gezeigt werden).
+    Wenn euer Programm (ohne Benutzeroberfl¨ache) l¨anger als wenige hundert Zeilen ist,
+    kann es fur den Bewerter hilfreich sein, ein UML Klassendiagramm ¨
+    14 oder ein Flussdiagramm15 zu sehen.
+    Solche Diagramme haben allerdings nur ihren Platz in der Dokumentation, wenn sie zum Verst¨andnis beitragen und sich auf relevanten Code beziehen. Es
+    wird kein Klassendiagramm ben¨otigt, was zeigt, welches die privaten Felder eurer C++
+    Klasse sind (Das k¨onnen die Bewerter auch im Quelltext nachlesen.), und auch keines,
+    das darstellt, dass euer Hauptfenster 5 Buttons enth¨alt.
+    Keinesfalls sollte hier eine "Programm-Dokumentation“ im Sinne eines Benutzer handbuches geschrieben werden.
+    Es sollte davon ausgegangen werden, dass m¨ogliche
+    Leser bzw.
+    Bediener sowohl mit dem Programmieren als auch mit der konkreten Aufgabenstellung vertraut sind.
+    Ist daruberhinaus eine Benutzerdokumentation notwendig, ¨
+    so ist die Benutzeroberfl¨ache offenbar verbesserbar.
+
+    \section{Beispiele}\label{sec:beispiele}
+    Genügend Beispiele einbinden!
+    Die Beispiele von der BwInf-Webseite sollten hier diskutiert werden,
+    aber auch eigene Beispiele sind sehr gut – besonders wenn sie Spezialfälle abdecken.
+    Aber bitte nicht 30 Seiten Programmausgabe hier einfügen!
+    Hier soll dokumentiert werden, wie das Programm sich unter verschiedenen Eingaben verh¨alt.
+    Die Eingaben sind am besten so gew¨ahlt, sodass der Leser
+    nach diesem Abschnitt uberzeugt ist, dass das Programm korrekt funktioniert und ¨
+    die relevanten F¨alle l¨osen kann (z.B.fur ¨ N = 1000000).
+    Zu jeder L¨osung geh¨oren 3 bis 5 Beispiele (Programmeingaben und dazugeh¨orige -
+    ausgaben oder Zwischenschritte), aus denen ersichtlich wird, wie das Programm sich
+    in unterschiedlichen Situationen verh¨alt.
+    Auch wenn 3 Beispieleingaben in der Aufgabe
+    vorgegeben sind, sollte man zus¨atzlich noch 3 Eingaben selbst entwerfen, dann erkl¨aren,
+    wieso man was wie gew¨ahlt hat, und das Ergebnis kommentieren.
+    Mit der Wahl der Eingaben sollte man m¨oglichst viele F¨alle abdecken (solche, die etwa im allt¨aglichen Betrieb
+    zu erwarten sind, aber auch solche, die Randwerte oder Sonderf¨alle darstellen, und das
+    Programm vielleicht an seine Grenzen bringen).
+    Schw¨achen Schw¨achen des Programms sollte man kommentieren. (Das wird positiv gewertet,
+    kommentieren das Weglassen solcher Kommentare negativ!).
+    Bringt das Programm etwa nur bei jedem zehnten Aufruf ein gutes Ergebnis, so sollte man dokumentieren, dass man das
+    Programm fur die Beispiele zehnmal hat laufen lassen, oder eben gleich das Programm ¨
+    ¨andern, so dass es den Algorithmus zehnmal ausfuhrt (das geh ¨ ¨ort dann aber naturlich ¨
+    schon entsprechend in der L¨osungsidee dokumentiert).
+    Die ” Protokolle ggf.
+    Ablaufprotokolle“ sollen sinnvoll darstellen, was bei einem Programmablauf
+    kurzen ¨ passiert.
+    Handelt es sich bei der Aufgabe etwa um ein Computerspiel, bei dem 1000
+    Zuge gemacht werden, so ist eine Liste der Z ¨ uge sicherlich nicht sinnvoll. (Die Einsendung ¨
+    wird von Menschen gelesen, nicht von Computern!) Stattdessen sollten vielleicht einzelne
+    Stellungen mit jeweils n¨achsten paar Zugen ausgegeben werden, anhand derer dann ¨
+    dokumentiert wird, wie sich die implementierte Methode stategisch auswirkt.
+    Beim Drucken von Ablaufprotokollen kann man umweltfreundlich sein und Geld
+    Hintergrund sparen, wenn man Screenshots von schwarzen Konsolenfenstern invertiert. Das sollte
+    man daher tun, es ¨andert nichts an der Sache.
+
+    \section{Quellcode}\label{sec:quellcode}
+    Unwichtige Teile des Programms sollen hier nicht abgedruckt werden.
+    Dieser Teil sollte nicht mehr als 2–3 Seiten umfassen, maximal 10.
+    Variablen- oder Funktionsnamen haben nichts in der L¨osungsidee zu suchen!
+    Die L¨oder Umsetzungsungsidee soll abstrakt die L¨osung beschreiben.
+    Das Programm ist lediglich eine m¨ogliche Umsetzung der Idee.
+    Dies zwingt zum einen dazu, dass die Idee eigenst¨andig formuliert sein muss, sich also
+    nicht hinter Aussagen wie „XY wird dann in der Funktion xy() berechnet“ verstecken kann.
+    Das hilft beim Verst¨andnis, denn normalerweise wird man die L¨osung von vorne
+    nach hinten lesen, und wie xy() funktioniert, ist zu dem Zeitpunkt, an dem dieser Satz
+    gelesen wird, weder bekannt noch relevant.
+    Zum anderen ist der Name der Funktion(xy()) nur von sehr geringem Interesse:
+    Ist die L¨osungsidee richtig und arbeitet das Programm korrekt (das sind Dinge die den Bewerter interessieren),
+    so ist wohl auch xy() (oder wie auch immer die Funktion heißen mag) korrekt.
+    Der relevante Teil des Quelltextes muss in ausgedruckter Form vorliegen. (Auf den Daunrelevant tentr¨ager gehen wir sp¨ater ein.) Die Unterscheidung zwischen relevantem und unrelevantem Code entscheidet sich an der Frage, was in der Aufgabenstellung gefragt ist. In
+    unserem Beispiel war die Eingabe der Spielsituation, die wir textbasiert uber die Kon- ¨
+    sole realisiert haben, nicht relevant.
+    Daher haben wir ihren Code in separate Dateien
+    ausgelagert und diese nicht abgedruckt. D
+    iese Trennung unterscheidet aber nicht nur,
+    Modular was abgedruckt wird, sondern ist auch gutes Softwaredesign.
+    Wir haben ein Interface (zu
+    programmieren deutsch: Schnittstelle) entwickelt, die den L¨osungsalgorithmus von seiner Verwendung
+    isoliert.
+    Das Interface selber, in drehzahl strategy.h definiert,
+    \begin{lstlisting}[label={lst:lstlisting}]
+    1 #include ”cards.h”
+    2
+    3 // Computes the expected final score fora given hand
+    4 double ExpectedScore ( const Cards& hand ) ;
+    5
+    6 // Computes what cards to play next , given a hand and the sum of rolled dice .
+    7 // Returns an empty set of cards if no move is possible .
+    8 Cards BestNextMove ( const Cards& hand , int roll ) ;
+    \end{lstlisting}
+    haben wir nicht abgedruckt, weil es schon in der Umsetzung beschrieben und einfach aus
+    der bereits abgedruckten drehzahl strategy.cpp ableitbar war.
+    Solche Interfaces machen
+    das gesamte Programm testbarer, einfacher und wartbarer, und helfen sowohl beim L¨osen
+    des Problems, da man ein großes Problem in zwei kleine unterteilt, die man unabh¨angig
+    voneinander l¨osen kann, als auch sp¨ater beim Kommunizieren bzw.
+    Dokumentieren der
+    eigenen L¨osung, da alle so isolierten Komponenten unabh¨angig voneinander sind —
+    sofern die Interfaces exakt spezifiziert sind16
+    .
+    Sind die Ein- und Ausgabe, die graphische Oberfl¨ache (zum Beispiel Fensterklassen),
+    Ereignisbehandlungsmethoden, das Lesen und Schreiben von Dateien, oder ¨ahnliche
+    Komponenten des Programms nicht ein zentraler Teil der Aufgabenstellung, so w¨are
+    es auch falsch, sie zu einem zentralen Teil der L¨osung zu machen: Dieser Code ist oft
+    recht technisch und an das verwendete System gekoppelt, zum Beispiel an Windowing
+    Toolkits oder Runtime Libraries. Tragen diese Teile des Codes nichts zur L¨osung des
+    eigentlichen Problemes bei, so sind sie nicht relevant.
+    Aus dieser Erkenntnis folgt, dass solche Teile des Codes auch keinen Wert fur die ¨
+    L¨osung des Problems tragen. Man muss sie somit nicht nur nicht abdrucken, sondern
+    eigentlich auch gar nicht schreiben: Mit der Konsoleeingabe haben wir in unserem Fall
+    das Problem der Eingabe m¨oglichst einfach gel¨ost: Eine graphische Oberfl¨ache (englisch:
+    Konzentration auf graphical user interface, GUI) h¨atte keinen Mehrwert geschaffen, sondern lediglich den
+    das Wesentliche nicht-relevanten Codeteil verl¨angert.
+    Schreibt man doch GUI-Code, so sollte man ihn, soweit es geht, vom Rest des Programms isolieren.
+    Dazu bietet sich das ”
+    Model-View-Controller-Pattern“ an17 MVC : Es darf
+    als bekannt vorausgesetzt werden, und die konsistente und konsequente Verwendung der
+    Begriffe ”
+    Model“, ”
+    View“ und ”
+    Controller“ im Code und in der Dokumentation helfen
+    nach der Erw¨ahnung des Patterns wiederum enorm beim Verst¨andnis.
+
+
+
+\end{document}
