@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Changes by Lenni and Tony" />
-    <list id="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" name="Changes by lenni" comment="Changes by lenni">
-      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Changes by Lenni and Tony">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <list id="91344497-ad05-493c-a7ef-e31e9be011e9" name="Changes by tonyborchert" comment="">
-      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
-    </list>
+    <list id="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" name="Changes by lenni" comment="Changes by Lenni and Tony" />
+    <list id="91344497-ad05-493c-a7ef-e31e9be011e9" name="Changes by tonyborchert" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,24 +25,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java">
-      <ranges>
-        <range start1="7" end1="7" start2="7" end2="10" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="9" end1="9" start2="12" end2="13" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="28" end1="28" start2="32" end2="36" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="41" end1="41" start2="49" end2="54" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="43" end1="44" start2="56" end2="58" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="46" end1="47" start2="60" end2="61" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="48" end1="49" start2="62" end2="63" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="53" end1="53" start2="67" end2="70" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="70" end1="71" start2="87" end2="88" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="73" end1="73" start2="90" end2="96" changelist="91344497-ad05-493c-a7ef-e31e9be011e9" />
-        <range start1="92" end1="92" start2="115" end2="145" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-        <range start1="102" end1="102" start2="155" end2="160" changelist="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -56,15 +36,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "last_opened_file_path": "/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Aufgabe1/Eingabedateien" />
@@ -84,7 +65,11 @@
       <workItem from="1662292346509" duration="2804000" />
       <workItem from="1666378000906" duration="22000" />
       <workItem from="1666444288824" duration="5402000" />
-      <workItem from="1666511729228" duration="11875000" />
+      <workItem from="1666511729228" duration="12114000" />
+      <workItem from="1666523865750" duration="3000" />
+      <workItem from="1666555194024" duration="364000" />
+      <workItem from="1666803031899" duration="202000" />
+      <workItem from="1666803239362" duration="1233000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
@@ -156,7 +141,8 @@
     <MESSAGE value="Adding some improvements and starting with comments" />
     <MESSAGE value="Documentation" />
     <MESSAGE value="Changes by lenni" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes by lenni" />
+    <MESSAGE value="Changes by Lenni and Tony" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes by Lenni and Tony" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
