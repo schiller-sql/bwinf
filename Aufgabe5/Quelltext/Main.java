@@ -6,44 +6,77 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * Begriffserklärung:
- * - Darstellung und Implementierung des Parcours:
- * - Die Darstellung der Parcours erfolgt als gerichteter Graph in Matrix-form, dabei ist zu beachten,
+ * Löst die Eingabedateien des Problems 5 und gibt die Lösung aus durch Aufrufen der Main {@link Main#main(String[])}.
+ * <p>
+ * Begriffserklärung für die Dokumentation der Main und der weiteren Methoden:
+ * <ul>
+ * <li>Darstellung und Implementierung des Parcours:
+ * <ul>
+ *     <li>Die Darstellung der Parcours erfolgt als gerichteter Graph in Matrix-form, dabei ist zu beachten,
  * dass in der Matrix-form die Nummer 0 in der Matrix zu der 1 im Parcours korrespondiert, usw.
- * - Die konkrete Implementierung dieses gerichten Graphen besteht aus einem Array aus {@link BitSet}s,
+ * <li>Die konkrete Implementierung dieses gerichten Graphen besteht aus einem Array aus {@link BitSet}s,
  * das Array und die BitSets haben beide die Länge gleich der Anzahl an Knoten.
  * Jeder BitSet im Array repräsentiert einen Knoten, der Index des BitSet im Array, ist welcher Knoten das ist.
  * Jeder Index im BitSet ist eine mögliche gerichtete Kante ausgehend von der Kante des Indexes Arrays des BitSets,
  * wenn dort eine gerichtete Kante existiert, dann ist der Bit auf 1 gesetzt, ansonsten ist er auf 0.
- * - Beispiel eines Graphen (y-Achse ist hier der Ausgang einer gerichteten Kante):
- * - Darstellung im Format der Eingabedateien:
- * 1 -> 2
- * 2 -> 3
- * 3 -> 1
- * - Darstellung in Matrix-form (y-Achse ist der Ausgangsknoten einer gerichteten Kante):
- * 0 1 2
- * 0   *
- * 1     *
- * 2 *
- * - Darstellung als Array aus BitSets (nur die verwendete Menge an Bits in den BitSets wird dargestellt):
+ * <li>Beispiel eines Graphen (y-Achse ist hier der Ausgang einer gerichteten Kante):
+ * <li>Darstellung im Format der Eingabedateien:<br/>
+ * 1 -> 2<br/>
+ * 2 -> 3<br/>
+ * 3 -> 1<br/>
+ * <li>Darstellung in Matrix-form (y-Achse ist der Ausgangsknoten einer gerichteten Kante):<br/>
+ *   <table>
+ * <tbody>
+ *   <tr>
+ *     <td></td>
+ *     <td>0</td>
+ *     <td>1</td>
+ *     <td>2</td>
+ *   </tr>
+ *   <tr>
+ *     <td>0</td>
+ *     <td></td>
+ *     <td>+</td>
+ *     <td></td>
+ *   </tr>
+ *   <tr>
+ *     <td>1</td>
+ *     <td></td>
+ *     <td></td>
+ *     <td>+</td>
+ *   </tr>
+ *   <tr>
+ *     <td>2</td>
+ *     <td>+</td>
+ *     <td></td>
+ *     <td></td>
+ *   </tr>
+ * </tbody>
+ * </table>
+ * <li>Darstellung als Array aus BitSets (nur die verwendete Menge an Bits in den BitSets wird dargestellt):
  * [010, 001, 100]
- * - Zeitleiste (im Quellcode Timeline) der erreichbaren Knoten:
- * - Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
+ * </ul>
+ * <li>Definition einer Zeitleiste (im Quellcode Timeline) der erreichbaren Knoten:
+ * <ul>
+ * <li>Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
  * nach einer Anzahl an Schritten von einem Startknoten.
- * - Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
+ * <li>Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
  * Die Menge der Knoten beim Zeitpunkt n (n > 0) sind alle Knoten die in n Schritten vom Startknoten erreichbar sind.
- * - Der Zeitpunkt n (n > 0) kann auch definiert werden als die Menge der Knoten,
+ * <li>Der Zeitpunkt n (n > 0) kann auch definiert werden als die Menge der Knoten,
  * die direkt (in einem Schritt) von den Knoten in der Menge von Zeitpunkt n - 1 erreichbar sind.
- * - Implementierung von Zeitleisten der erreichbaren Knoten:
- * - Jeder Zeitpunkt in einer Zeitleiste von erreichbaren Knoten wird als BitSet implementiert.
+ * </ul>
+ * <li>Implementierung von Zeitleisten der erreichbaren Knoten:
+ * <ul>
+ * <li>Jeder Zeitpunkt in einer Zeitleiste von erreichbaren Knoten wird als BitSet implementiert.
  * Beim BitSet korrespondiert der Index des Bit zu einem Knoten im Graph,
  * das BitSet hat also die gleiche länge wie die Anzahl an Knoten. Ist der Bit eines Knoten auf 1 gesetzt,
  * ist dieser Knoten zu diesem Zeitpunkt erreichbar.
- * - Zeitleisten werden als Liste von BitSets implementiert, das erste BitSet ist der Zeitpunkt 0.
+ * <li>Zeitleisten werden als Liste von BitSets implementiert, das erste BitSet ist der Zeitpunkt 0.
+ * </ul>
  */
 public class Main {
     /**
-     * Gehe jeden Pfad für die Beispieldatei durch, generiere den Graphen für die jeweilige Beispieldatei,
+     * Gehe jeden Pfad für die fünf Beispieldateien durch, generiere den Graphen für die jeweilige Beispieldatei,
      * löse ihn, gebe dann die Ergebnisse aus und
      * konvertiere dabei die um eins versetzten Nummern der Knoten in die korrespondierenden Nummern der Felder.
      */
