@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -103,7 +104,7 @@ public class Main {
      * @param taskPriorityDelegate
      * @return Gesamte gewartete Zeit für alle Aufträge
      */
-    private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
+    private static void simulateProcessingTasks2(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
         int maxWaitingTime = 0;
         int allWaitingTime = 0;
         int time = 60 * 9;
@@ -152,7 +153,7 @@ public class Main {
             if (firstTaskNotOnCurrentTaskList == tasks.size() && currentTaskList.isEmpty() && currentlyExecutingTask == null) {
                 break;
             }
-            if(time == nextBreak) {
+            if (time == nextBreak) {
                 time += 60 * 16;
                 nextBreak += 60 * 24;
             }
@@ -163,6 +164,59 @@ public class Main {
         System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
         System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
         System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitingTime + " minuten");
+        System.out.println("Nach " + time + " minuten von t0 aus fertig");
+    }
+
+
+    private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
+        int maxWaitedTime = 0;
+        int allWaitingTime = 0;
+        int time = 9 * 60;
+        int nextBreak = 17 * 60;
+        int firstTaskNotOnTaskQueue = 0;
+        List<Task> taskQueue = new ArrayList<>(tasks.size());
+        while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
+            while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
+                taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
+                firstTaskNotOnTaskQueue++;
+            }
+            if (!taskQueue.isEmpty()) {
+                Task currentlyExecutingTask = taskPriorityDelegate.pickTask(taskQueue);
+                int currentlyExecutingTaskProgress = 0;
+                while (currentlyExecutingTaskProgress != currentlyExecutingTask.duration) {
+                    assert currentlyExecutingTaskProgress < currentlyExecutingTask.duration;
+                    assert time <= nextBreak;
+                    if (time == nextBreak) {
+                        time += (9 + (24 - 17)) * 60;
+                        nextBreak += 24 * 60;
+                    }
+                    int passedTime = currentlyExecutingTask.duration - currentlyExecutingTaskProgress;
+                    if (time + passedTime > nextBreak) {
+                        passedTime = nextBreak - time;
+                    }
+                    time += passedTime;
+                    currentlyExecutingTaskProgress += passedTime;
+                }
+                int waitedTime = time - currentlyExecutingTask.entranceTime;
+                allWaitingTime += waitedTime;
+                maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
+            } else {
+                int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
+                while(time != targetedTime) {
+                    assert time < targetedTime;
+                    if (time == nextBreak) {
+                        nextBreak += 24 * 60;
+                    }
+                    time = Math.min(targetedTime, nextBreak);
+                }
+            }
+        }
+        double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
+        averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
+
+        System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
+        System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
+        System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitedTime + " minuten");
         System.out.println("Nach " + time + " minuten von t0 aus fertig");
     }
 
