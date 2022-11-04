@@ -233,6 +233,8 @@ public class Main {
      * oder falls diese nicht existieren null.
      */
     private static List<BitSet>[] generatesTimelines(BitSet[] graph) {
+        //TODO: Wenn ein Teil der Timeline in einen Loop läuft, kann dieser auch erkannt und abgebrochen werden
+        // Lohnt sich das? Oder wäre der Algorithmus zum finden der Loops rechenaufwändiger, als im Loop zu laufen?
         BitSet sashaFirst = new BitSet(graph.length);
         BitSet mikaFirst = new BitSet(graph.length);
         sashaFirst.set(0);
