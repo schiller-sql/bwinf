@@ -279,6 +279,7 @@ public class Main {
     }
 
     /**
+     * TODO: Javadoc muss entsprechend der Methodenänderungen erneuert werden
      * Ermittelt, ob zwei Zeitleisten der erreichbaren Knoten sich zu einem gleichen Zeitpunkt mit ihrem jeweils ersten Element wiederholen.
      * Es wird also festgestellt, ob die beiden Zeitleisten irgendwann schon mal an den genau gleichen Knoten waren,
      * wie zum neuesten/letzten Zeitpunkt. Ist dies der Fall, bedeutet das,
@@ -296,30 +297,24 @@ public class Main {
      * mit dem neuen/letzten Zeitpunkt wiederholen.
      */
     private static boolean timelineRepeats(List<BitSet>[] timelines) {
-        // TODO: falscher Ansatz: alle Stellen an der eine Wiederholung in der ersten Zeitleiste geschieht,
-        //       müssen auch in der zweiten Zeitleiste überprüft werden,
-        //       nicht nur bei der ersten Wiederholung in der ersten Zeitleiste muss es dazu kommen,
-        //       das auch dort eine Wiederholung der zweiten Zeitleiste stattfindet.
-        BitSet last0 = timelines[0].get(timelines[0].size() - 1);
-        int i = 0;
-        int repeat = -1;
-        for (BitSet set :
-                timelines[0]) {
-            if (set != last0) {
-                if (set.equals(last0)) {
-                    repeat = i;
-                    break;
-                }
+        BitSet current = timelines[0].get(timelines[0].size() -1);
+        BitSet repetitions = new BitSet(timelines[0].size());
+        List<BitSet> timeline = new ArrayList<>(timelines[0].subList(0, timelines[0].size() -1));
+        for(int i = 0; i < timeline.size(); i++) {
+            if(timeline.get(i).equals(current)) {
+                repetitions.set(i);
             }
-            i++;
         }
-        if (repeat != -1) {
-            BitSet last1 = timelines[1].get(timelines[1].size() - 1);
-            BitSet repeating = timelines[1].get(repeat);
-            return last1.equals(repeating);
+        //https://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html#nextSetBit-int-
+        for (int i = repetitions.nextSetBit(0); i >= 0; i = repetitions.nextSetBit(i+1)) {
+            if(timelines[1].get(timelines[1].size() -1).equals(timelines[1].get(i))) {
+                return true;
+            }
         }
         return false;
     }
+
+
 
     /**
      * Finde alle Pfade zu den Eingabedateien und gib sie als Liste zurück.
