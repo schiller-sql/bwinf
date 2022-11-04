@@ -87,16 +87,20 @@
     Die Problemstellung der Aufgabe ist es,
     einen Knoten zu finden,
     welcher von zwei unterschiedlichen Ausgangsknoten,
-    mit der gleichen Anzahl an Schritten zu erreichen ist,
-    wobei die Schrittfolge nie entgegengesetzt zur Kantenrichtung verlaufen darf.
+    mit der gleichen Anzahl an Schritten zu erreichen ist.
+    Dabei darf die Schrittfolge nie entgegengesetzt zur Kantenrichtung verlaufen.
     Dies kann erreicht werden,
-    indem für beide Spieler zeitgleich eine Breitensuche ohne Heuristiken ( daher eine uninformierte Suche) schrittweise durchgeführt wird.
+    indem für beide Spieler zeitgleich eine Breitensuche schrittweise durchgeführt wird.
+    Diese enthält keine Heuristiken und ist damit eine uninformierte Suche.
     Wenn es sich um einen lösbaren Parcours handelt,
     wird für beide Spieler im selben Schritt mindestens ein gleicher Knoten gefunden.
-    Sollte der Parcours nicht lösbar sein,
+    Sollte der Parcours nicht lösbar sein, %Diesen Bandwurmsatz entknoten :D
     wir für beide Spieler gleichzeitig,
-    die Menge der zu einem Zeitpunkt markierten Knoten,
-    der Menge der zu einem vorherigen Zeitpunkt markierten Knoten entsprechen.
+    die Menge,
+    der zu einem Zeitpunkt markierten Knoten,
+    der Menge,
+    der zu einem vorherigen Zeitpunkt markierten Knoten,
+    entsprechen.
     Dies lässt sich beweisen, indem ...
 
 
