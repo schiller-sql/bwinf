@@ -1,0 +1,108 @@
+[34m0.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 480.0 minuten
+Gesamte Wartezeit für alle Aufträge: 480 minuten
+Längste Wartezeit in allen Aufträgen: 480 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 480.0 minuten
+Gesamte Wartezeit für alle Aufträge: 480 minuten
+Längste Wartezeit in allen Aufträgen: 480 minuten
+
+
+[34m000111.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 7334.0 minuten
+Gesamte Wartezeit für alle Aufträge: 73340 minuten
+Längste Wartezeit in allen Aufträgen: 18754 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 5432.2 minuten
+Gesamte Wartezeit für alle Aufträge: 54322 minuten
+Längste Wartezeit in allen Aufträgen: 20539 minuten
+
+
+[34m001111.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 1020.0 minuten
+Gesamte Wartezeit für alle Aufträge: 1020 minuten
+Längste Wartezeit in allen Aufträgen: 1020 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 1020.0 minuten
+Gesamte Wartezeit für alle Aufträge: 1020 minuten
+Längste Wartezeit in allen Aufträgen: 1020 minuten
+
+
+[34m011111.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 60.0 minuten
+Gesamte Wartezeit für alle Aufträge: 120 minuten
+Längste Wartezeit in allen Aufträgen: 60 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 60.0 minuten
+Gesamte Wartezeit für alle Aufträge: 120 minuten
+Längste Wartezeit in allen Aufträgen: 60 minuten
+
+
+[34mfahrradwerkstatt0.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 32753.5 minuten
+Gesamte Wartezeit für alle Aufträge: 3733899 minuten
+Längste Wartezeit in allen Aufträgen: 68771 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 16981.3 minuten
+Gesamte Wartezeit für alle Aufträge: 1935866 minuten
+Längste Wartezeit in allen Aufträgen: 188734 minuten
+
+
+[34mfahrradwerkstatt1.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 63535.7 minuten
+Gesamte Wartezeit für alle Aufträge: 48668310 minuten
+Längste Wartezeit in allen Aufträgen: 128321 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 11883.9 minuten
+Gesamte Wartezeit für alle Aufträge: 9103084 minuten
+Längste Wartezeit in allen Aufträgen: 433563 minuten
+
+
+[34mfahrradwerkstatt2.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 51194.5 minuten
+Gesamte Wartezeit für alle Aufträge: 9522175 minuten
+Längste Wartezeit in allen Aufträgen: 110973 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 14805.7 minuten
+Gesamte Wartezeit für alle Aufträge: 2753868 minuten
+Längste Wartezeit in allen Aufträgen: 327087 minuten
+
+
+[34mfahrradwerkstatt3.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 30028.9 minuten
+Gesamte Wartezeit für alle Aufträge: 6606364 minuten
+Längste Wartezeit in allen Aufträgen: 60821 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 17242.8 minuten
+Gesamte Wartezeit für alle Aufträge: 3793423 minuten
+Längste Wartezeit in allen Aufträgen: 382016 minuten
+
+
+[34mfahrradwerkstatt4.txt:[0m
+[32mAuftrag Reihenfolge priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 74427.5 minuten
+Gesamte Wartezeit für alle Aufträge: 6698477 minuten
+Längste Wartezeit in allen Aufträgen: 167059 minuten
+
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 42200.9 minuten
+Gesamte Wartezeit für alle Aufträge: 3798081 minuten
+Längste Wartezeit in allen Aufträgen: 363155 minuten
+
+
