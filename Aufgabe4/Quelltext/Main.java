@@ -109,76 +109,7 @@ public class Main {
         }).toList();
     }
 
-    /**
-     * @param tasks
-     * @param taskPriorityDelegate
-     * @return Gesamte gewartete Zeit für alle Aufträge
-     */
     private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
-        int maxWaitingTime = 0;
-        int allWaitingTime = 0;
-        int time = 60 * 9;
-        int nextBreak = time + 60 * 8;
-        int firstTaskNotOnCurrentTaskList = 0;
-        Task currentlyExecutingTask = null;
-        int currentlyExecutingTaskProgress = 0;
-        List<Task> currentTaskList = new ArrayList<>(tasks.size());
-        while (firstTaskNotOnCurrentTaskList != tasks.size() || !currentTaskList.isEmpty() || currentlyExecutingTask != null) {
-            assert firstTaskNotOnCurrentTaskList <= tasks.size();
-            if (firstTaskNotOnCurrentTaskList != tasks.size() && tasks.get(firstTaskNotOnCurrentTaskList).entranceTime <= time) {
-                taskPriorityDelegate.sortTaskIntoCurrentTaskList(currentTaskList, tasks.get(firstTaskNotOnCurrentTaskList));
-                firstTaskNotOnCurrentTaskList++;
-                continue;
-            }
-
-            if (currentlyExecutingTask == null && !currentTaskList.isEmpty()) {
-                currentlyExecutingTask = taskPriorityDelegate.pickTask(currentTaskList);
-            }
-
-            int passedTime; // can be as high as Integer.MAX_VALUE
-            if (currentlyExecutingTask == null) {
-                passedTime = tasks.get(firstTaskNotOnCurrentTaskList).entranceTime - time;
-            } else {
-                passedTime = currentlyExecutingTask.duration - currentlyExecutingTaskProgress;
-            }
-
-            if (time + passedTime >= nextBreak) {
-                passedTime = nextBreak - time;
-            }
-
-            if (currentlyExecutingTask != null) {
-                assert currentlyExecutingTaskProgress + passedTime <= currentlyExecutingTask.duration;
-                currentlyExecutingTaskProgress += passedTime;
-                if (currentlyExecutingTask.duration == currentlyExecutingTaskProgress) {
-                    int waitedTime = (time + passedTime) - currentlyExecutingTask.entranceTime;
-                    allWaitingTime += waitedTime;
-                    if (waitedTime > maxWaitingTime) {
-                        maxWaitingTime = waitedTime;
-                    }
-                    currentlyExecutingTask = null;
-                    currentlyExecutingTaskProgress = 0;
-                }
-            }
-            time += passedTime;
-            if (firstTaskNotOnCurrentTaskList == tasks.size() && currentTaskList.isEmpty() && currentlyExecutingTask == null) {
-                break;
-            }
-            if (time == nextBreak) {
-                time += 60 * 16;
-                nextBreak += 60 * 24;
-            }
-        }
-        double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
-        averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
-
-        System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
-        System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
-        System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitingTime + " minuten");
-    }
-
-
-    private static void simulateProcessingTasks2(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
-        int[] tmp = new int[tasks.size()]; // TODO: REMOVE
         int maxWaitedTime = 0;
         int allWaitingTime = 0;
         int time = 9 * 60;
@@ -186,6 +117,10 @@ public class Main {
         int firstTaskNotOnTaskQueue = 0;
         List<Task> taskQueue = new ArrayList<>(tasks.size());
         while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
+            if (time == nextBreak) {
+                time += (9 + (24 - 17)) * 60;
+                nextBreak += 24 * 60;
+            }
             while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
                 taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
                 firstTaskNotOnTaskQueue++;
@@ -208,7 +143,6 @@ public class Main {
                     currentlyExecutingTaskProgress += passedTime;
                 }
                 int waitedTime = time - currentlyExecutingTask.entranceTime;
-                tmp[tasks.indexOf(currentlyExecutingTask)] = waitedTime; // TODO: REMOVE
                 allWaitingTime += waitedTime;
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
             } else {
