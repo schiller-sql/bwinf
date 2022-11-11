@@ -6,65 +6,120 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Lösung der Aufgabe 5.
+ */
 public class Main {
     public static final String TEXT_GREEN = "\u001B[32m";
     public static final String TEXT_BLUE = "\u001B[34m";
     public static final String TEXT_RESET = "\u001B[0m";
 
+    /**
+     * Ein Auftrag
+     *
+     * @param entranceTime Der Eingangszeitpunkt des Auftrages in Minuten von t0
+     * @param duration     Die Dauer des Auftrages in Minuten
+     */
     private record Task(int entranceTime, int duration) {
     }
 
+    /**
+     * Eine Klasse die entscheidet in welcher Reihenfolge die eingehenden Aufträge verwaltet werden sollen.
+     */
     abstract private static class TaskPriorityDelegate {
+        /**
+         * @return Der Name dieses Verfahrens, in welcher Reihenfolge die eingehenden Aufträge verwaltet werden sollen.
+         */
         public abstract String getName();
 
-        public abstract void sortTaskIntoCurrentTaskList(List<Task> currentTaskList, Task newTask);
+        /**
+         * Wo in der aktuellen Liste der schon eingegangen Aufträge ein neuer Auftrag eingehen soll.
+         * Das hat aber keinen direkten Einfluss darauf, wann dieser neue Auftrag angenommen werden soll,
+         * denn pickTask entscheidet dass.
+         * Durch eine Sortierung der Liste durch sortTaskIntoCurrentTaskList
+         * kann aber pickTask oft effizienter vorgehen.
+         * <p>
+         * Die implementierte Methode soll also an einer stellte in der taskQueue den newTask einsortieren.
+         *
+         * @param taskQueue Die aktuelle Liste der eingegangenen Aufträge
+         * @param newTask   Der neue Auftrag, der in die Liste, der eingegangen Aufträge eingenommen werden soll.
+         */
+        public abstract void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask);
 
         /**
-         * Remove and return one task from List
+         * Wählt den nächsten Auftrag zum Bearbeiten von der Liste der schon eingegangen Aufträge aus,
+         * entfernt ihn aus dieser Liste und gibt ihn zurück.
+         * Durch Sortieren dieser Liste in sortTaskIntoCurrentTaskList ist ein effizienteres Auswählen möglich.
+         * <p>
+         * Standardmäßig nimmt, wählt die Methode den ersten Auftrag in der Liste aus, da davon ausgegangen wird,
+         * dass meistens die Liste in sortTaskIntoCurrentTaskList sortiert wird.
          *
-         * @param currentTaskList
-         * @return
+         * @param taskQueue Die Liste der eingegangenen Aufträge.
+         * @return Der Auftrag, der als nächstes bearbeitet werden soll.
          */
-        public Task pickTask(List<Task> currentTaskList) {
-            return currentTaskList.remove(0);
+        public Task pickTask(List<Task> taskQueue) {
+            return taskQueue.remove(0);
         }
     }
 
+    /**
+     * Eine Implementation von {@link TaskPriorityDelegate}, die immer den Auftrag der als neuestes eingegangen ist,
+     * als letztes bearbeitet.
+     */
     static class FiFoTaskPriorityDelegate extends TaskPriorityDelegate {
         @Override
         public String getName() {
             return "Auftrag Reihenfolge priorisieren";
         }
 
+        /**
+         * Sortiert immer den neuen Auftrag immer ganz hinten. Da wenn der Auftrag in pickTask ausgewählt wird,
+         * immer der erste genommen wird, wird damit der älteste ausgewählt.
+         */
         @Override
-        public void sortTaskIntoCurrentTaskList(List<Task> currentTaskList, Task newTask) {
-            currentTaskList.add(newTask);
+        public void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask) {
+            taskQueue.add(newTask);
         }
     }
 
+    /**
+     * Eine Implementation von {@link TaskPriorityDelegate}, der immer den Auftrag als nächstes bearbeitet,
+     * der am kürzesten dauert.
+     */
     static class ShortestDurationTaskPriorityDelegate extends TaskPriorityDelegate {
         @Override
         public String getName() {
             return "Kürzester Auftrag priorisieren";
         }
 
+        /**
+         * Sortiert den neuen Auftrag in die Liste, der eingegangen Aufträge, ein, nach absteigender Dauer.
+         * Da wenn der Auftrag in pickTask ausgewählt wird, immer der kürzeste genommen wird.
+         */
         @Override
-        public void sortTaskIntoCurrentTaskList(List<Task> currentTaskList, Task newTask) {
-            for (int i = 0; i < currentTaskList.size(); i++) {
-                if (currentTaskList.get(i).duration > newTask.duration) {
-                    currentTaskList.add(i, newTask);
+        public void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask) {
+            for (int i = 0; i < taskQueue.size(); i++) {
+                if (taskQueue.get(i).duration > newTask.duration) {
+                    taskQueue.add(i, newTask);
                     return;
                 }
             }
-            currentTaskList.add(newTask);
+            taskQueue.add(newTask);
         }
     }
 
+    /**
+     * Alle Verfahren zur Auswahl des nächst zu bearbeitenden Auftrages.
+     */
     private static final TaskPriorityDelegate[] taskPriorityDelegates = new TaskPriorityDelegate[]{
             new FiFoTaskPriorityDelegate(),
             new ShortestDurationTaskPriorityDelegate(),
     };
 
+    /**
+     * Für alle Eingabedateien werden alle Verfahren durchgeführt
+     * mit {@link Main#simulateProcessingTasks(List, TaskPriorityDelegate)}.
+     */
     public static void main(String[] args) {
         for (Path path : getPaths()) {
             String fileName = path.getFileName().toString();
@@ -84,6 +139,9 @@ public class Main {
         }
     }
 
+    /**
+     * Aus einer Liste von Strings aus der Datei wird eine Liste von Aufträgen zurückgegeben.
+     */
     private static List<Task> tasksFromStrings(List<String> lines) {
         return lines.stream().map((line) -> {
             int entranceTime = Integer.parseInt(line.split(" ")[0]);
@@ -92,6 +150,16 @@ public class Main {
         }).toList();
     }
 
+    /**
+     * Für eine Liste von Aufträgen, mit einem Verfahren,
+     * also in welcher Reihenfolge die Aufträge durchgeführt werden soll,
+     * soll eine Simulation durchgeführt werden.
+     * Dabei wird ausgegeben wie lange jeder Auftrag durchschnittlich braucht,
+     * was die gesamte Wartezeit ist und was die maximale Wartezeit ist.
+     *
+     * @param tasks                Die Aufträge die bearbeitet werden sollen, wo das erste element, der zeitlich erste Auftrag ist.
+     * @param taskPriorityDelegate In welcher Reihenfolge die Aufträge bearbeitet werden sollen.
+     */
     private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
         int maxWaitedTime = 0;
         int allWaitingTime = 0;
@@ -130,7 +198,7 @@ public class Main {
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
-                while(time != targetedTime) {
+                while (time != targetedTime) {
                     assert time < targetedTime;
                     if (time == nextBreak) {
                         nextBreak += 24 * 60;
