@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Main {
+public class Bain {
     public static final String TEXT_RED = "\u001B[31m";
     public static final String TEXT_BLACK = "\u001B[30m";
     public static final String TEXT_GREEN = "\u001B[32m";
@@ -114,9 +114,8 @@ public class Main {
      * @param taskPriorityDelegate
      * @return Gesamte gewartete Zeit für alle Aufträge
      */
-    private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
+    private static void simulateProcessingTasks2(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
         int[] tmp = new int[tasks.size()]; // TODO: REMOVE
-        int tmp_i = -1; // TODO: REMVOE
         int maxWaitingTime = 0;
         int allWaitingTime = 0;
         int time = 60 * 9;
@@ -134,7 +133,6 @@ public class Main {
             }
 
             if (currentlyExecutingTask == null && !currentTaskList.isEmpty()) {
-                tmp_i++; // TODO: REMVOE
                 currentlyExecutingTask = taskPriorityDelegate.pickTask(currentTaskList);
             }
 
@@ -172,7 +170,6 @@ public class Main {
                 nextBreak += 60 * 24;
             }
         }
-        System.out.println(tmp_i);
         double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
         averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
 
@@ -184,8 +181,9 @@ public class Main {
     }
 
 
-    private static void simulateProcessingTasks2(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
+    private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
         int[] tmp = new int[tasks.size()]; // TODO: REMOVE
+        int tmp_i = 0; // TODO: REMOVE
         int maxWaitedTime = 0;
         int allWaitingTime = 0;
         int time = 9 * 60;
@@ -193,6 +191,11 @@ public class Main {
         int firstTaskNotOnTaskQueue = 0;
         List<Task> taskQueue = new ArrayList<>(tasks.size());
         while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
+            // TODO: korrigiert fehler
+            if (time == nextBreak) {
+                time += (9 + (24 - 17)) * 60;
+                nextBreak += 24 * 60;
+            }
             while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
                 taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
                 firstTaskNotOnTaskQueue++;
@@ -218,6 +221,7 @@ public class Main {
                 tmp[tasks.indexOf(currentlyExecutingTask)] = waitedTime; // TODO: REMOVE
                 allWaitingTime += waitedTime;
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
+                tmp_i++; // TODO: REMOVE
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
                 while(time != targetedTime) {
@@ -229,6 +233,7 @@ public class Main {
                 }
             }
         }
+        System.out.println(tmp_i);
         double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
         averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
 
