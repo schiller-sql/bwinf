@@ -78,7 +78,7 @@ public class Main {
     }
 
     private static final TaskPriorityDelegate[] taskPriorityDelegates = new TaskPriorityDelegate[]{
-//            new FiFoTaskPriorityDelegate(),
+            new FiFoTaskPriorityDelegate(),
             new ShortestDurationTaskPriorityDelegate(),
     };
 
