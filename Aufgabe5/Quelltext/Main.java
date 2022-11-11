@@ -6,10 +6,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * Löst die Eingabedateien des Problems 5 und gibt die Lösung aus durch Aufrufen der Main {@link Main#main(String[])}.
- * <p>
  * Begriffserklärung für die Dokumentation der Main und der weiteren Methoden:
- * <ul>
  * <li>Darstellung und Implementierung des Parcours:
  * <ul>
  *     <li>Die Darstellung der Parcours erfolgt als gerichteter Graph in Matrix-form, dabei ist zu beachten,
@@ -19,46 +16,8 @@ import java.util.stream.Stream;
  * Jeder BitSet im Array repräsentiert einen Knoten, der Index des BitSet im Array, ist welcher Knoten das ist.
  * Jeder Index im BitSet ist eine mögliche gerichtete Kante ausgehend von der Kante des Indexes Arrays des BitSets,
  * wenn dort eine gerichtete Kante existiert, dann ist der Bit auf 1 gesetzt, ansonsten ist er auf 0.
- * <li>Beispiel eines Graphen (y-Achse ist hier der Ausgang einer gerichteten Kante):
- * <li>Darstellung im Format der Eingabedateien:<br/>
- * 1 -> 2<br/>
- * 2 -> 3<br/>
- * 3 -> 1<br/>
- * <li>Darstellung in Matrix-form (y-Achse ist der Ausgangsknoten einer gerichteten Kante):<br/>
- *   <table>
- * <tbody>
- *   <tr>
- *     <td></td>
- *     <td>0</td>
- *     <td>1</td>
- *     <td>2</td>
- *   </tr>
- *   <tr>
- *     <td>0</td>
- *     <td></td>
- *     <td>+</td>
- *     <td></td>
- *   </tr>
- *   <tr>
- *     <td>1</td>
- *     <td></td>
- *     <td></td>
- *     <td>+</td>
- *   </tr>
- *   <tr>
- *     <td>2</td>
- *     <td>+</td>
- *     <td></td>
- *     <td></td>
- *   </tr>
- * </tbody>
- * </table>
- * <li>Darstellung als Array aus BitSets (nur die verwendete Menge an Bits in den BitSets wird dargestellt):
- * [010, 001, 100]
- * </ul>
  * <li>Definition einer Zeitleiste (im Quellcode Timeline) der erreichbaren Knoten:
- * <ul>
- * <li>Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
+ * <li> Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
  * nach einer Anzahl an Schritten von einem Startknoten.
  * <li>Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
  * Die Menge der Knoten beim Zeitpunkt n (n > 0) sind alle Knoten die in n Schritten vom Startknoten erreichbar sind.
@@ -76,9 +35,7 @@ import java.util.stream.Stream;
  */
 public class Main {
     /**
-     * Gehe jeden Pfad für die fünf Beispieldateien durch, generiere den Graphen für die jeweilige Beispieldatei,
-     * löse ihn, gebe dann die Ergebnisse aus und
-     * konvertiere dabei die um eins versetzten Nummern der Knoten in die korrespondierenden Nummern der Felder.
+     * Liest die Eingabedateien im Verzeichnis /Eingabedateien aus und gibt die Lösung für jede dieser Dateien aus.
      */
     public static void main(String[] args) {
         for (Path path : getPaths()) {
@@ -106,11 +63,7 @@ public class Main {
     }
 
     /**
-     * Generiere den Graphen vom Format einer Eingabedatei als String Liste. Erstelle dazu erst einen leeren Graphen,
-     * lese dann jede Zeile der Feldübergänge in den Graphen ein.
-     * Da jede Zeile erst den Ausgangsknoten und dann den Endknoten enthält,
-     * lassen sich diese Nummern mit 1 subtrahieren und man erhält die Indexe von den beiden Knoten im Graphen.
-     * Damit kann man im Graphen dann die gerichtete Kante eintragen.
+     * Generiert den Graphen aus den Zeilen einer Eingabedatei.
      *
      * @param lines Eine String Liste, wo jeder String eine Zeile im Eingabeformat ist.
      * @return Den generierten Graphen.
@@ -131,8 +84,8 @@ public class Main {
     }
 
     /**
-     * Generiere eine Route von dem 0. und 1. Knoten zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
-     * <p>
+     * Findet eine Route, von dem nullten und ersten Knoten zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
+     *
      * Es werden sich dabei erst zwei Zeitleisten der erreichbaren Knoten von 0. und 1.
      * generiert von der Methode {@link Main#generatesTimelines(BitSet[])}.
      * Diese Zeitleisten gehen bis zu einem Zeitpunkt, wo beide Zeitleisten in ihren Mengen
@@ -158,8 +111,8 @@ public class Main {
     }
 
     /**
-     * Findet in zwei Zeitleisten der erreichbaren Knoten,
-     * wo am Ende beide am selben Schritt einen gemeinsamen Knoten haben, einen gemeinsamen Knoten.
+     * Vergleicht den jeweils letzten Schritt der Schrittfolgen miteinander
+     * und gibt den gemeinsamen gemerkten Knoten zurück.
      *
      * @param timelines Zwei langes Array mit zwei Zeitleisten.
      * @return Der Index im Graphen des gemeinsamen Knotens.
@@ -170,7 +123,7 @@ public class Main {
         return targets.nextSetBit(0);
     }
 
-    /**
+    /*
      * Findet von einer Zeitleiste der erreichbaren Knoten eine Route,
      * die zu einem Zielknoten führt, welcher am Ende der Zeitleiste erreicht wird.
      * <p>
@@ -186,6 +139,10 @@ public class Main {
      * Da der erste Zeitpunkt nicht durchgegangen wurde und dementsprechend auch nicht der erste Index der Route,
      * aber das Ziel, kann am ersten Index der Route der Wert des Zieles stehen, da dieser ja zum Ziel davor führt.
      * Dieser Wert ist gleich dem Startknoten der Zeitleiste.
+     */
+
+     /**
+     * Ermittelt den Weg vom Zielpunkt zurück zum Startpunkt entgegengesetzt der Kantenrichtung des Graphen.
      *
      * @param timeline Die Zeitleiste der erreichbaren Knoten,
      *                 von der eine Route zu einem bestimmten Knoten im letzten Zeitpunkt der Zeitleiste gebaut werden soll.
@@ -213,7 +170,7 @@ public class Main {
         return route;
     }
 
-    /**
+    /*
      * Generiert zwei Zeitleisten der erreichbaren Knoten von Knoten 0. und 1.,
      * wo beide Zeitleisten am Ende auf einen gleichen Knoten kommen. Existieren diese Zeitleisten nicht,
      * wird null zurückgegeben.
@@ -227,6 +184,10 @@ public class Main {
      * mit der Methode {@link Main#timelineRepeats(List[])}, dann wird auch null zurückgeben.
      * Als Nächstes wird überprüft, ob beide Zeitleisten min. einen selben Knoten enthalten,
      * dann werden die Zeitleisten zurückgegeben.
+     */
+     /**
+     * Ermittelt für die Startknoten null und eins jeweils die Schrittfolge zum Zielknoten.
+     * Sollte es keine Lösung geben, wird null zurückgegeben.
      *
      * @param graph Der Graph, von dem die Zeitleisten der erreichbaren Knoten generiert werden sollen.
      * @return Die generierten Zeitleisten der erreichbaren Knoten von 0. und 1.,
@@ -239,7 +200,7 @@ public class Main {
         BitSet mikaFirst = new BitSet(graph.length);
         sashaFirst.set(0);
         mikaFirst.set(1);
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings("Generic array creation")
         List<BitSet>[] timelines = new ArrayList[2];
         timelines[0] = new ArrayList<>(List.of(sashaFirst));
         timelines[1] = new ArrayList<>(List.of(mikaFirst));
@@ -258,17 +219,12 @@ public class Main {
     }
 
     /**
-     * Gibt die Menge an Knoten, die in einem Schritt erreichbar sind von einer Menge an Knoten in einem Graphen.
+     * Gibt die Knoten zurück, welche in einem Schritt entlang der Kantenrichtung,
+     * von den aktuellen Knoten erreichbar sind.
      *
-     * @param nodes Die Knoten, von den die zurückgegebene Menge ermittelt werden soll.
-     *              Der Index eines Bits korrespondiert zu dem Index eines Knotens im Graphen,
-     *              ist er auf 1 gesetzt, ist der in der Menge enthalten.
-     *              Das gegebene BitSet muss also die gleiche Länge haben wie der Graph, bzw. die BitSets im Graphen.
-     * @param graph Der Graph anhand wessen ermittelt werden soll, welche Knoten in einem Schritt erreichbar sind.
-     * @return Die Menge der Knoten die in einem Schritt erreichbar sind von den gegebenen Knoten.
-     * Der Index eines Bits korrespondiert zu dem Index eines Knotens im Graphen,
-     * ist er auf 1 gesetzt, ist er in der Menge enthalten. Die Länge des zurückgegebenen BitSets
-     * ist gleichlang wie der Graph, bzw. die BitSets im Graphen und dem BitSet der gegebenen Knoten.
+     * @param nodes Die aktuellen Knoten
+     * @param graph Der Graph, welcher betrachtet wird
+     * @return Die Menge der Knoten die in einem Schritt von den gegebenen Knoten erreichbar ist
      */
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
         BitSet neighbours = new BitSet();
@@ -319,7 +275,7 @@ public class Main {
 
 
     /**
-     * Finde alle Pfade zu den Eingabedateien und gib sie als Liste zurück.
+     * Gibt zu jeder .txt Datei im Verzeichnis /Eingabedateien/ den zugehörigen Dateipfad zurück
      *
      * @return Die Pfade der Eingabedateien
      */
@@ -336,10 +292,10 @@ public class Main {
     }
 
     /**
-     * Gebe die Zeilen der Datei eines Pfades als Liste zurück.
+     * Gibt die Zeilen der Datei eines Pfades zurück.
      *
-     * @param path Der Pfad der Datei, die man möchte.
-     * @return Jede Zeile als String in einer Liste.
+     * @param path Der Dateipfad
+     * @return Jede Zeile der Datei
      */
     private static List<String> getLines(Path path) {
         try (Stream<String> lines = Files.lines(path)) {
