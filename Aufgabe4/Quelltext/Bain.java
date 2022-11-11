@@ -115,7 +115,6 @@ public class Bain {
      * @return Gesamte gewartete Zeit für alle Aufträge
      */
     private static void simulateProcessingTasks2(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
-        int[] tmp = new int[tasks.size()]; // TODO: REMOVE
         int maxWaitingTime = 0;
         int allWaitingTime = 0;
         int time = 60 * 9;
@@ -156,7 +155,6 @@ public class Bain {
                     if (waitedTime > maxWaitingTime) {
                         maxWaitingTime = waitedTime;
                     }
-                    tmp[tasks.indexOf(currentlyExecutingTask)] = waitedTime; // TODO: REMOVE
                     currentlyExecutingTask = null;
                     currentlyExecutingTaskProgress = 0;
                 }
@@ -176,14 +174,10 @@ public class Bain {
         System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
         System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
         System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitingTime + " minuten");
-        System.out.println("Nach " + time + " minuten von t0 aus fertig");
-        IntStream.of(tmp).forEach(System.out::println); // TODO: rmevmoe
     }
 
 
     private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
-        int[] tmp = new int[tasks.size()]; // TODO: REMOVE
-        int tmp_i = 0; // TODO: REMOVE
         int maxWaitedTime = 0;
         int allWaitingTime = 0;
         int time = 9 * 60;
@@ -218,10 +212,8 @@ public class Bain {
                     currentlyExecutingTaskProgress += passedTime;
                 }
                 int waitedTime = time - currentlyExecutingTask.entranceTime;
-                tmp[tasks.indexOf(currentlyExecutingTask)] = waitedTime; // TODO: REMOVE
                 allWaitingTime += waitedTime;
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
-                tmp_i++; // TODO: REMOVE
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
                 while(time != targetedTime) {
@@ -233,15 +225,12 @@ public class Bain {
                 }
             }
         }
-        System.out.println(tmp_i);
         double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
         averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
 
         System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
         System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
         System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitedTime + " minuten");
-        System.out.println("Nach " + time + " minuten von t0 aus fertig");
-        IntStream.of(tmp).forEach(System.out::println); // TODO: rmevmoe
     }
 
     /**

@@ -115,8 +115,6 @@ public class Main {
      * @return Gesamte gewartete Zeit für alle Aufträge
      */
     private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
-        int[] tmp = new int[tasks.size()]; // TODO: REMOVE
-        int tmp_i = -1; // TODO: REMVOE
         int maxWaitingTime = 0;
         int allWaitingTime = 0;
         int time = 60 * 9;
@@ -134,7 +132,6 @@ public class Main {
             }
 
             if (currentlyExecutingTask == null && !currentTaskList.isEmpty()) {
-                tmp_i++; // TODO: REMVOE
                 currentlyExecutingTask = taskPriorityDelegate.pickTask(currentTaskList);
             }
 
@@ -158,7 +155,6 @@ public class Main {
                     if (waitedTime > maxWaitingTime) {
                         maxWaitingTime = waitedTime;
                     }
-                    tmp[tasks.indexOf(currentlyExecutingTask)] = waitedTime; // TODO: REMOVE
                     currentlyExecutingTask = null;
                     currentlyExecutingTaskProgress = 0;
                 }
@@ -172,15 +168,12 @@ public class Main {
                 nextBreak += 60 * 24;
             }
         }
-        System.out.println(tmp_i);
         double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
         averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
 
         System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
         System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
         System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitingTime + " minuten");
-        System.out.println("Nach " + time + " minuten von t0 aus fertig");
-        IntStream.of(tmp).forEach(System.out::println); // TODO: rmevmoe
     }
 
 
@@ -235,8 +228,6 @@ public class Main {
         System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
         System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
         System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitedTime + " minuten");
-        System.out.println("Nach " + time + " minuten von t0 aus fertig");
-        IntStream.of(tmp).forEach(System.out::println); // TODO: rmevmoe
     }
 
     /**
