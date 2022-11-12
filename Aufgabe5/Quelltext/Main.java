@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Main {
@@ -60,7 +62,7 @@ public class Main {
      * Findet eine Route, vom nullten und ersten Knoten,
      * zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
      *
-     * @param graph Der Graph zu dem eine Route vom 0. und 1. Knoten zu einem gemeinsamen Knoten gebildet werden soll.
+     * @param graph Der Graph, zu dem eine Route vom nullten und ersten Knoten zu einem gemeinsamen Knoten gebildet werden soll.
      * @return Eine Route zu einem Knoten der vom 0. und 1. Knoten in der gleichen Anzahl von Schritten erreichbar ist.
      */
     private static int[][] sameTargetRoute(BitSet[] graph) {
@@ -175,7 +177,6 @@ public class Main {
      * dass die Zeitleisten sich immer wieder wiederholen werden.
      * Wenn bisher noch kein Zeitpunkt gefunden wurde in beiden Zeitleisten,
      * wo beide auf einem gleichen Knoten sind, ist dieser Zeitpunkt unmöglich und kann nie gefunden werden.
-     *
      *
      * @param timelines Zwei Zeitleisten der erreichbaren Knoten
      * @return True, wenn die Zeitleisten sich beide zu einem gleichen Zeitpunkt
