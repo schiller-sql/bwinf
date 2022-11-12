@@ -30,6 +30,7 @@
 
 % Für Algorithmen
 \usepackage{algpseudocode}
+\usepackage{adigraph}
 
 % Für Quelltext
 \usepackage{listings}
@@ -77,31 +78,85 @@
     \section{Lösungsidee}\label{sec:losungsidee}
     Der Aufgabenstellung zu entnehmen ist,
     dass sich beide Spieler immer genau gleichzeitig,
-    um genau einen Knoten,
-    entlang der Kantenrichtung bewegen und der Parcours als absolviert gilt,
-    wenn sich beide gleichzeitig zum gleichen Knoten bewegen.
-    Dabei ist die Startposition immer Identisch.
-    Als Datenstruktur für den Parcours eignet sich ein gerichteter Graph.
+    um genau einen Punkt,
+    entlang der Pfeilrichtung bewegen und der Parcours als absolviert gilt,
+    wenn sich beide gleichzeitig auf den gleichen Punkt bewegen.
+    Dabei ist die Startposition der Spieler immer Identisch.
+    
+    Als Datenstruktur für den Parcours eignet sich ein gerichteter und ungewichteter Graph.
     Die Pfeile zwischen den Kästchen werden durch gerichtete Kanten repräsentiert,
     während die Knoten repräsentativ für die Felder stehen.
-    Die Problemstellung der Aufgabe ist es,
-    einen Knoten in einem gerichteten Graphen zu finden,
-    welcher von zwei unterschiedlichen Ausgangsknoten,
-    mit der gleichen Anzahl an Schritten zu erreichen ist.
+    
+    Die abstrahierte Problemstellung der Aufgabe ist es,
+    für jeden der zwei Ausgangspunkte,
+    jeweils einen Weg zu einem Knoten, 
+    in einem gerichteten und ungewichteten Graphen, 
+    zu finden.
+    Dieser muss von beiden Ausgangsknoten mit der gleichen Anzahl an Schritten zu erreichen sein.
     Dabei darf die Schrittfolge nie entgegengesetzt zur Kantenrichtung verlaufen.
+    
     Dies kann erreicht werden,
-    indem für beide Spieler zeitgleich eine Breitensuche schrittweise durchgeführt wird.
-    Diese enthält keine Heuristiken und ist damit eine uninformierte Suche.
+    indem für beide Spieler eine Breitensuche parallel schrittweise durchgeführt wird.
+    Davon ausgehend, dass es dabei zu einem gemeinsamen Schnittpunkt kommt,
+    wird die Breitensuche fortgesetzt, 
+    bis sich mindestens ein Knoten aus der Schnittmenge der beiden Suchen ergibt.
     Wenn es sich um einen lösbaren Parcours handelt,
     wird für beide Spieler im selben Schritt mindestens ein gleicher Knoten gefunden.
-    Sollte der Parcours nicht lösbar sein, %Diesen Bandwurmsatz entknoten :D
-    wird für beide Spieler gleichzeitig,
-    die Menge,
-    der zu einem Zeitpunkt markierten Knoten,
-    der Menge,
-    der zu einem vorherigen Zeitpunkt markierten Knoten,
-    entsprechen.
-    Dies lässt sich beweisen, indem ...
+    
+    Sollte der Parcours nicht lösbar ist, 
+    ist die Menge der markierten Knoten,
+    für beide Spieler zur gleichen Zeit,
+    irgendwann gleich der Menge,
+    der zu einem früheren Zeitpunkt markierten Knoten. 
+    
+    \begin{figure}
+    \centering
+    \NewAdigraph{InfinityLoop}{
+    1:0,0;
+    2:2,0;
+    3:1,1;
+    }{
+    1,2;
+    2,3;
+    3,1;
+    }{}[]
+    \InfinityLoop{}
+    \caption{Nicht lösbarer zyklischer Graph}
+    \label{fig:Figure1}
+    \end{figure}
+    
+    So kommt es in \hyperref[fig:Figure1]{Figur 1.} zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
+    
+    \begin{table}
+    \centering
+    \begin{tabular}{lll}
+    \textbf{Schritt} & \textbf{Spieler 1 Pos.} & \textbf{Spieler 2 Pos.} \\
+    1. & Knoten 1 & Knoten 2 \\
+    2. & Knoten 2 & Knoten 3 \\
+    3. & Knoten 3 & Knoten 1 \\
+    4. & Knoten 1 & Knoten 2 \\
+    \end{tabular}
+    \caption{Schrittfolge für Figur 1.}
+    \label{tab:Table1}
+    \end{table}
+    
+    Hier kommt es in Schritt vier bei beiden Spielern zu einer Wiederholung von Schritt eins.
+    Damit kann der Parcours sicher für ungültig erklärt werden und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
+    Dies gilt, da sich beide Spieler in einem Zyklus befinden und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
+    
+    Das %zwei graphen, in einem wird in der zweiten Wiederholung abgebrochen und im zweiten graphen kommt es nur in einem spiler zur wiederholung und es gibt eine lösung
+    
+    %Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
+    % * nach einer Anzahl an Schritten von einem Startknoten.
+    % * Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
+    % * Die Menge der Knoten beim Zeitpunkt n (n > 0) sind alle Knoten die in n Schritten vom Startknoten erreichbar sind.
+    % * <li>Der Zeitpunkt n (n > 0) kann auch definiert werden als die Menge der Knoten,
+    % * die direkt (in einem Schritt) von den Knoten in der Menge von Zeitpunkt n - 1 erreichbar sind.
+    
+    
+    
+    
+
 
 
     \section{Umsetzung}\label{sec:umsetzung}
