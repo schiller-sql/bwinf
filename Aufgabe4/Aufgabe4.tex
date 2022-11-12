@@ -1,0 +1,417 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten vier Felder bitte anpassen:
+\newcommand{\Aufgabe}{Aufgabe 4: Fahrradwerkstatt}        % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamId}{?????}                       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{????}                      % Team-Namen angeben
+\newcommand{\Namen}{Tony Borchert}% Namen der Bearbeiter/-innen dieser Aufgabe angeben
+
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamId}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+% Position des Titels
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+    keywordstyle=\color{blue},commentstyle=\color{mygreen},
+    stringstyle=\color{mymauve},rulecolor=\color{black},
+    basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+    captionpos=b, % sets the caption-position to bottom
+    keepspaces=true, % keeps spaces in text
+    numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
+    showtabs=false, stepnumber=2, tabsize=2, title=\lstname ,
+    inputencoding = utf8,  % Input encoding
+    extendedchars = true,  % Extended ASCII
+    literate      =        % Support additional characters
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {à}{{\`a}}1  {è}{{\`e}}1  {ì}{{\`i}}1 {ò}{{\`o}}1  {ù}{{\`u}}1
+      {À}{{\`A}}1  {È}{{\'E}}1  {Ì}{{\`I}}1 {Ò}{{\`O}}1  {Ù}{{\`U}}1
+      {ä}{{\"a}}1  {ë}{{\"e}}1  {ï}{{\"i}}1 {ö}{{\"o}}1  {ü}{{\"u}}1
+      {Ä}{{\"A}}1  {Ë}{{\"E}}1  {Ï}{{\"I}}1 {Ö}{{\"O}}1  {Ü}{{\"U}}1
+      {â}{{\^a}}1  {ê}{{\^e}}1  {î}{{\^i}}1 {ô}{{\^o}}1  {û}{{\^u}}1
+      {Â}{{\^A}}1  {Ê}{{\^E}}1  {Î}{{\^I}}1 {Ô}{{\^O}}1  {Û}{{\^U}}1
+      {œ}{{\oe}}1  {Œ}{{\OE}}1  {æ}{{\ae}}1 {Æ}{{\AE}}1  {ß}{{\ss}}1
+      {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1  {Ø}{{\O}}1   {å}{{\r a}}1
+      {Å}{{\r A}}1 {ã}{{\~a}}1  {õ}{{\~o}}1 {Ã}{{\~A}}1  {Õ}{{\~O}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+      {°}{{\textdegree}}1 {º}{{\textordmasculine}}1 {ª}{{\textordfeminine}}1
+}
+\lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
+    keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]",
+    sensitive=true
+}
+
+% Diese beiden Pakete müssen zuletzt geladen werden
+\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamId \\\\
+\LARGE Team-Name: \LARGE \TeamName \\\\
+\LARGE Bearbeiter/-innen dieser Aufgabe: \\
+\LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\vspace{0.5cm}
+
+\section{Teilaufgabe 2}\label{sec:begruendung}
+Es werden nicht alle Kunden zufrieden sein, da der Auftrag eines Kunden A, der vor anderen Kunden einen Auftrag vergibt,
+nicht um bedingt als erstes bearbeitet wird. Dies passiert wenn der Auftrag von Kunde A
+nicht als einziger eingegangener Auftrag zur Verfügung steht und wenn die anderen Aufträge kürzer sind,
+aber nach dem des Kunden A eingegangen sind.
+Im schlimmsten Fall, ist der Kunde A mit seinem Auftrag sogar als letztes dran.
+
+\section{Teilaufgabe 3}\label{sec:eigenesverfahren}
+Obwohl es sicherlich viele verschiedene Möglichkeiten für ein solches Verfahren gibt,
+ist es wichtig zu verstehen, dass im echten Leben meist der Auftrag als erstes bearbeitet wird,
+der als erstes eingeht, da es sonst zu Anschuldigungen der Ungerechtigkeit kommt.
+Man lässt dementsprechend auch keinen vor einem selbst in der Schlange, da es für einen selbst immer länger dauert.
+
+Nur in Ausnahmen lässt man einen nach vorne, wenn man z.B. selber ganz lange dauert,
+die Person hinter einem aber nur kurz dauert und man selber vielleicht aber gerade nicht in der Eile ist.
+So könnte auch Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
+wenn es die Wartezeit des langen Auftrages kaum vergrößert. Wo aber die Grenze genau ist,
+ist arbiträr, mathematisch nicht belegt und sollte deshalb vom Verkäufer stammen,
+möglicherweise auch wie er seine Kunden einschätzt.  Deswegen kann dies nicht algorithmisch dargestellt werden.
+
+Eine weitere Ausnahme könnte liegen, wenn es sich um einen Kunden handelt,
+der von Marc besonders geschätzt wird oder es eine Gebühr gibt für schnelleres Reparieren.
+Diese beiden Ausnahmen, können aber auch nicht berücksichtigt werden durch den Algorithmus,
+weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren darstellt.
+
+%    
+\section{Lösungsidee}\label{sec:losungsidee}
+Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt,
+wo der Auftrag in die Fahrradwerkstatt eingeht. Außerdem werden die Aufträge in den Eingabedateien
+nach Eingangszeitpunkt sortiert, wo der erste Auftrag den Auftrag darstellt, der zuerst eingeht.
+Die Aufträge dürfen aber immer nur von 9 Uhr bis 17 Uhr bearbeitet werden und erst nachdem ein Auftrag
+fertig bearbeitet wurde, darf ein neuer ausgewählt werden.
+
+Obwohl es unterschiedliche Verfahren gibt, wie der nächst zu bearbeitende Auftrag ausgewählt wird,
+kann trotzdem ein verfahrensunabhängiger Algorithmus die Auswahl des nächsten Auftrages delegieren
+und sich selber mit der Simulation der Fahrradwerkstatt beschäftigen. Denn der nächst zu bearbeitende Auftrag
+muss einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet werden, egal welches Verfahren.
+Dieser verfahrensunabhängige Algorithmus wird im folgenden zuerst beschrieben.
+
+Als erstes wird sich gemerkt, was die aktuelle Zeit ist und was die Zeit der nächsten Pause ist.
+Am Anfang ist die aktuelle Zeit 9 Uhr und die nächste Pause 17 Uhr.
+Die maximale und gesamte Wartezeit werden sich auch gemerkt.
+Es wird sich außerdem ein Container an eingegangen und noch nicht eingegangen Aufträgen gemerkt.
+
+Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
+\begin{itemize}
+	\item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
+	\item Dann werden alle Aufträge die der neuen Zeit jetzt als eingegangen erscheinen sollten,
+	      von den nicht eingegangenen Aufträgen, zu den eingegangen Aufträgen bewegt.
+	\item Gibt es eingegangene Aufträge:
+	      \begin{itemize}
+		      \item Die Auswahl eines nun zu bearbeitenden Auftrages wird an das jeweilige Verfahren delegiert.
+		      \item Es wird sich gemerkt wie viel des Auftrages schon bearbeitet ist, also am Anfang 0.
+		      \item In einer Schleife bis der Auftrag fertig bearbeitet ist, d.h. wenn die schon bearbeitete Zeit, gleich der Dauer des Auftrages ist:
+		            \begin{itemize}
+			            \item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
+			            \item Zur Zeit und zur bearbeiteten Zeit, wird addiert wie viel Zeit noch übrig ist vom Auftrag.
+			            \item Ist diese addierte Zeit jedoch größer als die Differenz der Zeit zur nächsten Pause,
+			                  wird nur diese Zeit addiert.
+		            \end{itemize}
+		      \item Nun ist die Zeit genau die Zeit, wo der Auftrag fertig bearbeitet ist.
+		      \item Es bleibt außerdem ein Sonderfall zu beachten, denn wenn der Auftrag genau dann fertig ist,
+		            wo auch die Pause anfängt, darf nicht schon die Zeit auf den nächsten Tag um 7 Uhr gesetzt werden,
+		            weil es sonst gar nicht genau die Zeit wäre, wenn der Auftrag fertig wird.
+		            Deswegen wird die Zeit am Anfang der Schleife und nicht am Ende verschoben,
+		            dafür wird aber, wie bereits gesagt, am Anfang der äußeren Schleife die Zeit und Pause verschoben,
+		            wenn die Zeit gleich der nächsten Pause ist, da jetzt die Zeit nachdem Auftrag ist und deswegen am nächsten Tag.
+		            Ansonsten würden nämlich nicht alle eingehenden Aufträge als eingehend gezählt, da noch eine andere Zeit ist, als sie eigentlich sein sollte.
+		      \item Die Differenz zwischen der Eingangszeit des Auftrages und dieser Zeit, ist also wie lange der Kunde dieses Auftrages warten musste.
+		      \item Diese Wartezeit kann, wenn größer als das bisherige Maximum an Wartezeit, als das neue Maximum an Wartezeit eingespeichert werden.
+		      \item Die gesamte Wartezeit wird außerdem mit dieser Wartezeit addiert.
+	      \end{itemize}
+	\item Gibt es keine eingegangen Aufträge, muss gewartet werden, bis zur Eingangszeit des nächsten Auftrages.
+	\item Dafür wird in einer Schleife bis die aktuelle Zeit gleich der Eingangszeit des nächsten Auftrages ist:
+	      \begin{itemize}
+		      \item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
+	      \end{itemize}
+	\item Jetzt ist wieder der Zeitpunkt erreicht, wo es wieder möglich ist das man sich genau am Ende eines Arbeitstages befindet.
+	\item Da jedoch am Anfang der großen Schleife das wieder abgefangen wird, ist das egal.
+	      \begin{itemize}
+		      \item
+	      \end{itemize}
+\end{itemize}
+Nun kann anhand der gesamten Wartezeit geteilt durch die Anzahl der Aufträge, der Durchschnitt ermittelt werden
+und für die maximale Wartezeit, das schon ermittelte Maximum genommen werden.
+
+Was bei der Delegation des Verfahrens zur Bestimmung des nächsten Auftrages beachtet werden muss,
+ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container der eingegangenen Aufträge bewegt wird,
+dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist und zwar Verfahrens abhängig,
+da das einsortieren auch an das Verfahren delegiert wird.
+
+Was also unterschiedlich bei den Verfahren sein kann, ist wie ein neu eingegangener Auftrag
+in den schon eingegangenen Aufträgen einsortiert wird
+und wie von den schon eingegangenen Aufträgen ein zu bearbeitender Auftrag ermittelt wird.
+
+Die beiden Verfahren der Bestimmung des nächst zu bearbeitenden Auftrages wählen immer den ersten Auftrag
+aus dem sortierten Container der eingegangenen Aufträge. Sie sortieren jedoch die Aufträge unterschiedlich.
+Das ursprüngliche Verfahren hängt einfach immer nur den neusten eingegangen Auftrag
+in den Container der schon eingegangenen Aufträge hinten ein.
+Da beim Auswählen des zu bearbeitenden Auftrages das erste ausgewählt wird,
+ist dies das was von den eingegangen Aufträgen als erstes eingegangen ist
+und werden damit in der Reihenfolge ihres Eingangs, wie Marc es plant, ausgewählt.
+Das neue Verfahren sortiert neue eingehende Aufträge nach Dauer ein,
+so dass das erste immer der Auftrag mit der geringsten Dauer ist.
+
+
+\section{Umsetzung}\label{sec:umsetzung}
+\begin{itemize}
+	\item Zeit wird als Integer in Minuten dargestellt und Zeitpunkte als Zeit von 0 aus.
+	\item Ein Auftrag wird als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt dargestellt.
+	\item Wenn die Zeit gleich der Pause ist und die Zeit zum nächsten Tag um 9 Uhr und die Pause um 17 Uhr gesetzt wird,
+	      muss die Pause mit 24 Stunden addiert werden (also $24 * 60$ für Minuten) und die Zeit mit 16 Stunden (also $16 * 60$).
+	\item Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
+	      wo jedoch sich gemerkt wird, welche Aufträge noch nicht waren.
+	      Da alle Aufträge sortiert sind, nach Eingangszeitpunkt, wird sich konkret nur der Index gemerkt,
+	      wo der zugehörige Auftrag der erste Auftrag ist, der sich noch nicht in den eingegangen Aufträgen befindet.
+	\item Deswegen, in der äußeren Schleife, wird auch, wenn alle Aufträge die sich noch nicht
+	      in den eingegangenen Aufträgen befinden, sich dort aber laut der Zeit sich befinden sollten,
+	      lediglich der Index des ersten Auftrages, der sich nicht mehr in den eingegangen Aufträgen befindet,
+	      erhöht, bis der Auftrag mit dem Index eine höhere Eingangszeit hat als was die momentane Zeit ist.
+	      D.h. wenn dieser Auftrag nach der aktuellen Zeit noch nicht eingegangen ist.
+	\item Die schon eingegangenen Aufträge werden dargestellt als Liste von Aufträgen,
+	      die nur die Aufträge enthält die auch schon eingegangen sind.
+	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
+	      durch eine abstrakte Klasse \texttt{TaskPriorityDelegate}.
+	      An einem Objekt einer Unterklasse dieser abstrakten Klassen wird
+	      also das Auswählen des nächsten Auftrages delegiert.
+	      Jedes Verfahren des Auswählen des nächsten Auftrages wird
+	      also als eine Unterklasse dieser abstrakten Klasse dargestellt.
+	\item Die abstrakte Klasse hat zwei Methoden, die sich jeweils um das Sortieren
+	      der neu eingegangenen Aufträge in die schon eingegangen Aufträge
+	      und um das Auswählen der schon sortierten eingegangen Aufträge kümmern.
+	      Bei der sortierenden Methode, wird die Liste an schon eingegangenen Aufträgen gegeben
+	      und ein gegebener Auftrag soll dort einsortiert werden.
+	      Bei der auswählenden Methode wird auch die Liste an schon eingegangenen Aufträgen gegeben
+	      und es muss ein Auftrag daraus entfernt werden und zurückgegeben werden.
+	\item Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
+	      und sich nur in der Sortierung unterscheiden ist die Auswahl des Auftrages schon implementiert in der abstrakten Klasse
+	      und muss nicht mehr in den Unterklassen unterschieden. Da aber andere Verfahren möglich sind,
+	      die entweder nicht sortieren oder die Sortierung nur teilweise berücksichtigen, gibt es diese Methode trotzdem.
+	\item Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	      nach der Reihenfolge der eingehenden Aufträge.
+	\item Die Klasse \texttt{ShortestDurationTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	      nach der aufsteigenden Dauer der eingehenden Aufträge.
+	\item In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
+	      Es wird ein \texttt{TaskPriorityDelegate} gegeben und eine Liste von Aufträgen.
+	      Ausgegeben wird dann die durchschnittliche, längste und gesamte Wartezeit.
+	\item Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode 
+	mit jeder Kombination von jedem \texttt{TaskPriorityDelegate} und jeder Eingabedatei aufgerufen.
+	Alle Unterklassen vom \texttt{TaskPriorityDelegate} sind als Array
+	in der Konstante \texttt{taskPriorityDelegates} eingetragen.
+\end{itemize}
+
+\section{Beispiele}\label{sec:beispiele}
+
+
+\section{Quellcode}\label{sec:quellcode}\label{LastPage}
+	\begin{lstlisting}[frame=single,language=Java,title=Klasse Task,breaklines=true]
+	/**
+     * Ein Auftrag
+     *
+     * @param entranceTime Der Eingangszeitpunkt des Auftrages in Minuten von t0
+     * @param duration     Die Dauer des Auftrages in Minuten
+     */
+    private record Task(int entranceTime, int duration) {
+    }
+	\end{lstlisting}
+	\begin{lstlisting}[frame=single,language=Java,title=Klasse TaskPriorityDelegate,breaklines=true]
+	/**
+     * Eine Klasse die entscheidet in welcher Reihenfolge die eingehenden Aufträge verwaltet werden sollen.
+     */
+    abstract private static class TaskPriorityDelegate {
+        /**
+         * @return Der Name dieses Verfahrens, in welcher Reihenfolge die eingehenden Aufträge verwaltet werden sollen.
+         */
+        public abstract String getName();
+
+        /**
+         * Wo in der aktuellen Liste der schon eingegangen Aufträge ein neuer Auftrag eingehen soll.
+         * Das hat aber keinen direkten Einfluss darauf, wann dieser neue Auftrag angenommen werden soll,
+         * denn pickTask entscheidet dass.
+         * Durch eine Sortierung der Liste durch sortTaskIntoCurrentTaskList
+         * kann aber pickTask oft effizienter vorgehen.
+         * <p>
+         * Die implementierte Methode soll also an einer stellte in der taskQueue den newTask einsortieren.
+         *
+         * @param taskQueue Die aktuelle Liste der eingegangenen Aufträge
+         * @param newTask   Der neue Auftrag, der in die Liste, der eingegangen Aufträge eingenommen werden soll.
+         */
+        public abstract void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask);
+
+        /**
+         * Wählt den nächsten Auftrag zum Bearbeiten von der Liste der schon eingegangen Aufträge aus,
+         * entfernt ihn aus dieser Liste und gibt ihn zurück.
+         * Durch Sortieren dieser Liste in sortTaskIntoCurrentTaskList ist ein effizienteres Auswählen möglich.
+         * <p>
+         * Standardmäßig nimmt, wählt die Methode den ersten Auftrag in der Liste aus, da davon ausgegangen wird,
+         * dass meistens die Liste in sortTaskIntoCurrentTaskList sortiert wird.
+         *
+         * @param taskQueue Die Liste der eingegangenen Aufträge.
+         * @return Der Auftrag, der als nächstes bearbeitet werden soll.
+         */
+        public Task pickTask(List<Task> taskQueue) {
+            return taskQueue.remove(0);
+        }
+    }
+	\end{lstlisting}
+	\begin{lstlisting}[frame=single,language=Java,title=Klasse FiFoTaskPriorityDelegate,breaklines=true]
+    /**
+     * Eine Implementation von {@link TaskPriorityDelegate}, die immer den Auftrag der als neuestes eingegangen ist,
+     * als letztes bearbeitet.
+     */
+    static class FiFoTaskPriorityDelegate extends TaskPriorityDelegate {
+        @Override
+        public String getName() {
+            return "Auftrag Reihenfolge priorisieren";
+        }
+
+        /**
+         * Sortiert immer den neuen Auftrag immer ganz hinten. Da wenn der Auftrag in pickTask ausgewählt wird,
+         * immer der erste genommen wird, wird damit der älteste ausgewählt.
+         */
+        @Override
+        public void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask) {
+            taskQueue.add(newTask);
+        }
+    }
+	\end{lstlisting}
+	\begin{lstlisting}[frame=single,language=Java,title=Klasse ShortestDurationTaskPriorityDelegate,breaklines=true]
+	/**
+     * Eine Implementation von {@link TaskPriorityDelegate}, der immer den Auftrag als nächstes bearbeitet,
+     * der am kürzesten dauert.
+     */
+    static class ShortestDurationTaskPriorityDelegate extends TaskPriorityDelegate {
+        @Override
+        public String getName() {
+            return "Kürzester Auftrag priorisieren";
+        }
+
+        /**
+         * Sortiert den neuen Auftrag in die Liste, der eingegangen Aufträge, ein, nach absteigender Dauer.
+         * Da wenn der Auftrag in pickTask ausgewählt wird, immer der kürzeste genommen wird.
+         */
+        @Override
+        public void sortTaskIntoCurrentTaskList(List<Task> taskQueue, Task newTask) {
+            for (int i = 0; i < taskQueue.size(); i++) {
+                if (taskQueue.get(i).duration > newTask.duration) {
+                    taskQueue.add(i, newTask);
+                    return;
+                }
+            }
+            taskQueue.add(newTask);
+        }
+    }
+	\end{lstlisting}
+	\begin{lstlisting}[frame=single,language=Java,title=Konstante taskPriorityDelegates,breaklines=true]
+	/**
+     * Alle Verfahren zur Auswahl des nächst zu bearbeitenden Auftrages.
+     */
+     private static final TaskPriorityDelegate[] taskPriorityDelegates = new TaskPriorityDelegate[]{
+            new FiFoTaskPriorityDelegate(),
+            new ShortestDurationTaskPriorityDelegate(),
+    	};
+	\end{lstlisting}
+	\begin{lstlisting}[frame=single,language=Java,title=Methode simulateProcessingTasks,breaklines=true]
+	/**
+     * Für alle Eingabedateien werden alle Verfahren durchgeführt
+     * mit {@link Main#simulateProcessingTasks(List, TaskPriorityDelegate)}.
+     */
+	private static void simulateProcessingTasks(List<Task> tasks, TaskPriorityDelegate taskPriorityDelegate) {
+        int maxWaitedTime = 0;
+        int allWaitingTime = 0;
+        int time = 9 * 60;
+        int nextBreak = 17 * 60;
+        int firstTaskNotOnTaskQueue = 0;
+        List<Task> taskQueue = new ArrayList<>(tasks.size());
+        while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
+            if (time == nextBreak) {
+                time += (9 + (24 - 17)) * 60;
+                nextBreak += 24 * 60;
+            }
+            while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
+                taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
+                firstTaskNotOnTaskQueue++;
+            }
+            if (!taskQueue.isEmpty()) {
+                Task currentlyExecutingTask = taskPriorityDelegate.pickTask(taskQueue);
+                int currentlyExecutingTaskProgress = 0;
+                while (currentlyExecutingTaskProgress != currentlyExecutingTask.duration) {
+                    assert currentlyExecutingTaskProgress < currentlyExecutingTask.duration;
+                    assert time <= nextBreak;
+                    if (time == nextBreak) {
+                        time += (9 + (24 - 17)) * 60;
+                        nextBreak += 24 * 60;
+                    }
+                    int passedTime = currentlyExecutingTask.duration - currentlyExecutingTaskProgress;
+                    if (time + passedTime > nextBreak) {
+                        passedTime = nextBreak - time;
+                    }
+                    time += passedTime;
+                    currentlyExecutingTaskProgress += passedTime;
+                }
+                int waitedTime = time - currentlyExecutingTask.entranceTime;
+                allWaitingTime += waitedTime;
+                maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
+            } else {
+                int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
+                while (time != targetedTime) {
+                    assert time < targetedTime;
+                    if (time == nextBreak) {
+                        nextBreak += 24 * 60;
+                    }
+                    time = Math.min(targetedTime, nextBreak);
+                }
+            }
+        }
+        double averageTaskProcessingTime = (double) allWaitingTime / (double) tasks.size();
+        averageTaskProcessingTime = ((double) Math.round(averageTaskProcessingTime * 10)) / 10;
+
+        System.out.println("Durchschnittliche Wartezeit pro Auftrag: " + averageTaskProcessingTime + " minuten");
+        System.out.println("Gesamte Wartezeit für alle Aufträge: " + allWaitingTime + " minuten");
+        System.out.println("Längste Wartezeit in allen Aufträgen: " + maxWaitedTime + " minuten");
+    }
+	\end{lstlisting}
+\end{document}
