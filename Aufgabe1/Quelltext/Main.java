@@ -31,8 +31,14 @@ public class Main {
     }
 
     /**
+     * Die Methode "getPositions" sucht für eine durch den Parameter gegebene Eingabedatei das erste Wort im Buch.
+     * Dabei wird jede Zeile des Buchs einzeln auf das Anfangswort durchsucht
+     * und bei einem Fund wird sowohl die Zeile als auch die "Spalte" (der Index in der Zeile, an der das Wort beginnt) als Array an die Liste von Positionen hinzugefügt.
+     * Diese Liste wird am Ende der Methode zurückgegeben.
+     *
      * @param stoerung Die Eingabedatei, nach der das Buch durchsucht werden soll
-     * @return Eine Liste von Positionen, die mit demselben Wort beginnen wie die Eingabedatei
+     * @return Eine Liste von Positionen, an denen dasselbe Wort steht wie das erste Wort der Eingabedatei
+     *
      */
     private static List<int[]> getPositions(List<String> stoerung) {
         List<int[]> positions = new ArrayList<>();
@@ -48,9 +54,20 @@ public class Main {
     }
 
     /**
+     * Die Methode "checkPositions" untersucht für jede durch den Parameter "positions" gegebene Position,
+     * ob auch der Rest der Eingabedatei, die durch den Parameter "stoerung" gegeben ist,
+     * durch die nach der Position folgenden Worte vervollständigt werden kann.
+     * Dabei wird ersteinmal eine Liste aus Worten erstellt, das mit dem durch die Position gegebenen Wort startet.
+     * Hat diese nicht mindestens die Länge der Eingabedatei, wird auch die nächste Zeile hinzugefügt.
+     * Alle Elemente in der Liste werden danach erstmal von Sonderzeichen bereinigt, da diese auch nicht in der Eingabedatei vorgegeben sind.
+     * Dann wird Wort für Wort mit denen der Eingabedatei verglichen, wobei Unterstriche (also Lücken in der Eingabedatei) nicht verglichen werden,
+     * sondern jedes Wort akzeptieren.
+     * Sobald an einer Stelle keine Übereinstellung gefunden wird, wird der Suchvorgang für die eine Position beendet.
+     * Alle Stellen, die die Eingabedatei "lösen" können, werden an eine Liste angefügt, die nach Ende der Methode zurückgegeben wird.
+     *
      * @param positions Eine Liste von Positionen, die überprüft werden soll
      * @param stoerung Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
-     * @return Eine Liste von Positionen, die die Eingabedatei lösen können
+     * @return Eine Liste von Positionen, die die Eingabedatei "lösen" können
      */
     private static List<int[]> checkPositions(List<int[]> positions, List<String> stoerung) {
         List<int[]> rightPositions = new ArrayList<>();
@@ -90,6 +107,8 @@ public class Main {
     }
 
     /**
+     * Die Methode "getText"
+     *
      * @param line Die Zeile, in der der Text beginnt
      * @param column Die Spalte, in der der Text beginnt
      * @return Der (Teil-)Satz, der sich an der durch die Parameter bestimmten Stelle befindet
@@ -114,6 +133,8 @@ public class Main {
     }
 
     /**
+     * Die Methode "formatText" gibt den gegebenen Text ohne im Buch vorkommende Sonderzeichen zurück.
+     *
      * @param text Der zu bearbeitende Text
      * @return Der bearbeitete Text
      */
@@ -122,7 +143,7 @@ public class Main {
     }
 
     /**
-     *
+     * Die Methode "evaluatingFiles" liest die Eingabedateien sowie das Buch ein.
      */
     private static void evaluatingFiles() {
         for (Path path : getPaths()) {
@@ -140,6 +161,9 @@ public class Main {
     }
 
     /**
+     * Die Methode "getPaths" gibt alle im Verzeichnis der Eingabedateien gefundene Text Dateien (".txt") als Pfade zurück.
+     *
+     *
      * @return Eine Liste der Pfade zu allen Dateien im Verzeichnis Aufgabe1/Eingabedateien/*
      * @throws RuntimeException wenn nicht auf den Pfad zugegriffen werden kann
      */
@@ -154,6 +178,8 @@ public class Main {
     }
 
     /**
+     * Die Methode "getLines" gibt die Datei unter dem gegebenen Pfad als Liste aus Zeilen zurück.
+     *
      * @param path Der Pfad, unter dem die Datei gelesen werden soll
      * @return Eine Liste der Zeilen in der Datei
      * @throws RuntimeException wenn nicht auf die Datei zugegriffen werden kann

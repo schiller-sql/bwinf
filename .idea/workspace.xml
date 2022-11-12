@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Changes by Lenni and Tony">
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="workspace update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
     </list>
     <list id="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" name="Changes by lenni" comment="Changes by Lenni and Tony" />
     <list id="91344497-ad05-493c-a7ef-e31e9be011e9" name="Changes by tonyborchert" comment="" />
@@ -43,7 +44,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/lenni/Desktop/Projects/bwinf/bwinf/Aufgabe1/Eingabedateien&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;TexifyConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -69,7 +70,11 @@
       <workItem from="1666523865750" duration="3000" />
       <workItem from="1666555194024" duration="364000" />
       <workItem from="1666803031899" duration="202000" />
-      <workItem from="1666803239362" duration="1233000" />
+      <workItem from="1666803239362" duration="3321000" />
+      <workItem from="1666807937408" duration="686000" />
+      <workItem from="1667046942353" duration="607000" />
+      <workItem from="1667232100149" duration="3092000" />
+      <workItem from="1668245923962" duration="4823000" />
     </task>
     <task id="LOCAL-00001" summary="Dummys gelöscht">
       <created>1662293002233</created>
@@ -113,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666523580814</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="workspace update">
+      <created>1666805878890</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666805878890</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +154,8 @@
     <MESSAGE value="Documentation" />
     <MESSAGE value="Changes by lenni" />
     <MESSAGE value="Changes by Lenni and Tony" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes by Lenni and Tony" />
+    <MESSAGE value="workspace update" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace update" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
