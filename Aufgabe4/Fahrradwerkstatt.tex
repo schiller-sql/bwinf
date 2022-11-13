@@ -1,5 +1,5 @@
 \documentclass[a4paper,10pt,ngerman]{scrartcl}
-\usepackage[ngerman]{babel}
+\usepackage{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 \usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
@@ -91,51 +91,40 @@
 \vspace{0.5cm}
 
 \section{Teilaufgabe 2}\label{sec:begruendung2}
-Es werden nicht alle Kunden zufrieden sein, da der Auftrag eines Kunden A, der vor anderen Kunden einen Auftrag vergibt,
-nicht um bedingt als erstes bearbeitet wird. Dies passiert wenn der Auftrag von Kunde A
-nicht als einziger eingegangener Auftrag zur Verfügung steht und wenn die anderen Aufträge kürzer sind,
-aber nach dem des Kunden A eingegangen sind.
-Im schlimmsten Fall, ist der Kunde A mit seinem Auftrag sogar als letztes dran.
+Es werden nicht alle Kunden zufrieden sein, da die Aufträge nicht unbedingt in der Reihenfolge bearbeitet werden, indem sie abgegeben werden. Somit kann es dazu kommen, dass der Auftrag eines Kunden erst nach einem später abgegebenen Auftrag bearbeitet wird. Dies passiert wenn nachfolgende Aufträge kürzer sind als der vorangegengene Auftrag.
+So kann es dazu kommen, dass der Autrag des ersten Kunden als letztes abgearbeitet wird.
 
 \section{Teilaufgabe 3}\label{sec:begruendung3 }
-Wenn man in einem echten Geschäft bestimmte Kunden einfach vorlassen würden,
-würden sich auch die Kunden die nicht vorgezogen werden verständlich beschweren.
-Denn egal wann oder unter welchen Umständen man einen Kunden A 
-vor einem anderen Kunden B lässt, es dauert für B immer länger.
+Würde man in einem echten Geschäft bestimmte Kunden vorziehen,
+würden sich die Kunden, welche nicht vorgezogen werden, verständlicherweise beschweren.
+Da bei einem Vorziehen des einen Kunden immer Nachteile für die anderen Kunden bestehen.
 
-Nur in Ausnahmen lässt man einen Kunden nach vorne.
-So könnte auch Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
-wenn es die Wartezeit des langen Auftrages kaum vergrößert
-und der lange Auftrag noch nicht viel warten musste. Wo aber die Grenze genau ist,
-ist arbiträr, mathematisch nicht belegt und sollte deshalb vom Verkäufer stammen,
-möglicherweise auch wie er seine Kunden einschätzt.  Deswegen kann dies nicht algorithmisch dargestellt werden.
-
-Eine weitere Ausnahme könnte liegen, wenn es sich um einen Kunden handelt,
-der von Marc besonders geschätzt wird oder es eine Gebühr gibt für schnelleres Reparieren.
-Diese beiden Ausnahmen, können aber auch nicht berücksichtigt werden durch den Algorithmus,
-weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren darstellt, da jeder fair an der Reihe ist,
+In Ausnahmen könnte Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
+da es die Wartezeit des langen Auftrages kaum vergrößert.
+Besonders, wenn der lange Auftrag noch nicht viel warten musste.
+Auch könnte Marc eine Ausnahmen machen, wenn es sich um einen Kunden handelt, der entweder von Marc besonders geschätzt wird oder aber eine Gebühr gibt für schnelleres reparieren gezahlt hat.
+Wo aber die Grenze genau ist, ist arbiträr, mathematisch nicht belegt und kann nicht algorithmus dargestellt werden.
+Deshalb ist das allererste Verfahren, vermutlich das beste algorithmische Verfahren, da jeder fair an der Reihe ist,
 in der Reihenfolge wann dessen Auftrag eingegangen ist.
 
 \section{Lösungsidee}\label{sec:losungsidee}
-Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt,
-wo der Auftrag in die Fahrradwerkstatt eingeht. Außerdem werden die Aufträge in den Eingabedateien
-nach Eingangszeitpunkt sortiert, wo der erste Auftrag den Auftrag darstellt, der zuerst eingeht.
-Die Aufträge dürfen aber immer nur von 9 Uhr bis 17 Uhr (also dem Arbeitstag) abgearbeitet werden
-und erst nachdem ein Auftrag
-nach dessen Dauer fertig bearbeitet wurde, darf der nächste bearbeitet werden.
+Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt.
+Des weiteren werden die Aufträge in den Eingabedateien
+nach dem Eingangszeitpunkt absteigend sortiert.
+Die Aufträge dürfen aber immer nur im Zeitraum von 9 Uhr bis 17 Uhr am Arbeitstag abgearbeitet werden.
+Erst nachdem ein Auftrag vollständig bearbeitet wurde, darf der nächste bearbeitet werden.
 
 Obwohl es unterschiedliche Verfahren gibt, wie der nächst zu bearbeitende Auftrag ausgewählt wird,
 kann trotzdem ein verfahrensunabhängiger Algorithmus die Auswahl des nächsten Auftrages delegieren
 und sich selber mit der Simulation der Fahrradwerkstatt beschäftigen.
-Denn immer muss der nächst zu bearbeitende Auftrag
-einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet werden,
-egal welches Verfahren zur Auswahl des zu bearbeitenden Auftrages benutzt wird.
-Dieser verfahrensunabhängige Algorithmus wird im folgenden zuerst beschrieben.
+Der Auftrag, welcher als nächstes bearbeitet werden soll, muss ein bereits eingeganener Auftrag sein.
+Gibt es einen solchen nicht, muss gewartet werden.
+Dies gilt unabgängig vom Verfahren, welches zu bewältigung der Aufträge angewendet wird.
+Daher eignet sich zunächst die Betrachtung eines verfahrensunabhängigem Algorithmus.
 
-Als erstes wird sich gemerkt, was die aktuelle Zeit ist und wann der jetzige Arbeitstag zu ende ist.
-Am Anfang ist die aktuelle Zeit 9 Uhr und der Arbeitstag zu ende um 17 Uhr.
-Die maximale und gesamte Wartezeit werden sich auch gemerkt.
-Es wird sich außerdem ein Container an eingegangen und noch nicht eingegangen Aufträgen gemerkt.
+Als erstes wird sich die aktuelle Zeit und das Ende des jetzigen Arbeitstages gemerkt.
+Dazu die maximale und gesamte Wartezeit, als auch die eingegangenen und noch eingehenden Aufträge.
+Am Anfang ist die aktuelle Zeit 9 Uhr und das Ende des Arbeitstages ist um 17 Uhr.
 
 Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
 \begin{itemize}
