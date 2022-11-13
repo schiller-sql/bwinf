@@ -2,10 +2,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Main {
+
+    /**
+     * Liest die Eingabedateien im Verzeichnis /Eingabedateien aus und gibt die Lösung für jede dieser Dateien aus.
+     */
     public static void main(String[] args) {
         for (Path path : getPaths()) {
             String fileName = path.getFileName().toString();
@@ -31,6 +37,12 @@ public class Main {
         }
     }
 
+    /**
+     * Generiert den Graphen aus den Zeilen einer Eingabedatei.
+     *
+     * @param lines Eine String Liste, wo jeder String eine Zeile im Eingabeformat ist.
+     * @return Den generierten Graphen.
+     */
     private static BitSet[] graphFromLines(List<String> lines) {
         int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
         BitSet[] graph = new BitSet[countOfNodes];
@@ -46,25 +58,60 @@ public class Main {
         return graph;
     }
 
+    /**
+     * Findet eine Route, vom nullten und ersten Knoten,
+     * zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
+     *
+     * @param graph Der Graph, zu dem eine Route vom nullten und ersten Knoten zu einem gemeinsamen Knoten gebildet werden soll.
+     * @return Eine Route zu einem Knoten der vom 0. und 1. Knoten in der gleichen Anzahl von Schritten erreichbar ist.
+     */
     private static int[][] sameTargetRoute(BitSet[] graph) {
-        List<BitSet>[] timelines = generatesTimelines(graph);
-        if (timelines == null) return null;
-        int target = firstSameTargetOfTimelines(timelines);
+        BitSet sashaFirst = new BitSet(graph.length);
+        BitSet mikaFirst = new BitSet(graph.length);
+        sashaFirst.set(0);
+        mikaFirst.set(1);
+        List<BitSet> sashaTimeline = new ArrayList<>(List.of(sashaFirst));
+        List<BitSet> mikaTimeline = new ArrayList<>(List.of(mikaFirst));
+        do {
+            sashaTimeline.add(neighbourNodes(sashaTimeline.get(sashaTimeline.size() - 1), graph));
+            mikaTimeline.add(neighbourNodes(mikaTimeline.get(mikaTimeline.size() - 1), graph));
+            if (sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
+                    .get(mikaTimeline.size() - 1)
+                    .isEmpty() || timelineRepeats(sashaTimeline, mikaTimeline)) {
+                return null;
+            }
+        } while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1)));
+
+        int target = firstSameTargetOfTimelines(sashaTimeline, mikaTimeline);
         int[][] routes = new int[2][];
-        //calculate the pathway for mika and sasha
-        // and store them in the routes array
-        for (int i = 0; i < 2; i++) {
-            routes[i] = findSingleRouteInTimeline(timelines[i], target, graph);
-        }
+        routes[0] = findSingleRouteInTimeline(sashaTimeline, target, graph);
+        routes[1] = findSingleRouteInTimeline(mikaTimeline, target, graph);
         return routes;
     }
 
-    private static int firstSameTargetOfTimelines(List<BitSet>[] timelines) {
-        BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
-        targets.and(timelines[1].get(timelines[1].size() - 1));
+    /**
+     * Vergleicht den jeweils letzten Schritt der Schrittfolgen miteinander
+     * und gibt den gemeinsamen besuchten Knoten zurück.
+     *
+     * @param sashaTimeline Sasha's Zeitleiste
+     * @param mikaTimeline  Mika's Zeitleiste
+     * @return Der Index im Graphen des gemeinsamen Knotens.
+     */
+    private static int firstSameTargetOfTimelines(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet targets = (BitSet) sashaTimeline.get(sashaTimeline.size() - 1).clone();
+        targets.and(mikaTimeline.get(mikaTimeline.size() - 1));
         return targets.nextSetBit(0);
     }
 
+    /**
+     * Ermittelt den Weg vom Zielpunkt zurück zum Startpunkt entgegengesetzt der Kantenrichtung des Graphen.
+     *
+     * @param timeline Die Zeitleiste der erreichbaren Knoten,
+     *                 von der eine Route zu einem bestimmten Knoten im letzten Zeitpunkt der Zeitleiste gebaut werden soll.
+     * @param target   Das Ziel am Ende der Zeitleiste der erreichbaren Knoten, zudem eine Route gebaut werden soll.
+     * @param graph    Der Graph aus dem die Zeitleiste der erreichbaren Knoten (und dementsprechend auch das Ziel) stammt.
+     * @return Eine Route zum Ziel in der Zeitleiste.
+     */
     private static int[] findSingleRouteInTimeline(List<BitSet> timeline, int target, BitSet[] graph) {
         int[] route = new int[timeline.size()];
         steps:
@@ -85,29 +132,14 @@ public class Main {
         return route;
     }
 
-    private static List<BitSet>[] generatesTimelines(BitSet[] graph) {
-        BitSet sashaFirst = new BitSet(graph.length);
-        BitSet mikaFirst = new BitSet(graph.length);
-        sashaFirst.set(0);
-        mikaFirst.set(1);
-        @SuppressWarnings("unchecked")
-        List<BitSet>[] timelines = new ArrayList[2];
-        timelines[0] = new ArrayList<>(List.of(sashaFirst));
-        timelines[1] = new ArrayList<>(List.of(mikaFirst));
-        do {
-            // build both timelines stepwise
-            // until a solution is found or the parcours is invalid
-            timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size() - 1), graph));
-            timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size() - 1), graph));
-            if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
-                    .get(timelines[1].size() - 1)
-                    .isEmpty() || !timelineRepeats(timelines)) {
-                return null;
-            }
-        } while (!timelines[0].get(timelines[0].size() - 1).intersects(timelines[1].get(timelines[1].size() - 1)));
-        return timelines;
-    }
-
+    /**
+     * Gibt die Knoten zurück, welche in einem Schritt entlang der Kantenrichtung,
+     * von den aktuellen Knoten erreichbar sind.
+     *
+     * @param nodes Die aktuellen Knoten
+     * @param graph Der Graph, welcher betrachtet wird
+     * @return Die Menge der Knoten die in einem Schritt von den gegebenen Knoten erreichbar ist
+     */
     private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
         BitSet neighbours = new BitSet();
         for (int i = 0; i < graph.length; i++) {
@@ -118,32 +150,41 @@ public class Main {
         return neighbours;
     }
 
-    private static boolean timelineRepeats(List<BitSet>[] timelines) {
-        BitSet last0 = timelines[0].get(timelines[0].size() - 1);
-        int i = 0;
-        int repeat = -1;
-        for (BitSet set :
-                timelines[0]) {
-            if (set != last0) {
-                if (set.equals(last0)) {
-                    repeat = i;
-                    break;
-                }
+    /**
+     * Ermittelt, ob die zwei Zeitleisten sich zu einem Zeitpunkt mit ihrem letzten Eintrag wiederholen.
+     * Es wird daher festgestellt, ob beide Zeitleisten zu einem vorherigen Zeitpunkt an den genau gleichen Knoten waren,
+     * wie zum aktuellen Zeitpunkt.
+     *
+     * @param sashaTimeline Sasha's Zeitleiste der erreichbaren Knoten
+     * @param mikaTimeline  Mika's Zeitleiste der erreichbaren Knoten
+     * @return True, wenn die Zeitleisten sich beide zu einem gleichen Zeitpunkt
+     * mit dem neuen/letzten Zeitpunkt wiederholen.
+     */
+    private static boolean timelineRepeats(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet current = sashaTimeline.get(sashaTimeline.size() - 1);
+        BitSet repetitions = new BitSet(sashaTimeline.size());
+        List<BitSet> timeline = new ArrayList<>(sashaTimeline.subList(0, sashaTimeline.size() - 1));
+        for (int i = 0; i < timeline.size(); i++) {
+            if (timeline.get(i).equals(current)) {
+                repetitions.set(i);
             }
-            i++;
         }
-        if (repeat != -1) {
-            BitSet last1 = timelines[1].get(timelines[1].size() - 1);
-            BitSet repeating = timelines[1].get(repeat);
-            return !last1.equals(repeating);
+        for (int i = repetitions.nextSetBit(0); i >= 0; i = repetitions.nextSetBit(i + 1)) {
+            if (mikaTimeline.get(mikaTimeline.size() - 1).equals(mikaTimeline.get(i))) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
+    /**
+     * Gibt zu jeder .txt Datei im Verzeichnis /Eingabedateien/ den zugehörigen Dateipfad zurück
+     *
+     * @return Die Pfade der Eingabedateien
+     */
     private static List<Path> getPaths() {
-        List<Path> paths;
         try (Stream<Path> walk = Files.walk(Paths.get("Aufgabe5/", "Eingabedateien/"))) {
-            paths = walk
+            return walk
                     .filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().endsWith(".txt"))
                     .sorted()
@@ -151,16 +192,19 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return paths;
     }
 
+    /**
+     * Gibt die Zeilen der Datei eines Pfades zurück.
+     *
+     * @param path Der Dateipfad
+     * @return Jede Zeile der Datei
+     */
     private static List<String> getLines(Path path) {
-        List<String> data;
         try (Stream<String> lines = Files.lines(path)) {
-            data = new ArrayList<>(lines.toList());
+            return new ArrayList<>(lines.toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return data;
     }
 }
