@@ -5,9 +5,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-/**
- *
- */
 public class Main {
     private static final List<String> book = new ArrayList<>();
     @SuppressWarnings("unchecked")
@@ -107,7 +104,8 @@ public class Main {
     }
 
     /**
-     * Die Methode "getText"
+     * Die Methode "getText" sucht für die durch die Zeile und den Index in der Zeile gegebene Stelle den nächsten Teilsatz.
+     * Dabei wird das nächste Satzzeichen gesucht und der Text zwischen der gegebenen Stelle und dem Satzzeichen zurückgegeben.
      *
      * @param line Die Zeile, in der der Text beginnt
      * @param column Die Spalte, in der der Text beginnt
@@ -133,7 +131,7 @@ public class Main {
     }
 
     /**
-     * Die Methode "formatText" gibt den gegebenen Text ohne im Buch vorkommende Sonderzeichen zurück.
+     * Die Methode "formatText" ersetzt alle im Buch vorkommende Sonderzeichen mit einem Doppelkreuz ("#").
      *
      * @param text Der zu bearbeitende Text
      * @return Der bearbeitete Text
@@ -162,7 +160,6 @@ public class Main {
 
     /**
      * Die Methode "getPaths" gibt alle im Verzeichnis der Eingabedateien gefundene Text Dateien (".txt") als Pfade zurück.
-     *
      *
      * @return Eine Liste der Pfade zu allen Dateien im Verzeichnis Aufgabe1/Eingabedateien/*
      * @throws RuntimeException wenn nicht auf den Pfad zugegriffen werden kann
