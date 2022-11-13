@@ -151,9 +151,27 @@ als auch die eingegangenen (aber nicht bearbeiteten) und noch eingehenden Auftr�
 Am Anfang ist die aktuelle Zeit 9 Uhr
 und das Ende des Arbeitstages ist um 17 Uhr.
 
-Nun wird in einer Schleife, bis es keine eingegangenen
-und noch nicht eingegangenen Aufträge gibt,
-also bis alle Aufträge bearbeitet wurden, folgendes gemacht:
+Es bietet sich an, den Tagesablauf wie folgt zu simulieren.
+\begin{algorithmic}
+\While{$es$ $unbearbeitete$ $Auftraege$ $gibt$}
+\State $waehle$ $einen$ $Auftrag$ $nach$ $dem$ $aktuell$ $ausgewaehlten$ $Verfahren$
+\While{$der$ $Auftrag$ $noch$ $nicht$ $abgearbeitet$ $ist$}
+\State $bearbeite$ $den$ $Auftrag$
+\If{$der$ $Areitstag$ $zu$ $Ende$ $ist$}
+\State $gehe$ $zum$ $Morgen$ $des$ $naechsten$ $Tages$
+\State $fuehre$ $den$ $Auftrag$ $fohrt$
+\EndIf
+\EndWhile
+\State $erhoehe$ $die$ $Zeit$ $um$ $die$ $Bearbeitungsdauer$ $des$ $Auftrages$
+\If{$kein$ $Auftrag$ $vorliegt$}
+\State $warte$ $auf$ $den$ $naechsten$ $Auftrag$
+\State $setze$ $beim$ $eingehen$ $des$ $Auftrages$ $die$ $aktuelle$ $Zeit$ $auf$ $die$ $Zeit$ $des$ $Eingehens$
+\EndIf
+\EndWhile
+\end{algorithmic}
+
+
+Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
 \begin{itemize}
 	\item Alle Aufträge die im Container der noch nicht eingegangenen Aufträge sind,
 	      aber schon eingegangen sind laut aktueller Zeit,
@@ -252,58 +270,57 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 
 
 \section{Umsetzung}\label{sec:umsetzung}
-\begin{itemize}
-	\item Zeit beziehungsweise Dauer wird als Integer in Minuten dargestellt und Zeitpunkte als Zeit von 0 aus.
-	\item Ein Auftrag wird als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt dargestellt.
-	\item Wenn der gemerkte Zeitpunkt für das Ende des jetzigen Arbeitstages (17 Uhr),
+	Die Zeit beziehungsweise Auftragsdauer wird als Integer in Minuten dargestellt,
+	 während die Zeitpunkte als Zeit von 0 Uhr aus gesetzt werden.
+	Ein Auftrag wird dabei als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt modelliert.
+	Wenn der gemerkte Zeitpunkt für das Ende des aktuellen Arbeitstages (17 Uhr),
 	zum Ende des nächsten Arbeitstages (17 Uhr am nächsten Tag)  werden soll,
 	muss der Zeitpunkt lediglich mit 24 Stunden ($24 * 60$ Minuten) addiert werden.
-	\item Wenn die aktuelle Zeit gleich dem Ende des jetzigen Arbeitstages ist (17 Uhr)
+	Wenn die aktuelle Zeit gleich dem Ende des jetzigen Arbeitstages ist (17 Uhr)
 	und auf den Anfang des nächsten Arbeitstages (nächsten Tag 9 Uhr) gestellt werden soll,
 	muss die Zeit mit $(24 - 17) + 9 = 16$ Stunden ($16 * 60$ Minuten) addiert werden 
-	\item Wenn die Zeit größer als das gemerkten Ende des Arbeitstages ist,
+	Wenn die Zeit größer als das gemerkten Ende des Arbeitstages ist,
 	man aber die Zeit nur auf dem Anfang des Arbeitstages nach den gemerkten Ende das Arbeitstages setzten möchte,
 	muss man die Zeit gleich des jetzigen gemerkten Ende des Arbeitstages + 9 setzen.
-	\item Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
+	Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
 	      wo jedoch sich gemerkt wird, welche Aufträge noch nicht waren.
 	      Da alle Aufträge sortiert sind, nach Eingangszeitpunkt, wird sich konkret nur der Index gemerkt,
 	      wo der zugehörige Auftrag der erste Auftrag ist, der sich noch nicht in den eingegangen Aufträgen befindet.
-	\item Deswegen, in der äußeren Schleife, wird auch, wenn alle Aufträge die sich noch nicht
+	Deswegen, in der äußeren Schleife, wird auch, wenn alle Aufträge die sich noch nicht
 	      in den eingegangenen Aufträgen befinden, sich dort aber laut der Zeit sich befinden sollten,
 	      lediglich der Index des ersten Auftrages, der sich nicht mehr in den eingegangen Aufträgen befindet,
 	      erhöht, bis der Auftrag mit dem Index eine höhere Eingangszeit hat als was die momentane Zeit ist.
 	      D.h. wenn dieser Auftrag nach der aktuellen Zeit noch nicht eingegangen ist.
-	\item Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
+	Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
 	      die nur die Aufträge enthält, die auch schon eingegangen sind.
-	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
+	Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
 	      durch eine abstrakte Klasse \texttt{TaskPriorityDelegate}.
 	      An einem Objekt einer Unterklasse dieser abstrakten Klassen wird
 	      also das Auswählen des nächsten Auftrages delegiert.
 	      Jedes Verfahren des Auswählen des nächsten Auftrages wird
 	      also als eine Unterklasse dieser abstrakten Klasse dargestellt.
-	\item Die abstrakte Klasse hat zwei Methoden, die sich jeweils um das Sortieren
+	Die abstrakte Klasse hat zwei Methoden, die sich jeweils um das Sortieren
 	      der neu eingegangenen Aufträge in die schon eingegangen Aufträge
 	      und um das Auswählen der schon sortierten eingegangen Aufträge kümmern.
 	      Bei der sortierenden Methode, wird die Liste an schon eingegangenen Aufträgen gegeben
 	      und ein gegebener Auftrag soll dort einsortiert werden.
 	      Bei der auswählenden Methode wird auch die Liste an schon eingegangenen Aufträgen gegeben
 	      und es muss ein Auftrag daraus entfernt werden und zurückgegeben werden.
-	\item Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
+	Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
 	      und sich nur in der Sortierung unterscheiden ist die Auswahl des Auftrages schon implementiert in der abstrakten Klasse
 	      und muss nicht mehr in den Unterklassen unterschieden. Da aber andere Verfahren möglich sind,
 	      die entweder nicht sortieren oder die Sortierung nur teilweise berücksichtigen, gibt es diese Methode trotzdem.
-	\item Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
 	      nach der Reihenfolge der eingehenden Aufträge.
-	\item Die Klasse \texttt{ShortestDurationTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	Die Klasse \texttt{ShortestDurationTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
 	      nach der aufsteigenden Dauer der eingehenden Aufträge.
-	\item In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
+	In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
 	      Es wird ein \texttt{TaskPriorityDelegate} gegeben und eine Liste von Aufträgen.
 	      Ausgegeben wird dann die durchschnittliche, längste und gesamte Wartezeit.
-	\item Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode
+	Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode
 	      mit jeder Kombination von jedem \texttt{TaskPriorityDelegate} und jeder Eingabedatei aufgerufen.
 	      Alle Unterklassen vom \texttt{TaskPriorityDelegate} sind als Array
 	      in der Konstante \texttt{taskPriorityDelegates} eingetragen.
-\end{itemize}
 
 \section{Beispiele}\label{sec:beispiele}
 
