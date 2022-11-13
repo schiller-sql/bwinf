@@ -1,0 +1,170 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+% Die nächsten vier Felder bitte anpassen:
+\newcommand{\Aufgabe}{Aufgabe 5: Hüpfburg}        % Aufgabennummer und Aufgabennamen angeben
+\newcommand{\TeamId}{?????}                       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{????}                      % Team-Namen angeben
+\newcommand{\Namen}{Tony Borchert, Lennart Protte}% Namen der Bearbeiter/-innen dieser Aufgabe angeben
+
+% Kopf- und Fußzeilen
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamId}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+% Position des Titels
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+% Für mathematische Befehle und Symbole
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Für Bilder
+\usepackage{graphicx}
+
+% Für Algorithmen
+\usepackage{algpseudocode}
+\usepackage{adigraph}
+
+% Für Quelltext
+\usepackage{listings}
+\usepackage{color}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+    keywordstyle=\color{blue},commentstyle=\color{mygreen},
+    stringstyle=\color{mymauve},rulecolor=\color{black},
+    basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+    captionpos=b, % sets the caption-position to bottom
+    keepspaces=true, % keeps spaces in text
+    numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
+    showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+}
+\lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
+    keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]",
+    sensitive=true
+}
+
+% Diese beiden Pakete müssen zuletzt geladen werden
+\usepackage{hyperref} % Anklickbare Links im Dokument
+\usepackage{cleveref}
+
+% Daten für die Titelseite
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamId \\\\
+\LARGE Team-Name: \LARGE \TeamName \\\\
+\LARGE Bearbeiter/-innen dieser Aufgabe: \\
+\LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+
+    \maketitle
+    \tableofcontents
+
+    \vspace{0.5cm}
+
+    \section{Lösungsidee}\label{sec:losungsidee}
+    Der Aufgabenstellung zu entnehmen ist,
+    dass sich beide Spieler immer genau gleichzeitig,
+    um genau einen Punkt,
+    entlang der Pfeilrichtung bewegen und der Parcours als absolviert gilt,
+    wenn sich beide gleichzeitig auf den gleichen Punkt bewegen.
+    Dabei ist die Startposition der Spieler immer Identisch.
+    
+    Als Datenstruktur für den Parcours eignet sich ein gerichteter und ungewichteter Graph.
+    Die Pfeile zwischen den Kästchen werden durch gerichtete Kanten repräsentiert,
+    während die Knoten repräsentativ für die Felder stehen.
+    
+    Die abstrahierte Problemstellung der Aufgabe ist es,
+    für jeden der zwei Ausgangspunkte,
+    jeweils einen Weg zu einem Knoten, 
+    in einem gerichteten und ungewichteten Graphen, 
+    zu finden.
+    Dieser muss von beiden Ausgangsknoten mit der gleichen Anzahl an Schritten zu erreichen sein.
+    Dabei darf die Schrittfolge nie entgegengesetzt zur Kantenrichtung verlaufen.
+    
+    Dies kann erreicht werden,
+    indem für beide Spieler eine Breitensuche parallel schrittweise durchgeführt wird.
+    Davon ausgehend, dass es dabei zu einem gemeinsamen Schnittpunkt kommt,
+    wird die Breitensuche fortgesetzt, 
+    bis sich mindestens ein Knoten aus der Schnittmenge der beiden Suchen ergibt.
+    Wenn es sich um einen lösbaren Parcours handelt,
+    wird für beide Spieler im selben Schritt mindestens ein gleicher Knoten gefunden.
+    
+    Sollte der Parcours nicht lösbar ist, 
+    ist die Menge der markierten Knoten,
+    für beide Spieler zur gleichen Zeit,
+    irgendwann gleich der Menge,
+    der zu einem früheren Zeitpunkt markierten Knoten. 
+    
+    \begin{figure}
+    \centering
+    \NewAdigraph{InfinityLoop}{
+    1:0,0;
+    2:2,0;
+    3:1,1;
+    }{
+    1,2;
+    2,3;
+    3,1;
+    }{}[]
+    \InfinityLoop{}
+    \caption{Nicht lösbarer zyklischer Graph}
+    \label{fig:Figure1}
+    \end{figure}
+    
+    So kommt es in \hyperref[fig:Figure1]{Figur 1.} zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
+    
+    \begin{table}
+    \centering
+    \begin{tabular}{lll}
+    \textbf{Schritt} & \textbf{Spieler 1 Pos.} & \textbf{Spieler 2 Pos.} \\
+    1. & Knoten 1 & Knoten 2 \\
+    2. & Knoten 2 & Knoten 3 \\
+    3. & Knoten 3 & Knoten 1 \\
+    4. & Knoten 1 & Knoten 2 \\
+    \end{tabular}
+    \caption{Schrittfolge für Figur 1.}
+    \label{tab:Table1}
+    \end{table}
+    
+    Hier kommt es in Schritt vier bei beiden Spielern zu einer Wiederholung von Schritt eins.
+    Damit kann der Parcours sicher für ungültig erklärt werden und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
+    Dies gilt, da sich beide Spieler in einem Zyklus befinden und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
+    
+    Das %zwei graphen, in einem wird in der zweiten Wiederholung abgebrochen und im zweiten graphen kommt es nur in einem spiler zur wiederholung und es gibt eine lösung
+    
+    %Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
+    % * nach einer Anzahl an Schritten von einem Startknoten.
+    % * Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
+    % * Die Menge der Knoten beim Zeitpunkt n (n > 0) sind alle Knoten die in n Schritten vom Startknoten erreichbar sind.
+    % * <li>Der Zeitpunkt n (n > 0) kann auch definiert werden als die Menge der Knoten,
+    % * die direkt (in einem Schritt) von den Knoten in der Menge von Zeitpunkt n - 1 erreichbar sind.
+    
+    
+    
+    
+
+
+
+    \section{Umsetzung}\label{sec:umsetzung}
+
+
+    \section{Beispiele}\label{sec:beispiele}
+
+
+    \section{Quellcode}\label{sec:quellcode}\label{LastPage}
+
+\end{document}

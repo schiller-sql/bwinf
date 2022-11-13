@@ -1,0 +1,35 @@
+[34mfahrradwerkstatt0.txt:[0m
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 16981.3 minuten
+Gesamte Wartezeit für alle Aufträge: 1935866 minuten
+Längste Wartezeit in allen Aufträgen: 188734 minuten
+
+
+[34mfahrradwerkstatt1.txt:[0m
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 11883.9 minuten
+Gesamte Wartezeit für alle Aufträge: 9103084 minuten
+Längste Wartezeit in allen Aufträgen: 433563 minuten
+
+
+[34mfahrradwerkstatt2.txt:[0m
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 14805.7 minuten
+Gesamte Wartezeit für alle Aufträge: 2753868 minuten
+Längste Wartezeit in allen Aufträgen: 327087 minuten
+
+
+[34mfahrradwerkstatt3.txt:[0m
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 17242.8 minuten
+Gesamte Wartezeit für alle Aufträge: 3793423 minuten
+Längste Wartezeit in allen Aufträgen: 382016 minuten
+
+
+[34mfahrradwerkstatt4.txt:[0m
+[32mKürzester Auftrag priorisieren:[0m
+Durchschnittliche Wartezeit pro Auftrag: 42200.9 minuten
+Gesamte Wartezeit für alle Aufträge: 3798081 minuten
+Längste Wartezeit in allen Aufträgen: 363155 minuten
+
+
