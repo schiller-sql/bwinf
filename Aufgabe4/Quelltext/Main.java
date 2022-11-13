@@ -168,10 +168,6 @@ public class Main {
         int firstTaskNotOnTaskQueue = 0;
         List<Task> taskQueue = new ArrayList<>(tasks.size());
         while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
-            if (time == nextBreak) {
-                time += (9 + (24 - 17)) * 60;
-                nextBreak += 24 * 60;
-            }
             while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
                 taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
                 firstTaskNotOnTaskQueue++;
@@ -196,14 +192,18 @@ public class Main {
                 int waitedTime = time - currentlyExecutingTask.entranceTime;
                 allWaitingTime += waitedTime;
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
+                if (time == nextBreak) {
+                    time += (9 + (24 - 17)) * 60;
+                    nextBreak += 24 * 60;
+                }
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
-                while (time != targetedTime) {
-                    assert time < targetedTime;
-                    if (time == nextBreak) {
+                while (time < targetedTime) {
+                    time = targetedTime;
+                    if (time >= nextBreak) {
+                        time = nextBreak + 9;
                         nextBreak += 24 * 60;
                     }
-                    time = Math.min(targetedTime, nextBreak);
                 }
             }
         }
