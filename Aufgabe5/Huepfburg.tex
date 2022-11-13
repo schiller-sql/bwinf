@@ -256,6 +256,31 @@
 
 
     \section{Umsetzung}\label{sec:umsetzung}
+	% Beispiel graph
+	Eine Menge von Knoten wird als \texttt{BitSet} dargestellt.
+	Ein \texttt{BitSet} in Java ist eine Datenstruktur mit einer festen Anzahl von Bits,
+	die alle anhand eines Indexes gesetzt werden können.
+	Die Länge jedes \texttt{BitSet} ist gleich die Anzahl aller möglichen Knoten
+	und jeder Index korrespondiert einem Knoten.
+	Ist an diesen Index im \texttt{BitSet} eine 1,
+	ist der Knoten in der Knotenmenge enthalten, ansonsten ist er es nicht.
+	Beispielsweise gilt $0101 \widehat{=} \{2, 4\}$.
+	Da der erste Index eines \texttt{BitSet} 0 ist,
+	korrespondiert der Index 0 zu Knoten 1 des Parcours.
+	
+	Ein Graph wird als \texttt{BitSet[]} dargestellt, also ein Array von \texttt{BitSet}.
+	Jeder Index des Arrays korrespondiert wieder zu einem Knoten (Index 0 zu Knoten 1, usw.).
+	Der am Index eines Knotens A enthaltene \texttt{BitSet}, ist eine Knotenmenge,
+	die enthält zu welchen Knoten der Knoten A (von Knoten A aus) eine Kante besitzt.
+	
+	Die Liste an Knotenmengen ist eine \texttt{List<BitSet>},
+	d.h. eine \texttt{List} aus \texttt{BitSet}.
+	Index 0 der \texttt{List} korrespondiert zur ersten Position der Liste von Knotenmengen.
+	
+	Ein Weg ist ein \texttt{int[]}, also ein Array an Integern,
+	der Index 0 des Weges korrespondiert auch zur ersten Position des Weges.
+	Ist am Index 2 beispielsweise der Integer 3 eingetragen,
+	befindet sich an der dritten Position des Weges der Knoten 4.
 
 
     \section{Beispiele}\label{sec:beispiele}
