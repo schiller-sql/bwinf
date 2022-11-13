@@ -91,7 +91,15 @@
 \vspace{0.5cm}
 
 \section{Teilaufgabe 2}\label{sec:begruendung2}
-Es werden nicht alle Kunden zufrieden sein, da die Aufträge nicht unbedingt in der Reihenfolge bearbeitet werden, indem sie abgegeben werden. Somit kann es dazu kommen, dass der Auftrag eines Kunden erst nach einem später abgegebenen Auftrag bearbeitet wird. Dies passiert wenn nachfolgende Aufträge kürzer sind als der vorangegengene Auftrag.
+Es werden nicht alle Kunden zufrieden sein,
+da die Aufträge nicht unbedingt in der Reihenfolge bearbeitet werden,
+indem sie vergeben wurden.
+Somit kann es dazu kommen, dass der Auftrag eines Kunden
+erst nach einem später abgegebenen Auftrag bearbeitet wird.
+Dies passiert wenn nachfolgende Aufträge kürzer sind,
+als der vorangegangene Auftrag und vergeben wurden,
+als Marc noch beschäftigt mit einem anderen Auftrag ist oder er gerade nicht arbeitet,
+wenn also der längere Auftrag nicht nur alleine zur Bearbeitung zur Verfügung steht.
 So kann es dazu kommen, dass der Autrag des ersten Kunden als letztes abgearbeitet wird.
 
 \section{Teilaufgabe 3}\label{sec:begruendung3 }
@@ -102,34 +110,54 @@ Da bei einem Vorziehen des einen Kunden immer Nachteile für die anderen Kunden 
 In Ausnahmen könnte Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
 da es die Wartezeit des langen Auftrages kaum vergrößert.
 Besonders, wenn der lange Auftrag noch nicht viel warten musste.
-Auch könnte Marc eine Ausnahmen machen, wenn es sich um einen Kunden handelt, der entweder von Marc besonders geschätzt wird oder aber eine Gebühr gibt für schnelleres reparieren gezahlt hat.
-Wo aber die Grenze genau ist, ist arbiträr, mathematisch nicht belegt und kann nicht algorithmus dargestellt werden.
-Deshalb ist das allererste Verfahren, vermutlich das beste algorithmische Verfahren, da jeder fair an der Reihe ist,
+Auch könnte Marc eine Ausnahmen machen, wenn es sich um einen Kunden handelt,
+der entweder von Marc besonders geschätzt wird
+oder aber eine Gebühr gibt für schnelleres reparieren gezahlt hat.
+Da diese Informationen nicht dem Algorithmus vorliegenden,
+können sie aber nicht in Betracht gezogen werden.
+Wo aber die Grenze genau ist, ist arbiträr, mathematisch nicht belegt
+und kann nicht algorithmisch dargestellt werden.
+Deshalb ist das allererste Verfahren, vermutlich das beste algorithmische Verfahren,
+da jeder fair an der Reihe ist,
 in der Reihenfolge wann dessen Auftrag eingegangen ist.
 
 \section{Lösungsidee}\label{sec:losungsidee}
-Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt.
+Der Aufgabenstellung zu entnehmen,
+ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt.
 Des weiteren werden die Aufträge in den Eingabedateien
 nach dem Eingangszeitpunkt absteigend sortiert.
-Die Aufträge dürfen aber immer nur im Zeitraum von 9 Uhr bis 17 Uhr am Arbeitstag abgearbeitet werden.
-Erst nachdem ein Auftrag vollständig bearbeitet wurde, darf der nächste bearbeitet werden.
+Die Aufträge dürfen aber immer nur im Zeitraum von 9 Uhr bis 17 Uhr
+am Arbeitstag abgearbeitet werden.
+Erst nachdem ein Auftrag vollständig bearbeitet wurde,
+darf der nächste bearbeitet werden.
 
-Obwohl es unterschiedliche Verfahren gibt, wie der nächst zu bearbeitende Auftrag ausgewählt wird,
-kann trotzdem ein verfahrensunabhängiger Algorithmus die Auswahl des nächsten Auftrages delegieren
+Obwohl es unterschiedliche Verfahren gibt,
+wie der nächst zu bearbeitende Auftrag ausgewählt wird,
+kann trotzdem ein verfahrensunabhängiger Algorithmus
+die Auswahl des nächsten Auftrages delegieren
 und sich selber mit der Simulation der Fahrradwerkstatt beschäftigen.
-Der Auftrag, welcher als nächstes bearbeitet werden soll, muss ein bereits eingeganener Auftrag sein.
+Der Auftrag, welcher als nächstes bearbeitet werden soll,
+muss ein bereits eingeganener Auftrag sein.
 Gibt es einen solchen nicht, muss gewartet werden.
-Dies gilt unabgängig vom Verfahren, welches zu bewältigung der Aufträge angewendet wird.
-Daher eignet sich zunächst die Betrachtung eines verfahrensunabhängigem Algorithmus.
+Dies gilt unabgängig vom Verfahren,
+welches zur Bewältigung der Aufträge angewendet wird.
+Daher eignet sich zunächst
+die Betrachtung eines verfahrensunabhängigem Algorithmus.
 
-Als erstes wird sich die aktuelle Zeit und das Ende des jetzigen Arbeitstages gemerkt.
-Dazu die maximale und gesamte Wartezeit, als auch die eingegangenen und noch eingehenden Aufträge.
-Am Anfang ist die aktuelle Zeit 9 Uhr und das Ende des Arbeitstages ist um 17 Uhr.
+Als erstes wird sich die aktuelle Zeit
+und das Ende des jetzigen Arbeitstages gemerkt.
+Dazu die maximale und gesamte Wartezeit,
+als auch die eingegangenen (aber nicht bearbeiteten) und noch eingehenden Aufträge.
+Am Anfang ist die aktuelle Zeit 9 Uhr
+und das Ende des Arbeitstages ist um 17 Uhr.
 
-Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
+Nun wird in einer Schleife, bis es keine eingegangenen
+und noch nicht eingegangenen Aufträge gibt,
+also bis alle Aufträge bearbeitet wurden, folgendes gemacht:
 \begin{itemize}
 	\item Alle Aufträge die im Container der noch nicht eingegangenen Aufträge sind,
-	      aber schon eingegangen sind laut aktueller Zeit, werden von den nicht eingegangenen zu den eingegangenen Containern bewegt.
+	      aber schon eingegangen sind laut aktueller Zeit,
+    werden von den nicht eingegangenen zu den eingegangenen Containern bewegt.
 	\item Gibt es eingegangene Aufträge:
 	      \begin{itemize}
 		      \item Von den eingegangenen Aufträgen wird nach dem aktuellen Verfahren
@@ -137,16 +165,22 @@ Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegange
 		      \item Es wird sich der Fortschritt des Auftrages in Zeit gemerkt, also am Anfang 0.
 		      \item In einer Schleife bis der Auftrag fertig bearbeitet ist:
 		            \begin{itemize}
-			            \item Wenn die Zeit am gemerkten Ende des jetzigen Arbeitstages ist, wird die Zeit zum nächsten Tag um 9 Uhr gestellt,
+			            \item Wenn die Zeit am gemerkten Ende des jetzigen Arbeitstages ist,
+                        wird die Zeit zum nächsten Tag um 9 Uhr gestellt,
 			                  also dem beginn des nächsten Arbeitstages und
-			                  es wird sich nun das Ende des nächsten Arbeitstages gemerkt, also am nächsten Tag um 17 Uhr.
-			                  D.h. die Simulation befindet vorher am Ende eines Arbeitstages und sich jetzt am nächsten Arbeitstag
+			                  es wird sich nun das Ende des nächsten Arbeitstages gemerkt,
+                        also am nächsten Tag um 17 Uhr.
+			                  D.h. die Simulation befindet vorher am Ende eines Arbeitstages
+                        und sich jetzt am nächsten Arbeitstag
 			                  und weiß wann dort das Ende dieses Arbeitstages ist.
-			            \item Anhand der Differenz zwischen der momentanen Zeit und des gemerkten Endes dieses Arbeitstages,
+			            \item Anhand der Differenz zwischen der momentanen Zeit
+                        und des gemerkten Endes dieses Arbeitstages,
 			                  kann ermittelt werden wie viel Zeit noch in in diesem Arbeitstag verbleibt.
 			            \item Anhand der Differenz zwischen dem Fortschritt des Auftrages
-			                  und der Dauer des Auftrages, kann ermittelt werden wie viel Zeit noch vom Auftrag übrig bleibt.
-			            \item Das kürzere der beiden, also entweder Verbleib des Arbeitstages oder Verbleib des Auftrages,
+			                  und der Dauer des Auftrages, kann ermittelt werden
+                        wie viel Zeit noch vom Auftrag übrig bleibt.
+			            \item Das kürzere der beiden, also entweder Verbleib des Arbeitstages
+                         oder Verbleib des Auftrages,
 			                  wird gewählt und an die Zeit und an dem Fortschritt des Auftrages addiert.
 			            \item So befindet man sich zeitlich nun am Ende des Auftrages, am Ende des Arbeitstages
 			                  oder in einem Sonderfall, beidem. Befindet man sich am Ende des Auftrages (oder beidem),
@@ -160,19 +194,23 @@ Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegange
 		      \item Durch die Differenz der aktuellen Zeit und des Eingangszeitpunktes des bearbeiteten Auftrages,
 		            lässt sich die Wartezeit für diesen Auftrag ermitteln.
 		            Die gesamte Wartezeit kann dementsprechend mit dieser Wartezeit addiert werden
-		            und das Maximum der Wartezeit kann mit dieser Wartezeit ersetzt werden, wenn sie größer ist als das bisherige Maximum.
+		            und das Maximum der Wartezeit kann mit dieser Wartezeit ersetzt werden,
+               wenn sie größer ist als das bisherige Maximum.
 		      \item Da man sich genau an dem Zeitpunkt der Fertigstellung des Auftrages nun befindet,
 		            bleibt der Sonderfall zu beachten: Wenn der Auftrag genau dann fertiggestellt ist,
 		            wo der Arbeitstag endet, ist die aktuelle Zeit noch am Ende dieses Arbeitstages,
 		            obwohl man eigentlich beim nächsten Durchlauf in der äußeren Schleife,
-		            schon wieder am nächsten Tag um 9 Uhr sein möchte und sich merken möchte wann der nächste Arbeitstag endet.
+		            schon wieder am nächsten Tag um 9 Uhr sein möchte
+               und sich merken möchte wann der nächste Arbeitstag endet.
 		            Das muss sein, weil zwischen den beiden Arbeitstagen können neue Aufträge eingehen
 		            und manche Verfahren zur Auswahl des nächsten Auftrages
 		            wollen möglicherweise zwischen allen eingegangen Aufträgen wählen.
 		      \item Deswegen wird nochmal falls die Zeit am gemerkten Ende des jetzigen Arbeitstages ist,
-		            die Zeit zum Beginn des nächsten Arbeitstages gestellt und sich das Ende das nächsten Arbeitstages gemerkt.
+		            die Zeit zum Beginn des nächsten Arbeitstages gestellt
+               und sich das Ende das nächsten Arbeitstages gemerkt.
 	      \end{itemize}
-	\item Gibt es keine eingegangen Aufträge, muss gewartet werden, bis zur Eingangszeit des nächsten Auftrages:
+	\item Gibt es keine eingegangen Aufträge, muss gewartet werden,
+    bis zur Eingangszeit des nächsten Auftrages:
 	      \begin{itemize}
 		      \item Dafür wird in einer Schleife bis die aktuelle Zeit größer gleich der Eingangszeit des nächsten Auftrages ist:
 		            \begin{itemize}
@@ -186,12 +224,15 @@ Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegange
 		            ist aber nicht möglich, da die Zeit zum neuen Arbeitstag in der Schleife am Ende verschoben wird.
 	      \end{itemize}
 \end{itemize}
-Nun kann anhand der gesamten Wartezeit geteilt durch die Anzahl der Aufträge, der Durchschnitt ermittelt werden
+Nun kann anhand der gesamten Wartezeit geteilt durch die Anzahl der Aufträge,
+der Durchschnitt ermittelt werden
 und für die maximale Wartezeit, das schon gemerkte Maximum genommen werden.
 
 Was bei der Delegation des Verfahrens zur Bestimmung des nächsten Auftrages beachtet werden muss,
-ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container der eingegangenen Aufträge bewegt wird,
-dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist und zwar Verfahrens abhängig,
+ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container
+der eingegangenen Aufträge bewegt wird,
+dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist
+und zwar Verfahrens abhängig,
 da das einsortieren auch an das Verfahren delegiert wird.
 
 Was also unterschiedlich bei den Verfahren sein kann, ist wie ein neu eingegangener Auftrag
@@ -199,7 +240,8 @@ in den schon eingegangenen Aufträgen einsortiert wird
 und wie von den schon eingegangenen Aufträgen ein zu bearbeitender Auftrag ermittelt wird.
 
 Die beiden Verfahren der Bestimmung des nächst zu bearbeitenden Auftrages wählen immer den ersten Auftrag
-aus dem sortierten Container der eingegangenen Aufträge. Sie sortieren jedoch die Aufträge unterschiedlich.
+aus dem sortierten Container der eingegangenen Aufträge.
+Sie sortieren jedoch die Aufträge unterschiedlich.
 Das ursprüngliche Verfahren hängt einfach immer nur den neusten eingegangen Auftrag
 in den Container der schon eingegangenen Aufträge hinten ein.
 Da beim Auswählen des zu bearbeitenden Auftrages das erste ausgewählt wird,
