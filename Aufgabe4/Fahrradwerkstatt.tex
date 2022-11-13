@@ -98,22 +98,23 @@ aber nach dem des Kunden A eingegangen sind.
 Im schlimmsten Fall, ist der Kunde A mit seinem Auftrag sogar als letztes dran.
 
 \section{Teilaufgabe 3}\label{sec:begruendung3 }
-Obwohl es sicherlich viele verschiedene Möglichkeiten für ein solches Verfahren gibt,
-ist es wichtig zu verstehen, dass im echten Leben meist der Auftrag als erstes bearbeitet wird,
-der als erstes eingeht, da es sonst zu Anschuldigungen der Ungerechtigkeit kommt.
-Man lässt dementsprechend auch keinen vor einem selbst in der Schlange, da es für einen selbst immer länger dauert.
+Wenn man in einem echten Geschäft bestimmte Kunden einfach vorlassen würden,
+würden sich auch die Kunden die nicht vorgezogen werden verständlich beschweren.
+Denn egal wann oder unter welchen Umständen man einen Kunden A 
+vor einem anderen Kunden B lässt, es dauert für B immer länger.
 
-Nur in Ausnahmen lässt man einen nach vorne, wenn man z.B. selber ganz lange dauert,
-die Person hinter einem aber nur kurz dauert und man selber vielleicht aber gerade nicht in der Eile ist.
+Nur in Ausnahmen lässt man einen Kunden nach vorne.
 So könnte auch Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
-wenn es die Wartezeit des langen Auftrages kaum vergrößert. Wo aber die Grenze genau ist,
+wenn es die Wartezeit des langen Auftrages kaum vergrößert
+und der lange Auftrag noch nicht viel warten musste. Wo aber die Grenze genau ist,
 ist arbiträr, mathematisch nicht belegt und sollte deshalb vom Verkäufer stammen,
 möglicherweise auch wie er seine Kunden einschätzt.  Deswegen kann dies nicht algorithmisch dargestellt werden.
 
 Eine weitere Ausnahme könnte liegen, wenn es sich um einen Kunden handelt,
 der von Marc besonders geschätzt wird oder es eine Gebühr gibt für schnelleres Reparieren.
 Diese beiden Ausnahmen, können aber auch nicht berücksichtigt werden durch den Algorithmus,
-weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren darstellt.
+weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren darstellt, da jeder fair an der Reihe ist,
+in der Reihenfolge wann dessen Auftrag eingegangen ist.
 
 %    
 \section{Lösungsidee}\label{sec:losungsidee}
@@ -188,7 +189,7 @@ Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegange
 		      \item Dafür wird in einer Schleife bis die aktuelle Zeit größer gleich der Eingangszeit des nächsten Auftrages ist:
 		            \begin{itemize}
 			            \item Die aktuelle Zeit gleich der Eingangszeit des nächsten Auftrages gesetzt.
-			            \item Ist die aktuelle Zeit nach dem gemerkten Ende des Arbeitstages,
+			            \item Ist die aktuelle Zeit jetzt nach dem gemerkten Ende des Arbeitstages,
 			                  wird die aktuelle Zeit auf dem Anfang das nächsten Tages nach dem gemerkten Ende des Arbeitstages gesetzt.
 			                  Und das Ende das Arbeitstag wird sich als das Ende des nächsten Arbeitstages gemerkt.
 		            \end{itemize}
@@ -222,10 +223,17 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 
 \section{Umsetzung}\label{sec:umsetzung}
 \begin{itemize}
-	\item Zeit wird als Integer in Minuten dargestellt und Zeitpunkte als Zeit von 0 aus.
+	\item Zeit beziehungsweise Dauer wird als Integer in Minuten dargestellt und Zeitpunkte als Zeit von 0 aus.
 	\item Ein Auftrag wird als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt dargestellt.
-	\item Wenn die Zeit gleich der Pause ist und die Zeit zum nächsten Tag um 9 Uhr und die Pause um 17 Uhr gesetzt wird,
-	      muss die Pause mit 24 Stunden addiert werden (also $24 * 60$ für Minuten) und die Zeit mit 16 Stunden (also $16 * 60$).
+	\item Wenn der gemerkte Zeitpunkt für das Ende des jetzigen Arbeitstages (17 Uhr),
+	zum Ende des nächsten Arbeitstages (17 Uhr am nächsten Tag)  werden soll,
+	muss der Zeitpunkt lediglich mit 24 Stunden ($24 * 60$ Minuten) addiert werden.
+	\item Wenn die aktuelle Zeit gleich dem Ende des jetzigen Arbeitstages ist (17 Uhr)
+	und auf den Anfang des nächsten Arbeitstages (nächsten Tag 9 Uhr) gestellt werden soll,
+	muss die Zeit mit $(24 - 17) + 9 = 16$ Stunden ($16 * 60$ Minuten) addiert werden 
+	\item Wenn die Zeit größer als das gemerkten Ende des Arbeitstages ist,
+	man aber die Zeit nur auf dem Anfang des Arbeitstages nach den gemerkten Ende das Arbeitstages setzten möchte,
+	muss man die Zeit gleich des jetzigen gemerkten Ende des Arbeitstages + 9 setzen.
 	\item Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
 	      wo jedoch sich gemerkt wird, welche Aufträge noch nicht waren.
 	      Da alle Aufträge sortiert sind, nach Eingangszeitpunkt, wird sich konkret nur der Index gemerkt,
@@ -236,7 +244,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 	      erhöht, bis der Auftrag mit dem Index eine höhere Eingangszeit hat als was die momentane Zeit ist.
 	      D.h. wenn dieser Auftrag nach der aktuellen Zeit noch nicht eingegangen ist.
 	\item Die schon eingegangenen Aufträge werden dargestellt als Liste von Aufträgen,
-	      die nur die Aufträge enthält die auch schon eingegangen sind.
+	      die nur die Aufträge enthält, die auch schon eingegangen sind.
 	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
 	      durch eine abstrakte Klasse \texttt{TaskPriorityDelegate}.
 	      An einem Objekt einer Unterklasse dieser abstrakten Klassen wird
@@ -421,10 +429,10 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
                 }
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
-                while (time != targetedTime) {
-                    assert time < targetedTime;
-                    time = Math.min(targetedTime, nextBreak);
-                    if (time == nextBreak) {
+                while (time < targetedTime) {
+                    time = targetedTime;
+                    if (time >= nextBreak) {
+                        time = nextBreak + 9;
                         nextBreak += 24 * 60;
                     }
                 }
