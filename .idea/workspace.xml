@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="workspace update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe1/Quelltext/Main.java" afterDir="false" />
+    <list default="true" id="46fcac30-b3b6-41f6-8fea-4f9087a54f14" name="Changes" comment="Fix Warnings and Typos">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe1/AusführbaresProgramm/dummy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe2/AusführbaresProgramm/dummy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe2/Eingabedateien/dummy.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe2/Quelltext/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe2/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe3/AusführbaresProgramm/dummy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe3/Eingabedateien/dummy.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe3/Quelltext/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe3/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe4/AusführbaresProgramm/dummy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe5/AusführbaresProgramm/dummy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aufgabe5/Huepfburg.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Aufgabe5/Huepfburg.tex" afterDir="false" />
     </list>
     <list id="80d0385a-b5b5-4f81-8a2c-ae0288c446fa" name="Changes by lenni" comment="Changes by Lenni and Tony" />
     <list id="91344497-ad05-493c-a7ef-e31e9be011e9" name="Changes by tonyborchert" comment="" />
@@ -163,5 +175,8 @@
         <watch expression="positions" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/bwinf$Main.ic" NAME="Main Coverage Results" MODIFIED="1666462880721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
