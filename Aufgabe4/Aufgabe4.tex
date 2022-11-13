@@ -90,14 +90,14 @@
 
 \vspace{0.5cm}
 
-\section{Teilaufgabe 2}\label{sec:begruendung}
+\section{Teilaufgabe 2}\label{sec:begruendung2}
 Es werden nicht alle Kunden zufrieden sein, da der Auftrag eines Kunden A, der vor anderen Kunden einen Auftrag vergibt,
 nicht um bedingt als erstes bearbeitet wird. Dies passiert wenn der Auftrag von Kunde A
 nicht als einziger eingegangener Auftrag zur Verfügung steht und wenn die anderen Aufträge kürzer sind,
 aber nach dem des Kunden A eingegangen sind.
 Im schlimmsten Fall, ist der Kunde A mit seinem Auftrag sogar als letztes dran.
 
-\section{Teilaufgabe 3}\label{sec:eigenesverfahren}
+\section{Teilaufgabe 3}\label{sec:begruendung3 }
 Obwohl es sicherlich viele verschiedene Möglichkeiten für ein solches Verfahren gibt,
 ist es wichtig zu verstehen, dass im echten Leben meist der Auftrag als erstes bearbeitet wird,
 der als erstes eingeht, da es sonst zu Anschuldigungen der Ungerechtigkeit kommt.
@@ -120,61 +120,85 @@ weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren 
 Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt,
 wo der Auftrag in die Fahrradwerkstatt eingeht. Außerdem werden die Aufträge in den Eingabedateien
 nach Eingangszeitpunkt sortiert, wo der erste Auftrag den Auftrag darstellt, der zuerst eingeht.
-Die Aufträge dürfen aber immer nur von 9 Uhr bis 17 Uhr bearbeitet werden und erst nachdem ein Auftrag
-fertig bearbeitet wurde, darf ein neuer ausgewählt werden.
+Die Aufträge dürfen aber immer nur von 9 Uhr bis 17 Uhr (also dem Arbeitstag) abgearbeitet werden
+und erst nachdem ein Auftrag
+nach dessen Dauer fertig bearbeitet wurde, darf der nächste bearbeitet werden.
 
 Obwohl es unterschiedliche Verfahren gibt, wie der nächst zu bearbeitende Auftrag ausgewählt wird,
 kann trotzdem ein verfahrensunabhängiger Algorithmus die Auswahl des nächsten Auftrages delegieren
-und sich selber mit der Simulation der Fahrradwerkstatt beschäftigen. Denn der nächst zu bearbeitende Auftrag
-muss einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet werden, egal welches Verfahren.
+und sich selber mit der Simulation der Fahrradwerkstatt beschäftigen.
+Denn immer muss der nächst zu bearbeitende Auftrag
+einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet werden,
+egal welches Verfahren zur Auswahl des zu bearbeitenden Auftrages benutzt wird.
 Dieser verfahrensunabhängige Algorithmus wird im folgenden zuerst beschrieben.
 
-Als erstes wird sich gemerkt, was die aktuelle Zeit ist und was die Zeit der nächsten Pause ist.
-Am Anfang ist die aktuelle Zeit 9 Uhr und die nächste Pause 17 Uhr.
+Als erstes wird sich gemerkt, was die aktuelle Zeit ist und wann der jetzige Arbeitstag zu ende ist.
+Am Anfang ist die aktuelle Zeit 9 Uhr und der Arbeitstag zu ende um 17 Uhr.
 Die maximale und gesamte Wartezeit werden sich auch gemerkt.
 Es wird sich außerdem ein Container an eingegangen und noch nicht eingegangen Aufträgen gemerkt.
 
 Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
 \begin{itemize}
-	\item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
-	\item Dann werden alle Aufträge die der neuen Zeit jetzt als eingegangen erscheinen sollten,
-	      von den nicht eingegangenen Aufträgen, zu den eingegangen Aufträgen bewegt.
+	\item Alle Aufträge die im Container der noch nicht eingegangenen Aufträge sind,
+	      aber schon eingegangen sind laut aktueller Zeit, werden von den nicht eingegangenen zu den eingegangenen Containern bewegt.
 	\item Gibt es eingegangene Aufträge:
 	      \begin{itemize}
-		      \item Die Auswahl eines nun zu bearbeitenden Auftrages wird an das jeweilige Verfahren delegiert.
-		      \item Es wird sich gemerkt wie viel des Auftrages schon bearbeitet ist, also am Anfang 0.
-		      \item In einer Schleife bis der Auftrag fertig bearbeitet ist, d.h. wenn die schon bearbeitete Zeit, gleich der Dauer des Auftrages ist:
+		      \item Von den eingegangenen Aufträgen wird nach dem aktuellen Verfahren
+		            zur Bestimmung des nächst zu bearbeitenden Auftrages, ein Auftrag bestimmt.
+		      \item Es wird sich der Fortschritt des Auftrages in Zeit gemerkt, also am Anfang 0.
+		      \item In einer Schleife bis der Auftrag fertig bearbeitet ist:
 		            \begin{itemize}
-			            \item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
-			            \item Zur Zeit und zur bearbeiteten Zeit, wird addiert wie viel Zeit noch übrig ist vom Auftrag.
-			            \item Ist diese addierte Zeit jedoch größer als die Differenz der Zeit zur nächsten Pause,
-			                  wird nur diese Zeit addiert.
+			            \item Wenn die Zeit am gemerkten Ende des jetzigen Arbeitstages ist, wird die Zeit zum nächsten Tag um 9 Uhr gestellt,
+			                  also dem beginn des nächsten Arbeitstages und
+			                  es wird sich nun das Ende des nächsten Arbeitstages gemerkt, also am nächsten Tag um 17 Uhr.
+			                  D.h. die Simulation befindet vorher am Ende eines Arbeitstages und sich jetzt am nächsten Arbeitstag
+			                  und weiß wann dort das Ende dieses Arbeitstages ist.
+			            \item Anhand der Differenz zwischen der momentanen Zeit und des gemerkten Endes dieses Arbeitstages,
+			                  kann ermittelt werden wie viel Zeit noch in in diesem Arbeitstag verbleibt.
+			            \item Anhand der Differenz zwischen dem Fortschritt des Auftrages
+			                  und der Dauer des Auftrages, kann ermittelt werden wie viel Zeit noch vom Auftrag übrig bleibt.
+			            \item Das kürzere der beiden, also entweder Verbleib des Arbeitstages oder Verbleib des Auftrages,
+			                  wird gewählt und an die Zeit und an dem Fortschritt des Auftrages addiert.
+			            \item So befindet man sich zeitlich nun am Ende des Auftrages, am Ende des Arbeitstages
+			                  oder in einem Sonderfall, beidem. Befindet man sich am Ende des Auftrages (oder beidem),
+			                  wird die Schleife nun abgebrochen, da die verbleibende Zeit zum Fortschritt addiert wurde
+			                  und der Fortschritt so vollständig ist, was die Abbruchbedingung der Schleife ist.
+			                  Falls man sich aber nur am Ende des Tages befindet,
+			                  wird am Anfang des nächsten Durchlaufs der Schleife,
+			                  zeitlich zum nächsten Tag gesprungen und der Auftrag wird weiter bearbeitet.
 		            \end{itemize}
-		      \item Nun ist die Zeit genau die Zeit, wo der Auftrag fertig bearbeitet ist.
-		      \item Es bleibt außerdem ein Sonderfall zu beachten, denn wenn der Auftrag genau dann fertig ist,
-		            wo auch die Pause anfängt, darf nicht schon die Zeit auf den nächsten Tag um 7 Uhr gesetzt werden,
-		            weil es sonst gar nicht genau die Zeit wäre, wenn der Auftrag fertig wird.
-		            Deswegen wird die Zeit am Anfang der Schleife und nicht am Ende verschoben,
-		            dafür wird aber, wie bereits gesagt, am Anfang der äußeren Schleife die Zeit und Pause verschoben,
-		            wenn die Zeit gleich der nächsten Pause ist, da jetzt die Zeit nachdem Auftrag ist und deswegen am nächsten Tag.
-		            Ansonsten würden nämlich nicht alle eingehenden Aufträge als eingehend gezählt, da noch eine andere Zeit ist, als sie eigentlich sein sollte.
-		      \item Die Differenz zwischen der Eingangszeit des Auftrages und dieser Zeit, ist also wie lange der Kunde dieses Auftrages warten musste.
-		      \item Diese Wartezeit kann, wenn größer als das bisherige Maximum an Wartezeit, als das neue Maximum an Wartezeit eingespeichert werden.
-		      \item Die gesamte Wartezeit wird außerdem mit dieser Wartezeit addiert.
+		      \item Nun ist die aktuelle Zeit genau am Zeitpunkt der Fertigstellung des Auftrages.
+		      \item Durch die Differenz der aktuellen Zeit und des Eingangszeitpunktes des bearbeiteten Auftrages,
+		            lässt sich die Wartezeit für diesen Auftrag ermitteln.
+		            Die gesamte Wartezeit kann dementsprechend mit dieser Wartezeit addiert werden
+		            und das Maximum der Wartezeit kann mit dieser Wartezeit ersetzt werden, wenn sie größer ist als das bisherige Maximum.
+		      \item Da man sich genau an dem Zeitpunkt der Fertigstellung des Auftrages nun befindet,
+		            bleibt der Sonderfall zu beachten: Wenn der Auftrag genau dann fertiggestellt ist,
+		            wo der Arbeitstag endet, ist die aktuelle Zeit noch am Ende dieses Arbeitstages,
+		            obwohl man eigentlich beim nächsten Durchlauf in der äußeren Schleife,
+		            schon wieder am nächsten Tag um 9 Uhr sein möchte und sich merken möchte wann der nächste Arbeitstag endet.
+		            Das muss sein, weil zwischen den beiden Arbeitstagen können neue Aufträge eingehen
+		            und manche Verfahren zur Auswahl des nächsten Auftrages
+		            wollen möglicherweise zwischen allen eingegangen Aufträgen wählen.
+		      \item Deswegen wird nochmal falls die Zeit am gemerkten Ende des jetzigen Arbeitstages ist,
+		            die Zeit zum Beginn des nächsten Arbeitstages gestellt und sich das Ende das nächsten Arbeitstages gemerkt.
 	      \end{itemize}
-	\item Gibt es keine eingegangen Aufträge, muss gewartet werden, bis zur Eingangszeit des nächsten Auftrages.
-	\item Dafür wird in einer Schleife bis die aktuelle Zeit gleich der Eingangszeit des nächsten Auftrages ist:
+	\item Gibt es keine eingegangen Aufträge, muss gewartet werden, bis zur Eingangszeit des nächsten Auftrages:
 	      \begin{itemize}
-		      \item Wenn die Zeit gleich der nächsten Pause ist, wird die Zeit zum nächsten Tag um 9 Uhr gesetzt und die Pause am nächsten Tag um 17 Uhr.
-	      \end{itemize}
-	\item Jetzt ist wieder der Zeitpunkt erreicht, wo es wieder möglich ist das man sich genau am Ende eines Arbeitstages befindet.
-	\item Da jedoch am Anfang der großen Schleife das wieder abgefangen wird, ist das egal.
-	      \begin{itemize}
-		      \item
+		      \item Dafür wird in einer Schleife bis die aktuelle Zeit größer gleich der Eingangszeit des nächsten Auftrages ist:
+		            \begin{itemize}
+			            \item Die aktuelle Zeit gleich der Eingangszeit des nächsten Auftrages gesetzt.
+			            \item Ist die aktuelle Zeit nach dem gemerkten Ende des Arbeitstages,
+			                  wird die aktuelle Zeit auf dem Anfang das nächsten Tages nach dem gemerkten Ende des Arbeitstages gesetzt.
+			                  Und das Ende das Arbeitstag wird sich als das Ende des nächsten Arbeitstages gemerkt.
+		            \end{itemize}
+		      \item Nun ist man im ersten Zeitpunkt, wo min. ein neuer Auftrag eingeht.
+		      \item Der Sonderfall, das dieser Zeitpunkt genau am Ende eines Arbeitstages ist,
+		            ist aber nicht möglich, da die Zeit zum neuen Arbeitstag in der Schleife am Ende verschoben wird.
 	      \end{itemize}
 \end{itemize}
 Nun kann anhand der gesamten Wartezeit geteilt durch die Anzahl der Aufträge, der Durchschnitt ermittelt werden
-und für die maximale Wartezeit, das schon ermittelte Maximum genommen werden.
+und für die maximale Wartezeit, das schon gemerkte Maximum genommen werden.
 
 Was bei der Delegation des Verfahrens zur Bestimmung des nächsten Auftrages beachtet werden muss,
 ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container der eingegangenen Aufträge bewegt wird,
@@ -237,17 +261,17 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 	\item In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
 	      Es wird ein \texttt{TaskPriorityDelegate} gegeben und eine Liste von Aufträgen.
 	      Ausgegeben wird dann die durchschnittliche, längste und gesamte Wartezeit.
-	\item Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode 
-	mit jeder Kombination von jedem \texttt{TaskPriorityDelegate} und jeder Eingabedatei aufgerufen.
-	Alle Unterklassen vom \texttt{TaskPriorityDelegate} sind als Array
-	in der Konstante \texttt{taskPriorityDelegates} eingetragen.
+	\item Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode
+	      mit jeder Kombination von jedem \texttt{TaskPriorityDelegate} und jeder Eingabedatei aufgerufen.
+	      Alle Unterklassen vom \texttt{TaskPriorityDelegate} sind als Array
+	      in der Konstante \texttt{taskPriorityDelegates} eingetragen.
 \end{itemize}
 
 \section{Beispiele}\label{sec:beispiele}
 
 
 \section{Quellcode}\label{sec:quellcode}\label{LastPage}
-	\begin{lstlisting}[frame=single,language=Java,title=Klasse Task,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Klasse Task,breaklines=true]
 	/**
      * Ein Auftrag
      *
@@ -257,7 +281,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
     private record Task(int entranceTime, int duration) {
     }
 	\end{lstlisting}
-	\begin{lstlisting}[frame=single,language=Java,title=Klasse TaskPriorityDelegate,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Klasse TaskPriorityDelegate,breaklines=true]
 	/**
      * Eine Klasse die entscheidet in welcher Reihenfolge die eingehenden Aufträge verwaltet werden sollen.
      */
@@ -297,7 +321,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
         }
     }
 	\end{lstlisting}
-	\begin{lstlisting}[frame=single,language=Java,title=Klasse FiFoTaskPriorityDelegate,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Klasse FiFoTaskPriorityDelegate,breaklines=true]
     /**
      * Eine Implementation von {@link TaskPriorityDelegate}, die immer den Auftrag der als neuestes eingegangen ist,
      * als letztes bearbeitet.
@@ -318,7 +342,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
         }
     }
 	\end{lstlisting}
-	\begin{lstlisting}[frame=single,language=Java,title=Klasse ShortestDurationTaskPriorityDelegate,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Klasse ShortestDurationTaskPriorityDelegate,breaklines=true]
 	/**
      * Eine Implementation von {@link TaskPriorityDelegate}, der immer den Auftrag als nächstes bearbeitet,
      * der am kürzesten dauert.
@@ -345,7 +369,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
         }
     }
 	\end{lstlisting}
-	\begin{lstlisting}[frame=single,language=Java,title=Konstante taskPriorityDelegates,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Konstante taskPriorityDelegates,breaklines=true]
 	/**
      * Alle Verfahren zur Auswahl des nächst zu bearbeitenden Auftrages.
      */
@@ -354,7 +378,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
             new ShortestDurationTaskPriorityDelegate(),
     	};
 	\end{lstlisting}
-	\begin{lstlisting}[frame=single,language=Java,title=Methode simulateProcessingTasks,breaklines=true]
+\begin{lstlisting}[frame=single,language=Java,title=Methode simulateProcessingTasks,breaklines=true]
 	/**
      * Für alle Eingabedateien werden alle Verfahren durchgeführt
      * mit {@link Main#simulateProcessingTasks(List, TaskPriorityDelegate)}.
@@ -367,10 +391,6 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
         int firstTaskNotOnTaskQueue = 0;
         List<Task> taskQueue = new ArrayList<>(tasks.size());
         while (firstTaskNotOnTaskQueue != tasks.size() || !taskQueue.isEmpty()) {
-            if (time == nextBreak) {
-                time += (9 + (24 - 17)) * 60;
-                nextBreak += 24 * 60;
-            }
             while (firstTaskNotOnTaskQueue != tasks.size() && tasks.get(firstTaskNotOnTaskQueue).entranceTime <= time) {
                 taskPriorityDelegate.sortTaskIntoCurrentTaskList(taskQueue, tasks.get(firstTaskNotOnTaskQueue));
                 firstTaskNotOnTaskQueue++;
@@ -395,14 +415,18 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
                 int waitedTime = time - currentlyExecutingTask.entranceTime;
                 allWaitingTime += waitedTime;
                 maxWaitedTime = Math.max(waitedTime, maxWaitedTime);
+                if (time == nextBreak) {
+                    time += (9 + (24 - 17)) * 60;
+                    nextBreak += 24 * 60;
+                }
             } else {
                 int targetedTime = tasks.get(firstTaskNotOnTaskQueue).entranceTime;
                 while (time != targetedTime) {
                     assert time < targetedTime;
+                    time = Math.min(targetedTime, nextBreak);
                     if (time == nextBreak) {
                         nextBreak += 24 * 60;
                     }
-                    time = Math.min(targetedTime, nextBreak);
                 }
             }
         }
