@@ -45,7 +45,23 @@
     captionpos=b, % sets the caption-position to bottom
     keepspaces=true, % keeps spaces in text
     numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
-    showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+    showtabs=false, stepnumber=2, tabsize=2, title=\lstname ,
+    inputencoding = utf8,  % Input encoding
+    extendedchars = true,  % Extended ASCII
+    literate      =        % Support additional characters
+      {á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+      {Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+      {à}{{\`a}}1  {è}{{\`e}}1  {ì}{{\`i}}1 {ò}{{\`o}}1  {ù}{{\`u}}1
+      {À}{{\`A}}1  {È}{{\'E}}1  {Ì}{{\`I}}1 {Ò}{{\`O}}1  {Ù}{{\`U}}1
+      {ä}{{\"a}}1  {ë}{{\"e}}1  {ï}{{\"i}}1 {ö}{{\"o}}1  {ü}{{\"u}}1
+      {Ä}{{\"A}}1  {Ë}{{\"E}}1  {Ï}{{\"I}}1 {Ö}{{\"O}}1  {Ü}{{\"U}}1
+      {â}{{\^a}}1  {ê}{{\^e}}1  {î}{{\^i}}1 {ô}{{\^o}}1  {û}{{\^u}}1
+      {Â}{{\^A}}1  {Ê}{{\^E}}1  {Î}{{\^I}}1 {Ô}{{\^O}}1  {Û}{{\^U}}1
+      {œ}{{\oe}}1  {Œ}{{\OE}}1  {æ}{{\ae}}1 {Æ}{{\AE}}1  {ß}{{\ss}}1
+      {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1  {Ø}{{\O}}1   {å}{{\r a}}1
+      {Å}{{\r A}}1 {ã}{{\~a}}1  {õ}{{\~o}}1 {Ã}{{\~A}}1  {Õ}{{\~O}}1
+      {ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+      {°}{{\textdegree}}1 {º}{{\textordmasculine}}1 {ª}{{\textordfeminine}}1
 }
 \lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
     keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
@@ -206,11 +222,12 @@
     
     Nun hat man eine n lange Liste von Knotenmengen,
     wo der letzte Eintrag die überschneidende Knotenmenge ist
-    und einen ausgewählten überschneidenden Knoten in diesem letzten Eintrag.
-    Jede Menge in dieser Liste ist also ein Schritt
-    und die Knoten die erreichbar sind in diesem Schritt.
+    und man hat einen ausgewählten überschneidenden Knoten in diesem letzten Eintrag.
+    Jede Position in dieser Liste ist also ein Schritt
+    und die Knotenmenge sind alle Knoten die erreichbar sind in nach diesem Schritt.
     Beim ersten Eintrag in der Liste,
-    ist zu beachten, dass die Knotenmenge nur aus dem Startknoten besteht.
+    ist zudem zu beachten,
+    dass die Knotenmenge nur aus dem Startknoten besteht.
 
 	Auch der Weg ist eine n lange Liste,
 	aber an einzelnen Knoten.
@@ -245,5 +262,165 @@
 
 
     \section{Quellcode}\label{sec:quellcode}\label{LastPage}
+    \begin{lstlisting}[frame=single,language=Java,title=Methode graphFromLines,breaklines=true]
+    /**
+     * Generiert den Graphen aus den Zeilen einer Eingabedatei.
+     *
+     * @param lines Eine String Liste, wo jeder String eine Zeile im Eingabeformat ist.
+     * @return Den generierten Graphen.
+     */
+    private static BitSet[] graphFromLines(List<String> lines) {
+        int countOfNodes = Integer.parseInt(lines.get(0).split(" ")[0]);
+        BitSet[] graph = new BitSet[countOfNodes];
+        for (int i = 0; i < countOfNodes; i++) {
+            graph[i] = new BitSet(countOfNodes);
+        }
+        List<String> rawArrows = lines.subList(1, lines.size());
+        for (String rawArrow : rawArrows) {
+            int arrowBegin = Integer.parseInt(rawArrow.split(" ")[0]);
+            int arrowEnd = Integer.parseInt(rawArrow.split(" ")[1]);
+            graph[arrowBegin - 1].set(arrowEnd - 1);
+        }
+        return graph;
+    }
+	\end{lstlisting}
+	
+	
+	\begin{lstlisting}[frame=single,language=Java,title=Methode sameTargetRoute,breaklines=true]
+    /**
+     * Findet eine Route, vom nullten und ersten Knoten,
+     * zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
+     *
+     * @param graph Der Graph, zu dem eine Route vom nullten und ersten Knoten zu einem gemeinsamen Knoten gebildet werden soll.
+     * @return Eine Route zu einem Knoten der vom 0. und 1. Knoten in der gleichen Anzahl von Schritten erreichbar ist.
+     */
+    private static int[][] sameTargetRoute(BitSet[] graph) {
+        BitSet sashaFirst = new BitSet(graph.length);
+        BitSet mikaFirst = new BitSet(graph.length);
+        sashaFirst.set(0);
+        mikaFirst.set(1);
+        List<BitSet> sashaTimeline = new ArrayList<>(List.of(sashaFirst));
+        List<BitSet> mikaTimeline = new ArrayList<>(List.of(mikaFirst));
+        do {
+            sashaTimeline.add(neighbourNodes(sashaTimeline.get(sashaTimeline.size() - 1), graph));
+            mikaTimeline.add(neighbourNodes(mikaTimeline.get(mikaTimeline.size() - 1), graph));
+            if (sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
+                    .get(mikaTimeline.size() - 1)
+                    .isEmpty() || timelineRepeats(sashaTimeline, mikaTimeline)) {
+                return null;
+            }
+        } while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1)));
+
+        int target = firstSameTargetOfTimelines(sashaTimeline, mikaTimeline);
+        int[][] routes = new int[2][];
+        routes[0] = findSingleRouteInTimeline(sashaTimeline, target, graph);
+        routes[1] = findSingleRouteInTimeline(mikaTimeline, target, graph);
+        return routes;
+    }
+	\end{lstlisting}
+	
+	
+	\begin{lstlisting}[frame=single,language=Java,title=Methode firstSameTargetOfTimelines,breaklines=true]
+    /**
+     * Vergleicht den jeweils letzten Schritt der Schrittfolgen miteinander
+     * und gibt den gemeinsamen besuchten Knoten zurück.
+     *
+     * @param sashaTimeline Sasha's Zeitleiste
+     * @param mikaTimeline  Mika's Zeitleiste
+     * @return Der Index im Graphen des gemeinsamen Knotens.
+     */
+    private static int firstSameTargetOfTimelines(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet targets = (BitSet) sashaTimeline.get(sashaTimeline.size() - 1).clone();
+        targets.and(mikaTimeline.get(mikaTimeline.size() - 1));
+        return targets.nextSetBit(0);
+    }
+	\end{lstlisting}
+	
+	
+	\begin{lstlisting}[frame=single,language=Java,title=Methode findSingleRouteInTimeline,breaklines=true]
+    /**
+     * Ermittelt den Weg vom Zielpunkt zurück zum Startpunkt entgegengesetzt der Kantenrichtung des Graphen.
+     *
+     * @param timeline Die Zeitleiste der erreichbaren Knoten,
+     *                 von der eine Route zu einem bestimmten Knoten im letzten Zeitpunkt der Zeitleiste gebaut werden soll.
+     * @param target   Das Ziel am Ende der Zeitleiste der erreichbaren Knoten, zudem eine Route gebaut werden soll.
+     * @param graph    Der Graph aus dem die Zeitleiste der erreichbaren Knoten (und dementsprechend auch das Ziel) stammt.
+     * @return Eine Route zum Ziel in der Zeitleiste.
+     */
+    private static int[] findSingleRouteInTimeline(List<BitSet> timeline, int target, BitSet[] graph) {
+        int[] route = new int[timeline.size()];
+        steps:
+        for (int currentStep = timeline.size() - 1; currentStep > 0; currentStep--) {
+            route[currentStep] = target;
+            BitSet currentNodes = timeline.get(currentStep - 1);
+            for (int i = 0; i < graph.length; i++) {
+                if (currentNodes.get(i)) {
+                    BitSet arrows = graph[i];
+                    if (arrows.get(target)) {
+                        target = i;
+                        continue steps;
+                    }
+                }
+            }
+        }
+        route[0] = target;
+        return route;
+    }
+	\end{lstlisting}
+	
+	
+	\begin{lstlisting}[frame=single,language=Java,title=Methode neighbourNodes,breaklines=true]
+    /**
+     * Gibt die Knoten zurück, welche in einem Schritt entlang der Kantenrichtung,
+     * von den aktuellen Knoten erreichbar sind.
+     *
+     * @param nodes Die aktuellen Knoten
+     * @param graph Der Graph, welcher betrachtet wird
+     * @return Die Menge der Knoten die in einem Schritt von den gegebenen Knoten erreichbar ist
+     */
+    private static BitSet neighbourNodes(BitSet nodes, BitSet[] graph) {
+        BitSet neighbours = new BitSet();
+        for (int i = 0; i < graph.length; i++) {
+            if (nodes.get(i)) {
+                neighbours.or(graph[i]);
+            }
+        }
+        return neighbours;
+    }
+	\end{lstlisting}
+	
+	
+	\begin{lstlisting}[frame=single,language=Java,title=Methode timelineRepeats,breaklines=true]
+    /**
+     * Ermittelt, ob die zwei Zeitleisten sich zu einem Zeitpunkt mit ihrem letzten Eintrag wiederholen.
+     * Es wird daher festgestellt, ob beide Zeitleisten zu einem vorherigen Zeitpunkt an den genau gleichen Knoten waren,
+     * wie zum aktuellen Zeitpunkt.
+     *
+     * @param sashaTimeline Sasha's Zeitleiste der erreichbaren Knoten
+     * @param mikaTimeline  Mika's Zeitleiste der erreichbaren Knoten
+     * @return True, wenn die Zeitleisten sich beide zu einem gleichen Zeitpunkt
+     * mit dem neuen/letzten Zeitpunkt wiederholen.
+     */
+    private static boolean timelineRepeats(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet current = sashaTimeline.get(sashaTimeline.size() - 1);
+        BitSet repetitions = new BitSet(sashaTimeline.size());
+        List<BitSet> timeline = new ArrayList<>(sashaTimeline.subList(0, sashaTimeline.size() - 1));
+        for (int i = 0; i < timeline.size(); i++) {
+            if (timeline.get(i).equals(current)) {
+                repetitions.set(i);
+            }
+        }
+        for (int i = repetitions.nextSetBit(0); i >= 0; i = repetitions.nextSetBit(i + 1)) {
+            if (mikaTimeline.get(mikaTimeline.size() - 1).equals(mikaTimeline.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+	\end{lstlisting}
+	
+	
+	
+	
 
 \end{document}
