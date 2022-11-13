@@ -121,7 +121,7 @@
     3,1;
     }{}
     \InfinityLoop{}
-    \caption{Nicht lösbarer zyklischer Graph}
+    \caption{Nicht lösbarer zyklischer Parcour}
     \label{fig:Figure1}
     \end{figure}
     
@@ -141,18 +141,101 @@
     \end{table}
     
     Hier kommt es in Schritt vier bei beiden Spielern zu einer Wiederholung von Schritt eins.
-    Damit kann der Parcours sicher für ungültig erklärt werden und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
-    Dies gilt, da sich beide Spieler in einem Zyklus befinden und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
+    Damit kann der Parcours sicher für ungültig erklärt werden
+    und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
+    Dies gilt, da sich beide Spieler in einem Zyklus befinden
+    und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
     
-    Das %zwei graphen, in einem wird in der zweiten Wiederholung abgebrochen und im zweiten graphen kommt es nur in einem spiler zur wiederholung und es gibt eine lösung
+    Der Parcour ist aber dann auch nicht lösbar, wenn einer der beiden Knotenmengen leer ist,
+    dann kann nämlich bei allen weiteren Schritt der Breitensuche dieser Knotenmenge,
+    keine weiteren Knoten erreicht werden und somit können beide Knotenmengen nie überlappen,
+    da eine Knotenmenge ab jetzt immer leer ist. Es handelt sich also um eine Sackgasse im Parcour.
     
-    %Eine Zeitleiste beschreibt den Verlauf der Menge von allen möglich erreichbaren Knoten
-    % * nach einer Anzahl an Schritten von einem Startknoten.
-    % * Die Menge der Knoten beim Zeitpunkt 0 ist also nur der Startknoten.
-    % * Die Menge der Knoten beim Zeitpunkt n (n > 0) sind alle Knoten die in n Schritten vom Startknoten erreichbar sind.
-    % * <li>Der Zeitpunkt n (n > 0) kann auch definiert werden als die Menge der Knoten,
-    % * die direkt (in einem Schritt) von den Knoten in der Menge von Zeitpunkt n - 1 erreichbar sind.
+	So kommt es in \hyperref[fig:Figure2]{Figur 2.} zu einer solchen Sackgasse.
+    
+	\begin{figure}[htb]
+    \centering
+    \NewAdigraph{NameOfAdigraph}{
+    1:0,0;
+    2:4.5,0;
+    3:1.5,0;
+    4:3,0;
+    }{
+    1,3;
+    3,4;
+    2,4;
+    }{}
+    \NameOfAdigraph{}
+    \caption{Nicht lösbarer Parcour mit Sackgasse}
+    \label{fig:Figure2}
+    \end{figure}
+    
+    \begin{table}[htb]
+    \centering
+    \begin{tabular}{lll}
+    \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+    1. & \{ 1 \} & \{ 2 \} \\
+    2. & \{ 3 \} & \{  \} \\
+    \end{tabular}
+    \caption{Schrittfolge für Figur 2.}
+    \label{tab:Table2}
+    \end{table}
+    
+    Denn hier kommt es bereits im zweiten Schritt dazu, dass die Knotenmenge des Spieler 2 leer ist.
+    Damit ist es unmöglich das Spieler 1 und 2 sich je treffen, da Spieler 2 nicht mehr im Parcour ist.
+    
+    Beim Algorithmus muss also bei jedem Schritt der Breitensuche überprüft werden,
+    ob die jetzige Knotenmenge von beiden Spielern sich
+    zu einem gemeinsamen Zeitpunkt wiederholt.
+    Dafür muss eine Liste an bisherigen Knotenmengen beider Spieler geführt werden.
+    Es muss auch überprüft werden ob einer der beiden Knotenmengen leer ist.
+    Ist einer dieser Bedingungen erfüllt, ist der Graph nicht lösbar
+    und die Suche nach einem gemeinsamen Feld kann abgebrochen werden.
+    Ansonsten kann überprüft werden,
+    ob die beiden neuen Knotenmengen sich überschneiden,
+    dann kann der Parcour an diesem Schritt an einem Feld
+    von beiden Spielern gleichzeitig erreicht werden.
+    Ist die Bedingung nicht erfüllt,
+    folgt ein weiterer Schritt der Breitensuche.
+    
+    Wenn man aber nun einen Zeitpunkt gefunden hat,
+    wo beide Knotenmengen sich überschneiden,
+    muss ein Weg gefunden werden zu
+    einer der überschneidenden Knoten in den Knotenmengen.
+    Dafür kann jeder der überschneidenden Knoten ausgewählt werden.
+    
+    Nun hat man eine n lange Liste von Knotenmengen,
+    wo der letzte Eintrag die überschneidende Knotenmenge ist
+    und einen ausgewählten überschneidenden Knoten in diesem letzten Eintrag.
+    Jede Menge in dieser Liste ist also ein Schritt
+    und die Knoten die erreichbar sind in diesem Schritt.
+    Beim ersten Eintrag in der Liste,
+    ist zu beachten, dass die Knotenmenge nur aus dem Startknoten besteht.
 
+	Auch der Weg ist eine n lange Liste,
+	aber an einzelnen Knoten.
+	Jeder Knoten an einer Position l muss enthalten sein
+	in der Knotenmenge der gleichen Postion l der schon gegebenen Liste von Knotenmengen,
+	da diese Knotenmenge alle Knoten enthält die nach dem Schritt l möglich zu erreichen sind.
+	Gleichzeitig muss der Knoten der Position l eine Kante zum nächsten Knoten,
+	d.h. Knoten der Position $l + 1$ besitzen,
+	da sonst von den Knoten im Weg
+	gar kein richtiger Weg zwischen den Knoten gebildet wird.
+	Außerdem muss der letzte Knoten im Weg,
+	der ausgewählte überschneidende Knoten sein.
+	Da die erste Knotenmenge nur aus dem Startknoten besteht,
+	ist auch der Knoten an der ersten Position immer nur der Startknoten,
+	da der Weg auch immer vom Startknoten starten muss.
+    
+	Wenn man für eine Position i im Weg einen Knoten ermitteln möchte,
+	muss man deswegen nur nach einem Knoten in der zugehörigen Knotenmenge suchen
+	(also Knotenmenge der Knotenmengen Liste an Position i),
+	die zur Position $i + 1$ führt.
+	Da aber am Anfang nur der letzte Knoten an Position j ermittelt ist,
+	kann von dem angefangen werden und der Knoten an Position $j - 1$ ermittelt werden,
+	der zum Knoten an Position j führt.
+	Dann kann $j - 2$, $j - 3$, usw. ermittelt werden,
+	bis j die erste Position ist.
 
 
     \section{Umsetzung}\label{sec:umsetzung}
