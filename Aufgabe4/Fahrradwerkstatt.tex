@@ -116,7 +116,6 @@ Diese beiden Ausnahmen, können aber auch nicht berücksichtigt werden durch den
 weshalb das allererste Verfahren, vermutlich das beste algorithmische Verfahren darstellt, da jeder fair an der Reihe ist,
 in der Reihenfolge wann dessen Auftrag eingegangen ist.
 
-%    
 \section{Lösungsidee}\label{sec:losungsidee}
 Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt,
 wo der Auftrag in die Fahrradwerkstatt eingeht. Außerdem werden die Aufträge in den Eingabedateien
@@ -243,7 +242,7 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 	      lediglich der Index des ersten Auftrages, der sich nicht mehr in den eingegangen Aufträgen befindet,
 	      erhöht, bis der Auftrag mit dem Index eine höhere Eingangszeit hat als was die momentane Zeit ist.
 	      D.h. wenn dieser Auftrag nach der aktuellen Zeit noch nicht eingegangen ist.
-	\item Die schon eingegangenen Aufträge werden dargestellt als Liste von Aufträgen,
+	\item Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
 	      die nur die Aufträge enthält, die auch schon eingegangen sind.
 	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
 	      durch eine abstrakte Klasse \texttt{TaskPriorityDelegate}.
