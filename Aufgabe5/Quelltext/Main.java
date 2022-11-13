@@ -66,30 +66,44 @@ public class Main {
      * @return Eine Route zu einem Knoten der vom 0. und 1. Knoten in der gleichen Anzahl von Schritten erreichbar ist.
      */
     private static int[][] sameTargetRoute(BitSet[] graph) {
-        List<BitSet>[] timelines = generatesTimelines(graph);
-        if (timelines == null) return null;
-        int target = firstSameTargetOfTimelines(timelines);
+        BitSet sashaFirst = new BitSet(graph.length);
+        BitSet mikaFirst = new BitSet(graph.length);
+        sashaFirst.set(0);
+        mikaFirst.set(1);
+        List<BitSet> sashaTimeline = new ArrayList<>(List.of(sashaFirst));
+        List<BitSet> mikaTimeline = new ArrayList<>(List.of(mikaFirst));
+        do {
+            sashaTimeline.add(neighbourNodes(sashaTimeline.get(sashaTimeline.size() - 1), graph));
+            mikaTimeline.add(neighbourNodes(mikaTimeline.get(mikaTimeline.size() - 1), graph));
+            if (sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
+                    .get(mikaTimeline.size() - 1)
+                    .isEmpty() || timelineRepeats(sashaTimeline, mikaTimeline)) {
+                return null;
+            }
+        } while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1)));
+
+        int target = firstSameTargetOfTimelines(sashaTimeline, mikaTimeline);
         int[][] routes = new int[2][];
-        for (int i = 0; i < 2; i++) {
-            routes[i] = findSingleRouteInTimeline(timelines[i], target, graph);
-        }
+        routes[0] = findSingleRouteInTimeline(sashaTimeline, target, graph);
+        routes[1] = findSingleRouteInTimeline(mikaTimeline, target, graph);
         return routes;
     }
 
     /**
      * Vergleicht den jeweils letzten Schritt der Schrittfolgen miteinander
-     * und gibt den gemeinsamen gemerkten Knoten zurück.
+     * und gibt den gemeinsamen besuchten Knoten zurück.
      *
-     * @param timelines Zwei langes Array mit zwei Zeitleisten.
+     * @param sashaTimeline Sasha's Zeitleiste
+     * @param mikaTimeline  Mika's Zeitleiste
      * @return Der Index im Graphen des gemeinsamen Knotens.
      */
-    private static int firstSameTargetOfTimelines(List<BitSet>[] timelines) {
-        BitSet targets = (BitSet) timelines[0].get(timelines[0].size() - 1).clone();
-        targets.and(timelines[1].get(timelines[1].size() - 1));
+    private static int firstSameTargetOfTimelines(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet targets = (BitSet) sashaTimeline.get(sashaTimeline.size() - 1).clone();
+        targets.and(mikaTimeline.get(mikaTimeline.size() - 1));
         return targets.nextSetBit(0);
     }
 
-     /**
+    /**
      * Ermittelt den Weg vom Zielpunkt zurück zum Startpunkt entgegengesetzt der Kantenrichtung des Graphen.
      *
      * @param timeline Die Zeitleiste der erreichbaren Knoten,
@@ -104,8 +118,7 @@ public class Main {
         for (int currentStep = timeline.size() - 1; currentStep > 0; currentStep--) {
             route[currentStep] = target;
             BitSet currentNodes = timeline.get(currentStep - 1);
-            for (int i = 0; i < graph.length; i++) { //TODO: loop over with:
-                //https://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html#nextSetBit-int-
+            for (int i = 0; i < graph.length; i++) {
                 if (currentNodes.get(i)) {
                     BitSet arrows = graph[i];
                     if (arrows.get(target)) {
@@ -117,37 +130,6 @@ public class Main {
         }
         route[0] = target;
         return route;
-    }
-
-     /**
-     * Ermittelt für die Startknoten null und eins jeweils die Schrittfolge zum Zielknoten.
-     * Sollte es keine Lösung geben, wird null zurückgegeben.
-     *
-     * @param graph Der Graph, von dem die Zeitleisten der erreichbaren Knoten generiert werden sollen.
-     * @return Die generierten Zeitleisten der erreichbaren Knoten von 0. und 1.,
-     * oder falls diese nicht existieren null.
-     */
-    private static List<BitSet>[] generatesTimelines(BitSet[] graph) {
-        //TODO: Wenn ein Teil der Timeline in einen Loop läuft, kann dieser auch erkannt und abgebrochen werden
-        // Lohnt sich das? Oder wäre der Algorithmus zum finden der Loops rechenaufwändiger, als im Loop zu laufen?
-        BitSet sashaFirst = new BitSet(graph.length);
-        BitSet mikaFirst = new BitSet(graph.length);
-        sashaFirst.set(0);
-        mikaFirst.set(1);
-        @SuppressWarnings("Generic array creation")
-        List<BitSet>[] timelines = new ArrayList[2];
-        timelines[0] = new ArrayList<>(List.of(sashaFirst));
-        timelines[1] = new ArrayList<>(List.of(mikaFirst));
-        do {
-            timelines[0].add(neighbourNodes(timelines[0].get(timelines[0].size() - 1), graph));
-            timelines[1].add(neighbourNodes(timelines[1].get(timelines[1].size() - 1), graph));
-            if (timelines[0].get(timelines[0].size() - 1).isEmpty() || timelines[1]
-                    .get(timelines[1].size() - 1)
-                    .isEmpty() || timelineRepeats(timelines)) {
-                return null;
-            }
-        } while (!timelines[0].get(timelines[0].size() - 1).intersects(timelines[1].get(timelines[1].size() - 1)));
-        return timelines;
     }
 
     /**
@@ -169,39 +151,31 @@ public class Main {
     }
 
     /**
-     * TODO: 1. Javadoc muss entsprechend der Methodenänderungen erneuert werden
-     * TODO: 2. javadoc muss neu formuliert werden
-     * Ermittelt, ob zwei Zeitleisten der erreichbaren Knoten sich zu einem gleichen Zeitpunkt mit ihrem jeweils ersten Element wiederholen.
-     * Es wird also festgestellt, ob die beiden Zeitleisten irgendwann schon mal an den genau gleichen Knoten waren,
-     * wie zum neuesten/letzten Zeitpunkt. Ist dies der Fall, bedeutet das,
-     * dass die Zeitleisten sich immer wieder wiederholen werden.
-     * Wenn bisher noch kein Zeitpunkt gefunden wurde in beiden Zeitleisten,
-     * wo beide auf einem gleichen Knoten sind, ist dieser Zeitpunkt unmöglich und kann nie gefunden werden.
+     * Ermittelt, ob die zwei Zeitleisten sich zu einem Zeitpunkt mit ihrem letzten Eintrag wiederholen.
+     * Es wird daher festgestellt, ob beide Zeitleisten zu einem vorherigen Zeitpunkt an den genau gleichen Knoten waren,
+     * wie zum aktuellen Zeitpunkt.
      *
-     * @param timelines Zwei Zeitleisten der erreichbaren Knoten
+     * @param sashaTimeline Sasha's Zeitleiste der erreichbaren Knoten
+     * @param mikaTimeline  Mika's Zeitleiste der erreichbaren Knoten
      * @return True, wenn die Zeitleisten sich beide zu einem gleichen Zeitpunkt
      * mit dem neuen/letzten Zeitpunkt wiederholen.
      */
-    private static boolean timelineRepeats(List<BitSet>[] timelines) { //TODO: Die Zeitleisten trennen
-        // -> 2parameter statt einer list
-        BitSet current = timelines[0].get(timelines[0].size() -1);
-        BitSet repetitions = new BitSet(timelines[0].size());
-        List<BitSet> timeline = new ArrayList<>(timelines[0].subList(0, timelines[0].size() -1));
-        for(int i = 0; i < timeline.size(); i++) {
-            if(timeline.get(i).equals(current)) {
+    private static boolean timelineRepeats(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline) {
+        BitSet current = sashaTimeline.get(sashaTimeline.size() - 1);
+        BitSet repetitions = new BitSet(sashaTimeline.size());
+        List<BitSet> timeline = new ArrayList<>(sashaTimeline.subList(0, sashaTimeline.size() - 1));
+        for (int i = 0; i < timeline.size(); i++) {
+            if (timeline.get(i).equals(current)) {
                 repetitions.set(i);
             }
         }
-        //https://docs.oracle.com/javase/8/docs/api/java/util/BitSet.html#nextSetBit-int-
-        for (int i = repetitions.nextSetBit(0); i >= 0; i = repetitions.nextSetBit(i+1)) {
-            if(timelines[1].get(timelines[1].size() -1).equals(timelines[1].get(i))) {
+        for (int i = repetitions.nextSetBit(0); i >= 0; i = repetitions.nextSetBit(i + 1)) {
+            if (mikaTimeline.get(mikaTimeline.size() - 1).equals(mikaTimeline.get(i))) {
                 return true;
             }
         }
         return false;
     }
-
-
 
     /**
      * Gibt zu jeder .txt Datei im Verzeichnis /Eingabedateien/ den zugehörigen Dateipfad zurück
