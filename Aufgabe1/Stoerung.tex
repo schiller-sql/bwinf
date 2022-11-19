@@ -6,7 +6,7 @@
 
 % Die nächsten vier Felder bitte anpassen:
 \newcommand{\Aufgabe}{Aufgabe 1: Störung} % Aufgabennummer und Aufgabennamen angeben
-\newcommand{\TeamId}{?????}% Team-ID aus dem PMS angeben
+\newcommand{\TeamId}{00919}% Team-ID aus dem PMS angeben
 \newcommand{\TeamName}{Team-Name} % Team-Namen angeben
 \newcommand{\Namen}{Ole Deifuß}% Namen der Bearbeiter/-innen dieser Aufgabe angeben
 
@@ -74,53 +74,14 @@
 
     \vspace{0.5cm}
 
-	\textbf{Anleitung:} Trage oben in den Zeilen 8 bis 11 die Aufgabennummer, die Team-ID, den Team-Namen und alle Bearbeiter/-innen dieser Aufgabe mit Vor- und Nachnamen ein.
-   		Vergiss nicht, auch den Aufgabennamen anzupassen (statt "'\LaTeX-Dokument"')!
-
-    	Dann kannst du dieses Dokument mit deiner \LaTeX-Umgebung übersetzen.
-
-    	Die Texte, die hier bereits stehen, geben ein paar Hinweise zur Einsendung.
-   		Du solltest sie aber in deiner Einsendung wieder entfernen!
-
 	\section{Lösungsidee}\label{sec:losungsidee}
-	Die Idee der Lösung sollte hieraus vollkommen ersichtlich werden, ohne dass auf die eigentliche Implementierung Bezug genommen wird.
-	Hier sollte eben die Idee der Lösung beschrieben werden.
-	Dazu gehört meistens die Abstraktion des Problems, die Idee selbst und die Argumentation, wieso die Idee richtig ist.
-	Der erste Teil der Lösungsidee sollte üblicherweise darin bestehen, das gegebene Problem formalisieren, Mehrdeutigkeiten entscheiden zu formalisieren.
-	Dazu gehört auch, dass eventuelle Uneindeutigkeiten in der Aufgabenstellung entschieden und klar dokumentiert werden.
-	Das Ergebnis sollte eine formale, mathematische Darstellung des Problems sein – so einfach wie möglich und nicht unnötig kompliziert.
-	Es geht nicht darum, irgendjemanden davon zu überzeugen, dass das Problem schwierig ist.
-	Vielmehr glänzen gute Losungen dadurch, dass sie das Problem erstaunlich einfach darstellen.
-	Gute, veranschaulichende Beispiele sind natürlich erlaubt und erwünscht.
-	Es ist einerseits wichtig, die Algorithmen in Worten so zu beschreiben, dass der Leser die richtige Intuition und Vorstellung bekommt.
-	Andererseits sollten die Beschreibungen so präzise sein, dass der Leser den Algorithmus ohne viel nachzudenken selbst implementieren kann.
-	Für eine präzise Beschreibung eignet sich Pseudocode besonders gut.
-	Triviale Schritte im Algorithmus müssen natürlich nicht als Pseudocode ausgeführt wer- ¨ den.
-	Wie immer gilt: weniger ist mehr.
-	Echter Quelltext oder Implementationsdetails haben in der Lösungsidee nichts zu suchen.
-	Es kann interessant sein, alternative Lösungsverfahren zu kurz zu beschreiben und zu erklären, weshalb diese nicht verwendet worden sind.
-	Wenn dies von der Aufgabenstellung impliziert ist, kann es auch nötig sein, mehrere Lösungsverfahren zu implementieren und diese zu vergleichen.
-	In einem solchen Fall ist es sehr wichtig, die Vergleichsergebnisse übersichtlich im Kapitel „Programm-Ablaufprotokolle“ zu präsentieren (zum Beispiel in einer Tabelle) und zu interpretieren.
-	Wenn die vergleichsrelevanten Ergebnisse auf mehreren Seiten verteilt sind, wird sich kaum ein Bewerter die Muhe machen und diese zusammensuchen.
-	Nachdem die Lösungsidee beschrieben wurde, muss in den allermeisten Fällen eine theoretische Analyse folgen.
-	Oft sollte hier die Laufzeitkomplexität des Algorithmus genannt und begründet werden.
-	Auch die Speicherkomplexität ist interessant, falls diese nicht trivial ist.
-	Wenn nachgewiesen werden kann, dass das vorliegende Problem NP-vollständig ist, ist dies meistens Extrapunkte wert.
-	Die Analyse sollte knapp und richtig sein: Es ist nicht hilfreich, wenn die Anzahl der Zyklen auf einer selbst-definierten Rechnerarchitektur auf zehn Seiten genau berechnet wird.
-	Vielmehr sollten eine oder mehrere Variablen definiert werden, die die Größe der Eingabe beschreiben.
-	Mithilfe dieser Variablen kann die Laufzeit bzw. Speicherkomplexität dann in O-Notation angegeben werden.
-	Wenn man von der Laufzeit einer durchschnittlichen Eingabe sprechen möchte (dieser Begriff muss natürlich definiert sein) und die Analyse dieser Laufzeit zu kompliziert ist, kann man mithilfe von Zeitmessungen eine Hypothese aufstellen (diese sollte selbstverständlich auch als reine Hypothese dargestellt werden).
-	In der ersten Runde sind solche Messungen selten sinnvoll.
-	Nicht nur in der theoretischen Analyse ist es erlaubt und sinnvoll, mathematische Symbole wie P oder Q zu verwenden, wenn ein Zusammenhang nicht einfacher dargestellt werden kann – Ausdrucke mit diesen Symbolen sind meistens leichter zu verstehen als andere Konstruktionen oder umständliche Sätze, die den Zusammenhang beschreiben.
-	Oft können (und sollten) kompliziertere Ausdrücke mit einem einfachen Beispiel erläutert werden.
-
-    	In der Aufgabe geht es darum, dass ein Buch nach mit Lücken versehener Lückentext (Eingabedateien) durchsucht werden soll.
+    	In der Aufgabe "Störung" geht es darum, ein Buch nach mit Lücken versehener Lückentexten (Eingabedateien) zu durchsuchen.
 		Herausgefunden werden sollen alle Stellen im Buch, die ein Lückentext vervollständigen können.
-		Die Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen haben und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
+		In Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
 
 		Der Aufgabenstellung und der Form der vorgegebenen Lückentexte lässt sich Folgendes über den Aufbau der Lückentexte entnehmen:
 		\begin{itemize}
-			\item Jede Lücke durch einen Unterstrich ("\_") dargestellt,
+			\item jede Lücke wird durch einen Unterstrich ("\_") dargestellt,
 			\item alle Worte in den Lückentexten werden kleingeschrieben,
 			\item Satz- oder Sonderzeichen werden in den Lückentexten nicht verwendet,
 			\item daraus folgt, dass sich alle Lückentexte innerhalb eines geschlossenen Satzes beziehungsweise innerhalb eines durch Kommata abgetrennten Teilsatzes befinden.
@@ -139,24 +100,6 @@
 		Diese Lösungen können dann mit der Position, da nach dieser in der Aufgabenstellung gefragt war, ausgegeben werden.
 
 	\section{Umsetzung}\label{sec:umsetzung}
-	Hier wird kurz erläutert, wie die Lösungsidee im Programm tatsächlich umgesetzt wurde.
-	Hier können auch Implementierungsdetails erwähnt werden.
-	Nachdem unter "Lösungsidee" das Problem theoretisch gelöst wurde, muss die Lösung nun durch ein Programm realisiert werden.
-	Diese Transformation von Idee ins Programm soll hier vermittelt werden.
-	Beim Verständnis kann Pseudocode oder zum Teil auch ein UML-Diagramm enorm helfen.
-	In der Umsetzung geht es darum, den Bezug zwischen der Lösungsidee und Implementation herzustellen.
-	Nur selten sollte hier der tatsächliche Quelltext abgedruckt sein.
-	Auf gar keinen Fall soll der Code Zeile für Zeile erklärt werden.
-	Wenn der Quelltext nicht selbsterklärend ist (und damit ist nicht eine Flut von Kommentaren gemeint!), ist er oft in schlechtem Zustand.
-	In den allermeisten Fällen reicht es anzugeben, in welchen Methoden die Algorithmen aus der Lösungsidee implementiert sind.
-	Dies ist der richtige Abschnitt, um darauf einzugehen, wie bestimmte Konzepte der Lösungsidee elegant im Programm modelliert wurden (in diesem Fall dürfen natürlich auch kurze Ausschnitte des Quelltextes gezeigt werden).
-	Wenn euer Programm (ohne Benutzeroberfläche) länger als wenige hundert Zeilen ist, kann es für den Bewerter hilfreich sein, ein UML Klassendiagramm oder ein Flussdiagramm zu sehen.
-	Solche Diagramme haben allerdings nur ihren Platz in der Dokumentation, wenn sie zum Verständnis beitragen und sich auf relevanten Code beziehen.
-	Es wird kein Klassendiagramm benötigt, was zeigt, welches die privaten Felder eurer C++ Klasse sind (Das können die Bewerter auch im Quelltext nachlesen.), und auch keines, das darstellt, dass euer Hauptfenster 5 Buttons enthält.
-	Keinesfalls sollte hier eine Programm-Dokumentation im Sinne eines Benutzerhandbuches geschrieben werden.
-	Es sollte davon ausgegangen werden, dass mögliche Leser bzw. Bediener sowohl mit dem Programmieren als auch mit der konkreten Aufgabenstellung vertraut sind.
-	Ist darüber hinaus eine Benutzerdokumentation notwendig, so ist die Benutzeroberfläche offenbar verbesserbar.
-    	
 		Zunächst müssen sowohl das Buch als auch die Eingabedateien eingelesen werden.
 		Für die Eingabedateien bieten sich Listen an, da sie Wort für Wort verglichen werden sollen.
 		Speichert man diese also direkt einzeln als Worte ab, kann man mithilfe des Index auf einzelne zugreifen.
@@ -166,60 +109,10 @@
 		Der erste besteht aus dem Suchen des jeweils ersten Wortes der Lückentexte im Buch.
 		Die Suchergebnisse, also Positionen im Buch, die mit demselben Wort beginnen, können dann im zweiten Schritt auch auf die Korrektheit der weiteren Worte überprüft werden.
 
-		Der erste Prozess ist ziemlich einfach umzusetzen:
-
-			\begin{figure}\label{fig:pseudocode}
-				\begin{algorithmic}
-					\State $Positionen = new List$ \Comment{Die Liste, in der mögliche Positionen gespeichert werden sollen}
-					\For{$Zeile$ $in$ $Buch$}
-						\While{$Zeile$ $contains$ $Wort$}
-
-						\EndWhile
-					\EndFor
-				\end{algorithmic}
-			\end{figure}
-
-	\begin{figure}\label{fig:pseudocode2}
-		\begin{algorithmic}
-			\Require $n \geq 0$
-			\Ensure $y = x^n$
-			\State $y \Leftarrow 1$
-			\State $X \Leftarrow x$
-			\State $N \Leftarrow n$
-			\While{$N \neq 0$}
-				\If{$N$ is even}
-					\State $X \Leftarrow X \times X$
-					\State $N \Leftarrow \frac{N}{2} $ \Comment{This is a comment}
-				\ElsIf{$N$ is odd}
-					\State $y \Leftarrow y \times X$
-					\State $N \Leftarrow N - 1$
-				\EndIf
-			\EndWhile
-		\end{algorithmic}
-		\caption{Hallo}
-	\end{figure}
-
 	\section{Beispiele}\label{sec:beispiele}
-	Genügend Beispiele einbinden!
-	Die Beispiele von der BwInf-Webseite sollten hier diskutiert werden, aber auch eigene Beispiele sind sehr gut – besonders wenn sie Spezialfälle abdecken.
-	Aber bitte nicht 30 Seiten Programmausgabe hier einfügen!
-	Hier soll dokumentiert werden, wie das Programm sich unter verschiedenen Eingaben verhält.
-	Die Eingaben sind am besten so gewählt, sodass der Leser nach diesem Abschnitt überzeugt ist, dass das Programm korrekt funktioniert und die relevanten Fälle lösen kann (z.B.für N = 1000000).
-	Zu jeder Lösung gehören 3 bis 5 Beispiele (Programmeingaben und dazugehörige -ausgaben oder Zwischenschritte), aus denen ersichtlich wird, wie das Programm sich in unterschiedlichen Situationen verhält.
-	Auch wenn 3 Beispieleingaben in der Aufgabe vorgegeben sind, sollte man zusätzlich noch 3 Eingaben selbst entwerfen, dann erklären, wieso man was wie gewählt hat, und das Ergebnis kommentieren.
-	Mit der Wahl der Eingaben sollte man möglichst viele Fälle abdecken (solche, die etwa im alltäglichen Betrieb zu erwarten sind, aber auch solche, die Randwerte oder Sonderfälle darstellen, und das Programm vielleicht an seine Grenzen bringen).
-	Schwächen des Programms sollte man kommentieren.
-	(Das wird positiv gewertet, das Weglassen solcher Kommentare negativ!).
-	Bringt das Programm etwa nur bei jedem zehnten Aufruf ein gutes Ergebnis, so sollte man dokumentieren, dass man das Programm für die Beispiele zehnmal hat laufen lassen, oder eben gleich das Programm ändern, sodass es den Algorithmus zehnmal ausführt (das gehört dann aber natürlich schon entsprechend in der Lösungsidee dokumentiert).
-	Die Protokolle und ggf. Ablaufprotokolle sollen sinnvoll darstellen, was bei einem Programmablauf passiert.
-	Handelt es sich bei der Aufgabe etwa um ein Computerspiel, bei dem 1000 Zuge gemacht werden, so ist eine Liste der Züge sicherlich nicht sinnvoll.
-	(Die Einsendung wird von Menschen gelesen, nicht von Computern!)
-	Stattdessen sollten vielleicht einzelne Stellungen mit jeweils nächsten paar Zügen ausgegeben werden, anhand derer dann dokumentiert wird, wie sich die implementierte Methode strategisch auswirkt.
-	Beim Drucken von Ablaufprotokollen kann man umweltfreundlich sein und Geld sparen, wenn man Screenshots von schwarzen Konsolenfenstern invertiert.
-	Das sollte man daher tun, es ändert nichts an der Sache.
-
-		Lässt man das Programm laufen, werden für jede der sechs Eingabedateien die passenden Lösungen angegeben.
-		Dabei wird zunächst die Position im Buch angegeben (erst die Zeile, dann die "Spalte", also der Index in der Zeile), gefolgt von dem Teilsatz, welcher den jeweilige Lückentext vervollständigt.
+		Lässt man das Programm laufen, werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
+		Dabei wird zunächst die Position im Buch angegeben, gefolgt von dem Teilsatz, welcher den jeweilige Lückentext vervollständigt.
+		
 		Unter den Eingabedateien gibt es einige Sonderfälle:
 
 		Lückentexte können\ldots
@@ -229,65 +122,9 @@
 			\item \ldots mit einer Lücke enden.
 		\end{itemize}
 		Unter den vorgegebenen Eingabedateien befinden sich zwar keine, die mit einer Lücke beginnen, trotzdem könnten solche durch den Algorithmus vervollständigt werden.
+		
+		Als Ausgabe erhält man folgenden Text im Konsolenfenster:
 
-    \section{Quellcode}\label{sec:quellcode}
-    Unwichtige Teile des Programms sollen hier nicht abgedruckt werden.
-    Dieser Teil sollte nicht mehr als 2–3 Seiten umfassen, maximal 10.
-    Variablen- oder Funktionsnamen haben nichts in der L¨osungsidee zu suchen!
-    Die L¨oder Umsetzungsungsidee soll abstrakt die L¨osung beschreiben.
-    Das Programm ist lediglich eine m¨ogliche Umsetzung der Idee.
-    Dies zwingt zum einen dazu, dass die Idee eigenst¨andig formuliert sein muss, sich also
-    nicht hinter Aussagen wie „XY wird dann in der Funktion xy() berechnet“ verstecken kann.
-    Das hilft beim Verst¨andnis, denn normalerweise wird man die L¨osung von vorne
-    nach hinten lesen, und wie xy() funktioniert, ist zu dem Zeitpunkt, an dem dieser Satz
-    gelesen wird, weder bekannt noch relevant.
-    Zum anderen ist der Name der Funktion(xy()) nur von sehr geringem Interesse:
-    Ist die L¨osungsidee richtig und arbeitet das Programm korrekt (das sind Dinge die den Bewerter interessieren),
-    so ist wohl auch xy() (oder wie auch immer die Funktion heißen mag) korrekt.
-    Der relevante Teil des Quelltextes muss in ausgedruckter Form vorliegen. (Auf den Daunrelevant tentr¨ager gehen wir sp¨ater ein.) Die Unterscheidung zwischen relevantem und unrelevantem Code entscheidet sich an der Frage, was in der Aufgabenstellung gefragt ist. In
-    unserem Beispiel war die Eingabe der Spielsituation, die wir textbasiert uber die Kon- ¨
-    sole realisiert haben, nicht relevant.
-    Daher haben wir ihren Code in separate Dateien
-    ausgelagert und diese nicht abgedruckt. D
-    iese Trennung unterscheidet aber nicht nur,
-    Modular was abgedruckt wird, sondern ist auch gutes Softwaredesign.
-    Wir haben ein Interface (zu
-    programmieren deutsch: Schnittstelle) entwickelt, die den L¨osungsalgorithmus von seiner Verwendung
-    isoliert.
-    Das Interface selber, in drehzahl strategy.h definiert,
-    haben wir nicht abgedruckt, weil es schon in der Umsetzung beschrieben und einfach aus
-    der bereits abgedruckten drehzahl strategy.cpp ableitbar war.
-    Solche Interfaces machen
-    das gesamte Programm testbarer, einfacher und wartbarer, und helfen sowohl beim L¨osen
-    des Problems, da man ein großes Problem in zwei kleine unterteilt, die man unabh¨angig
-    voneinander l¨osen kann, als auch sp¨ater beim Kommunizieren bzw.
-    Dokumentieren der
-    eigenen L¨osung, da alle so isolierten Komponenten unabh¨angig voneinander sind —
-    sofern die Interfaces exakt spezifiziert sind16
-    .
-    Sind die Ein- und Ausgabe, die graphische Oberfl¨ache (zum Beispiel Fensterklassen),
-    Ereignisbehandlungsmethoden, das Lesen und Schreiben von Dateien, oder ¨ahnliche
-    Komponenten des Programms nicht ein zentraler Teil der Aufgabenstellung, so w¨are
-    es auch falsch, sie zu einem zentralen Teil der L¨osung zu machen: Dieser Code ist oft
-    recht technisch und an das verwendete System gekoppelt, zum Beispiel an Windowing
-    Toolkits oder Runtime Libraries. Tragen diese Teile des Codes nichts zur L¨osung des
-    eigentlichen Problemes bei, so sind sie nicht relevant.
-    Aus dieser Erkenntnis folgt, dass solche Teile des Codes auch keinen Wert fur die ¨
-    L¨osung des Problems tragen. Man muss sie somit nicht nur nicht abdrucken, sondern
-    eigentlich auch gar nicht schreiben: Mit der Konsoleeingabe haben wir in unserem Fall
-    das Problem der Eingabe m¨oglichst einfach gel¨ost: Eine graphische Oberfl¨ache (englisch:
-    Konzentration auf graphical user interface, GUI) h¨atte keinen Mehrwert geschaffen, sondern lediglich den
-    das Wesentliche nicht-relevanten Codeteil verl¨angert.
-    Schreibt man doch GUI-Code, so sollte man ihn, soweit es geht, vom Rest des Programms isolieren.
-    Dazu bietet sich das ”
-    Model-View-Controller-Pattern“ an17 MVC : Es darf
-    als bekannt vorausgesetzt werden, und die konsistente und konsequente Verwendung der
-    Begriffe ”
-    Model“, ”
-    View“ und ”
-    Controller“ im Code und in der Dokumentation helfen
-    nach der Erw¨ahnung des Patterns wiederum enorm beim Verst¨andnis.
-
-
-
+	\section{Quellcode}\label{sec:quellcode}
+   
 \end{document}
