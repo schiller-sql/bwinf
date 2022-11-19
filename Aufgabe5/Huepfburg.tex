@@ -6,9 +6,9 @@
 
 % Die nächsten vier Felder bitte anpassen:
 \newcommand{\Aufgabe}{Aufgabe 5: Hüpfburg}        % Aufgabennummer und Aufgabennamen angeben
-\newcommand{\TeamId}{?????}                       % Team-ID aus dem PMS angeben
-\newcommand{\TeamName}{????}                      % Team-Namen angeben
-\newcommand{\Namen}{Tony Borchert, Lennart Protte}% Namen der Bearbeiter/-innen dieser Aufgabe angeben
+\newcommand{\TeamId}{00919}                       % Team-ID aus dem PMS angeben
+\newcommand{\TeamName}{Object Grind}              % Team-Namen angeben
+\newcommand{\Namen}{Lennart Protte}               % Namen der Bearbeiter/-innen dieser Aufgabe angeben
 
 % Kopf- und Fußzeilen
 \usepackage{scrlayer-scrpage, lastpage}
@@ -75,6 +75,7 @@
 % Diese beiden Pakete müssen zuletzt geladen werden
 \usepackage{hyperref} % Anklickbare Links im Dokument
 \usepackage{cleveref}
+\usepackage{textcomp}
 
 % Daten für die Titelseite
 \title{\textbf{\Huge\Aufgabe}}
@@ -90,6 +91,7 @@
     \tableofcontents
 
     \vspace{0.5cm}
+%TODO: Schrittfolge als Begriff durchgängig verwenden
 
 
     \section{Lösungsidee}\label{sec:losungsidee}
@@ -128,7 +130,7 @@
 
     \begin{figure}
         \centering
-        \NewAdigraph{InfinityLoop}{
+        \NewAdigraph{FigurEins}{
             1:0,0;
             2:2,0;
             3:1,1;
@@ -137,43 +139,43 @@
             2,3;
             3,1;
         }{}
-        \InfinityLoop{}
-        \caption{Nicht lösbarer zyklischer Parcour}
+        \FigurEins{}
+        \caption{Nicht lösbarer zyklischer Parcours}
         \label{fig:Figure1}
     \end{figure}
 
-    So kommt es in \hyperref[fig:Figure1]{Figur 1.} zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
+    So kommt es in \hyperref[fig:Figure1]{Figur 1.}
+    zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
 
     \begin{table}
         \centering
         \begin{tabular}{lll}
             \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
-            1.               & \{ 1 \}                        & \{ 2 \}                        \\
-            2.               & \{ 2 \}                        & \{ 3 \}                        \\
-            3.               & \{ 3 \}                        & \{ 1 \}                        \\
-            4.               & \{ 1 \}                        & \{ 2 \}                        \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 2 \}                        & \{ 3 \}                        \\
+            2.               & \{ 3 \}                        & \{ 1 \}                        \\
+            3.               & \{ 1 \}                        & \{ 2 \}                        \\
         \end{tabular}
-        \caption{Schrittfolge für Figur 1.}
+        \caption{Schrittfolge für \hyperref[fig:Figure1]{Figur 1.}}
         \label{tab:Table1}
     \end{table}
 
-    Hier kommt es in Schritt vier bei beiden Spielern zu einer Wiederholung von Schritt eins.
+    Hier kommt es in Schritt drei bei beiden Spielern zu einer Wiederholung von Schritt null.
     Damit kann der Parcours sicher für ungültig erklärt werden
     und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
     Dies gilt, da sich beide Spieler in einem Zyklus befinden
     und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
 
-    Der Parcour ist aber dann auch nicht lösbar, wenn einer der beiden Knotenmengen leer ist,
-    dann kann nämlich bei allen weiteren Schritt der Breitensuche dieser Knotenmenge,
-    keine weiteren Knoten erreicht werden und somit können beide Knotenmengen nie überlappen,
-    da eine Knotenmenge ab jetzt immer leer ist.
-    Es handelt sich also um eine Sackgasse im Parcour.
+    Der Parcours ist ebenfalls nicht lösbar, sollte eine der beiden oder beide Knotenmengen leer sein.
+    Dies gilt, da im nächsten Schritt keine weiteren Knoten für die leere Knotenmenge erreichbar wären
+    und somit für einen der beiden Spieler kein Schritt mehr möglich ist.
+    Da die Aufgabenstellung allerdings vorgibt, dass sich in jedem Schritt beide Spieler bewegen müssen,
+    ist der Parcours damit für ungültig zu erklären.
+    So kommt es in \hyperref[fig:Figure2]{Figur 2.} zu einer solchen Sackgasse für einen der Spieler.
 
-    So kommt es in \hyperref[fig:Figure2]{Figur 2.} zu einer solchen Sackgasse.
-
-    \begin{figure}[htb]
+    \begin{figure}[!h]
         \centering
-        \NewAdigraph{NameOfAdigraph}{
+        \NewAdigraph{FigurZwei}{
             1:0,0;
             2:4.5,0;
             3:1.5,0;
@@ -183,113 +185,156 @@
             3,4;
             2,4;
         }{}
-        \NameOfAdigraph{}
-        \caption{Nicht lösbarer Parcour mit Sackgasse}
+        \FigurZwei{}
+        \caption{Nicht lösbarer Parcours mit Sackgasse}
         \label{fig:Figure2}
     \end{figure}
 
-    \begin{table}[htb]
+    \begin{table}[!h]
         \centering
         \begin{tabular}{lll}
             \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
-            1.               & \{ 1 \}                        & \{ 2 \}                        \\
-            2.               & \{ 3 \}                        & \{  \}                           \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 3 \}                        & \{  4\}                          \\
+            2.               & \{ 4 \}                        & \{  \}                           \\
         \end{tabular}
-        \caption{Schrittfolge für Figur 2.}
+        \caption{Schrittfolge für \hyperref[fig:Figure2]{Figur 2.}}
         \label{tab:Table2}
     \end{table}
 
-    Denn hier kommt es bereits im zweiten Schritt dazu, dass die Knotenmenge des Spieler 2 leer ist.
-    Damit ist es unmöglich das Spieler 1 und 2 sich je treffen, da Spieler 2 nicht mehr im Parcour ist.
+    Hier kommt es bereits im zweiten Schritt dazu, dass die Knotenmenge des zweiten Spielers leer ist.
+    Damit ist es unmöglich das Spieler eins und Spieler zwei sich jemals treffen werden,
+    da Spieler zwei keinen weiteren Schritt gehen kann und sie sich noch nicht auf dem gleichen Feld befinden.
 
-    Beim Algorithmus muss also bei jedem Schritt der Breitensuche überprüft werden,
-    ob die jetzige Knotenmenge von beiden Spielern sich
-    zu einem gemeinsamen Zeitpunkt wiederholt.
-    Dafür muss eine Liste an bisherigen Knotenmengen beider Spieler geführt werden.
-    Es muss auch überprüft werden ob einer der beiden Knotenmengen leer ist.
+    Im Algorithmus muss also in jedem Schritt der Breitensuche überprüft werden,
+    ob die aktuelle Knotenmenge von beiden Spielern sich
+    mit einem gemeinsamen Zeitpunkt in der Vergangenheit wiederholt.
+    Dazu muss eine Liste an bisherigen Knotenmengen beider Spieler geführt werden.
+    Auch muss überprüft werden ob einer der beiden Knotenmengen leer ist.
     Ist einer dieser Bedingungen erfüllt, ist der Graph nicht lösbar
     und die Suche nach einem gemeinsamen Feld kann abgebrochen werden.
-    Ansonsten kann überprüft werden,
-    ob die beiden neuen Knotenmengen sich überschneiden,
-    dann kann der Parcours an diesem Schritt an einem Feld
-    von beiden Spielern gleichzeitig erreicht werden.
-    Ist die Bedingung nicht erfüllt,
+    Andernfalls kann überprüft werden,
+    ob die beiden neuen Knotenmengen sich überschneiden.
+    Ist dies der Fall, kann der Parcours in diesem Schritt an einem Feld
+    von beiden Spielern gleichzeitig erreicht werden und ist somit lösbar.
+    Ist keine der Bedingungen Bedingung nicht erfüllt,
     folgt ein weiterer Schritt der Breitensuche.
 
-    Wenn man aber nun einen Zeitpunkt gefunden hat,
-    wo beide Knotenmengen sich überschneiden,
-    muss ein Weg gefunden werden zu
-    einer der überschneidenden Knoten in den Knotenmengen.
-    Dafür kann jeder der überschneidenden Knoten ausgewählt werden.
+    Sobald der Zielpunkt gefunden ist,
+    wo sich beide Schrittfolgen überschneiden,
+    gilt es einen Weg von den Startknoten zu diesem Zielknoten zu finden.
+    Gibt es mehrere Zielpunkte, kann ein beliebiger gewählt werden,
+    da alle mit der gleichen Schrittanzahl erreicht werden können.
 
-    Nun hat man eine n lange Liste von Knotenmengen,
-    wo der letzte Eintrag die überschneidende Knotenmenge ist
-    und man hat einen ausgewählten überschneidenden Knoten in diesem letzten Eintrag.
-    Jede Position in dieser Liste ist also ein Schritt
-    und die Knotenmenge sind alle Knoten die erreichbar sind in nach diesem Schritt.
-    Beim ersten Eintrag in der Liste,
-    ist zudem zu beachten,
-    dass die Knotenmenge nur aus dem Startknoten besteht.
+    Aus dem ermittelten Zielknoten, den gegebenen Startknoten und
+    der generierten Schrittfolge von jedem Startknoten zum Zielknoten,
+    lässt sich nun der Weg für jeden der Startknoten bestimmen.
+    Der letzte Eintrag in den Schrittfolgen beinhaltet nun den Zielknoten,
+    während der erste Eintrag den jeweiligen Startknoten enthält.
 
-    Auch der Weg ist eine n lange Liste,
-    aber an einzelnen Knoten.
-    Jeder Knoten an einer Position l muss enthalten sein
-    in der Knotenmenge der gleichen Postion l der schon gegebenen Liste von Knotenmengen,
-    da diese Knotenmenge alle Knoten enthält die nach dem Schritt l möglich zu erreichen sind.
-    Gleichzeitig muss der Knoten der Position l eine Kante zum nächsten Knoten,
-    d.h. Knoten der Position $l + 1$ besitzen,
-    da sonst von den Knoten im Weg
-    gar kein richtiger Weg zwischen den Knoten gebildet wird.
-    Außerdem muss der letzte Knoten im Weg,
-    der ausgewählte überschneidende Knoten sein.
-    Da die erste Knotenmenge nur aus dem Startknoten besteht,
-    ist auch der Knoten an der ersten Position immer nur der Startknoten,
-    da der Weg auch immer vom Startknoten starten muss.
-
-    Wenn man für eine Position i im Weg einen Knoten ermitteln möchte,
-    muss man deswegen nur nach einem Knoten in der zugehörigen Knotenmenge suchen
-    (also Knotenmenge der Knotenmengen Liste an Position i),
-    die zur Position $i + 1$ führt.
-    Da aber am Anfang nur der letzte Knoten an Position j ermittelt ist,
-    kann von dem angefangen werden und der Knoten an Position $j - 1$ ermittelt werden,
-    der zum Knoten an Position j führt.
-    Dann kann $j - 2$, $j - 3$, usw. ermittelt werden,
-    bis j die erste Position ist.
+    Zunächst kann im Weg vom Startknoten zum Zielknoten der Zielknoten selbst an letzter Stelle eingetragen werden.
+    Es lässt sich nun in jeder Schrittfolge der vorletzte Schritt betrachten.
+    In diesem Schritt kann nun ein Knoten ermittelt werden,
+    welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt.
+    Ist dieser Knoten gefunden,
+    kann er im Weg an der entsprechenden Stelle (hier an der vorletzten) gespeichert werden.
+    Dieses Verfahren wird nun solange für den nächsten Schritt und den zuletzt in den Weg eingefügten Knoten wiederholt,
+    bis man am Startknoten angelangt ist.
 
 
     \section{Umsetzung}\label{sec:umsetzung}
-	% Beispiel graph
-	Eine Menge von Knoten wird als \texttt{BitSet} dargestellt.
-	Ein \texttt{BitSet} in Java ist eine Datenstruktur mit einer festen Anzahl von Bits,
-	die alle anhand eines Indexes gesetzt werden können.
-	Die Länge jedes \texttt{BitSet} ist gleich die Anzahl aller möglichen Knoten
-	und jeder Index korrespondiert einem Knoten.
-	Ist an diesen Index im \texttt{BitSet} eine 1,
-	ist der Knoten in der Knotenmenge enthalten, ansonsten ist er es nicht.
-	Beispielsweise gilt $0101 \widehat{=} \{2, 4\}$.
-	Da der erste Index eines \texttt{BitSet} 0 ist,
-	korrespondiert der Index 0 zu Knoten 1 des Parcours.
-	
-	Ein Graph wird als \texttt{BitSet[]} dargestellt, also ein Array von \texttt{BitSet}.
-	Jeder Index des Arrays korrespondiert wieder zu einem Knoten (Index 0 zu Knoten 1, usw.).
-	Der am Index eines Knotens A enthaltene \texttt{BitSet}, ist eine Knotenmenge,
-	die enthält zu welchen Knoten der Knoten A (von Knoten A aus) eine Kante besitzt.
-	
-	Die Liste an Knotenmengen ist eine \texttt{List<BitSet>},
-	d.h. eine \texttt{List} aus \texttt{BitSet}.
-	Index 0 der \texttt{List} korrespondiert zur ersten Position der Liste von Knotenmengen.
-	
-	Ein Weg ist ein \texttt{int[]}, also ein Array an Integern,
-	der Index 0 des Weges korrespondiert auch zur ersten Position des Weges.
-	Ist am Index 2 beispielsweise der Integer 3 eingetragen,
-	befindet sich an der dritten Position des Weges der Knoten 4.
+
+    % Beispiel graph mit matrix daneben zur visualisierung
+    Eine Menge von Knoten wird als \texttt{BitSet} dargestellt.
+    Ein \texttt{BitSet} in Java ist eine lineare statische Datenstruktur,
+    welche Bits, die alle anhand eines Indexes gesetzt werden können.
+    Die Länge jedes \texttt{BitSet} ist gleich der Anzahl der Knoten des Graphen
+    und jeder Index korrespondiert zu einem Knoten.
+    Ist an diesen Index im \texttt{BitSet} eine eins,
+    ist der Knoten in der Knotenmenge enthalten, andernfalls ist er es nicht.
+    Beispielsweise gilt $0101 \widehat{=} \{2, 4\}$.
+    Da der erste Index eines \texttt{BitSet} null ist,
+    korrespondiert der Index null zu Knoten eins des Parcours.
+
+    Ein Graph wird als \texttt{BitSet[]} dargestellt.
+    Jeder Index des Arrays korrespondiert zu einem Knoten.
+    Das am Index eines Knoten enthaltene \texttt{BitSet}, ist eine Knotenmenge.
+    Diese stellt da, zu welchen Knoten eine Kante ausgeht.
+
+
+
+
+    \begin{figure}[!h]
+        \centering
+        \NewAdigraph{FigurDrei}{
+            1:0,0;
+            2:1.5,0;
+            3:0.75,1;
+            4:2.5,1;
+        }{
+            1,2;
+            2,3;
+            2,4;
+            1,3;
+        }
+        \FigurDrei{
+            1,2,3::blue;
+        }
+        \caption{Graph der Matrix}
+
+        \label{fig:Figure3}
+    \end{figure}
+
+    \[
+        Graph = \begin{bmatrix}
+                    0 & 1 & 1 & 0 \\
+                    0 & 0 & 1 & 1 \\
+                    0 & 0 & 0 & 0 \\
+                    0 & 0 & 0 & 0 \\
+        \end{bmatrix}
+    \]
+
+    Die Schrittfolge ist eine \texttt{List<BitSet>},
+    d.h. eine \texttt{List} aus \texttt{BitSet}.
+    Index null der \texttt{List} korrespondiert zum Ausgangspunkt,
+    daher Schritt null beziehungsweise zur Startposition.
+    \[
+        Schrittfolge = \left\lbrace
+        \begin{tabular}{ll}
+            \underline{\text{List Index:}} & \underline{\text{BitSet:}} \\
+            0                              & \{  1000\}                   \\
+            1                              & \{  0100\}                   \\
+            2                              & \{  0010\}                   \\
+        \end{tabular}
+        \right\rbrace
+    \]
+
+    Ein Weg ist ein \texttt{int[]}.
+    Dabei repräsentiert der Index null den Ausgangspunkt des Weges.
+    Aufgrund der Tatsache, dass im Graphen der Index null, dem Knoten eins entspricht,
+    sind die Werte im Weg um eins niedriger eingetragen, als die tatsächlichen Knoten.
+    Ist beispielsweise am Index zwei der Integer drei eingetragen,
+    befindet sich an der dritten Position des Weges der Knoten vier.
+    Dies wird in der Ausgabe berücksichtigt, wo zu jedem Wert eins addiert wird.
+
+    - Transformation von Idee in Programm
+
+    - kein Echter Code aber Pseudo Code
+
+    - Angeben, in welchen Methoden welcher Algorithmische teil
+
+    - Wie wurde Modelliert
+
+    -
 
 
     \section{Beispiele}\label{sec:beispiele}
 
-    \begin{figure}[htb]
+    - Darstellen, was bei einem Programmablauf passiert
+
+    \begin{figure}[h!]
         \centering
-        \NewAdigraph{IL}{
+        \NewAdigraph{FigurVier}{
             1:0,0;
             2:1,1;
             3:0,2;
@@ -309,14 +354,40 @@
             7,8;
             8,2;
         }{}
-        \IL{}
-        \caption{Unendlcher Parcour}
-        \label{fig:Figure3}
+        \FigurVier{}
+        \caption{Unendlicher Parcours}
+        \label{fig:Figure4}
     \end{figure}
 
-    \begin{figure}[htb]
+    \begin{table}[h!]
         \centering
-        \NewAdigraph{IL}{
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 2 \}                        & \{  3, 4\}                       \\
+            2.               & \{ 3, 4\}                      & \{  1, 5\}                       \\
+            3.               & \{ 1, 5 \}                     & \{  2, 6\}                       \\
+            4.               & \{ 2, 6 \}                     & \{  3, 4, 7\}                    \\
+            5.               & \{ 3, 4, 7 \}                  & \{  1, 5, 8\}                    \\
+            6.               & \{  1, 5, 8\}                    & \{ 2, 6 \}                     \\
+            7.               & \{  2, 6\}                       & \{  3, 4, 7\}                    \\
+        \end{tabular}
+        \caption{Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
+        \label{tab:Table3}
+    \end{table}
+
+    -Breitensuche ohne Abbruchbedingung würde hier unendlich lange weiter laufen
+
+    -Abbruch in Schritt acht, da wiederholung mit Schritt fünf
+
+    -teil zyklen (1,2,3,1,2,3,... bei spieler eins) sind dabei nicht ausschlaggebend
+
+
+
+
+    \begin{figure}[h!]
+        \centering
+        \NewAdigraph{FigurFuenf}{
             1:0,0;
             2:2,0;
             3:0,2;
@@ -337,14 +408,39 @@
             8,7;
             7,6;
         }{}
-        \IL{}
-        \caption{Sackgasse Parcour}
-        \label{fig:Figure4}
+        \FigurFuenf{}
+        \caption{Sackgasse Parcours}
+        \label{fig:Figure5}
     \end{figure}
 
-    \begin{figure}[htb]
+    \begin{table}[h!]
         \centering
-        \NewAdigraph{InfLoop}{
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{  4\}                          & \{  9\}                          \\
+            2.               & \{  3, 5\}                       & \{  8\}                          \\
+            3.               & \{  1, 6\}                       & \{  7\}                          \\
+            4.               & \{  4\}                          & \{  6\}                          \\
+            5.               & \{  3, 5\}                       & \{  \}                           \\
+        \end{tabular}
+        \caption{Schrittfolge für \hyperref[fig:Figure5]{Figur 5.}}
+        \label{tab:Table4}
+    \end{table}
+
+    %TODO überprüfen, ob unser Algorithmus wirklich an dieser Stelle abbricht oder eins später 
+    % @ \hyperref[fig:Figure4]{Figur 4.}
+    führt an knoten sechs in eine sackgasse für Spieler zwei von Schritt fünf auf sechs
+    daher ist es nicht möglich, nach schritt sechs für spieler zwei weiter zu laufen
+
+    -da beide spieler sich in jedem schritt immer um genau ein feld bewegen müssen
+    es ist also nicht möglich für den einen spieler stehen zu bleiben,
+    während der andere sich noch weiter bewegt
+    -
+
+    \begin{figure}[h!]
+        \centering
+        \NewAdigraph{FigurSechs}{
             1:3,0;
             2:-3.5,-1;
             3:-1.5,0;
@@ -411,16 +507,39 @@
             20,3;
             20,10:3;
         }
-        \InfLoop{
+        \FigurSechs{
             1,18,13,10::blue;
             2,19,20,10::red;
         }
-        \caption{Beispiel1 Parcour}
-        \label{fig:Figure5}
+        \caption{huepfburg0.txt Parcours}
+        \label{fig:Figure6}
     \end{figure}
 
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 4, 8, 18 \}                 & \{ 3, 19 \}                    \\
+            2.               & \{ 4, 7, 13, 18 \}             & \{ 6, 19, 20 \}                \\
+            3.               & \{ 5, 7, 10, 13 \}             & \{ 2, 3, 10, 12, 20 \}         \\
+        \end{tabular}
+        \caption{Schrittfolge für \hyperref[fig:Figure6]{Figur 6.}}
+        \label{tab:Table5}
+    \end{table}
 
-    \section{Quellcode}\label{sec:quellcode}\label{LastPage}
+    -der graph aus dem beispiel huepfburg0.txt
+
+    -lösbarer parcours
+
+    -breitensuche findet im dritten schritt einen gemeinsamen nenner
+
+    %TODO Beispiel, wo mehrere Zielknoten gefunden werden
+
+
+    \section{Quellcode}
+    \label{sec:quellcode}
+    \label{LastPage}
     \begin{lstlisting}[frame=single,language=Java,title=Methode graphFromLines,breaklines=true]
     /**
      * Generiert den Graphen aus den Zeilen einer Eingabedatei.
@@ -577,6 +696,4 @@
         return false;
     }
     \end{lstlisting}
-
-
 \end{document}
