@@ -96,10 +96,8 @@ public class Main {
                 counter++;
             }
             if (text.toString().contains("  ")) {
-                /**
-                 * Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
-                 * Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
-                 */
+                 // Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
+                 // Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
                 continue;
             }
             String[] lines = text.toString().split(" ");
