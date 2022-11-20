@@ -28,13 +28,21 @@
 % Für Bilder
 \usepackage{graphicx}
 
+%Für Überschriften
+\usepackage[labelformat=empty]{caption}
+\captionsetup[algorithm]{labelformat=empty}
+
 % Für Algorithmen
 \usepackage{algpseudocode}
 \usepackage{adigraph}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+
 
 % Für Quelltext
 \usepackage{listings}
 \usepackage{color}
+\usepackage{textcomp}
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
@@ -75,7 +83,6 @@
 % Diese beiden Pakete müssen zuletzt geladen werden
 \usepackage{hyperref} % Anklickbare Links im Dokument
 \usepackage{cleveref}
-\usepackage{textcomp}
 
 % Daten für die Titelseite
 \title{\textbf{\Huge\Aufgabe}}
@@ -127,6 +134,8 @@
     für beide Spieler zur gleichen Zeit,
     irgendwann gleich der Menge,
     der zu einem früheren Zeitpunkt markierten Knoten.
+    So kommt es in \hyperref[fig:Figure1]{Figur 1.}
+    zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
 
     \begin{figure}
         \centering
@@ -140,12 +149,9 @@
             3,1;
         }{}
         \FigurEins{}
-        \caption{Nicht lösbarer zyklischer Parcours}
+        \caption{Figur 1: Nicht lösbarer zyklischer Parcours}
         \label{fig:Figure1}
     \end{figure}
-
-    So kommt es in \hyperref[fig:Figure1]{Figur 1.}
-    zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
 
     \begin{table}
         \centering
@@ -156,11 +162,11 @@
             2.               & \{ 3 \}                        & \{ 1 \}                        \\
             3.               & \{ 1 \}                        & \{ 2 \}                        \\
         \end{tabular}
-        \caption{Schrittfolge für \hyperref[fig:Figure1]{Figur 1.}}
+        \caption{Tabelle 1: Schrittfolge für \hyperref[fig:Figure1]{Figur 1.}}
         \label{tab:Table1}
     \end{table}
 
-    Hier kommt es in Schritt drei bei beiden Spielern zu einer Wiederholung von Schritt null.
+    In Schritt drei findet bei beiden Spielern eine Wiederholung zu Schritt null statt.
     Damit kann der Parcours sicher für ungültig erklärt werden
     und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
     Dies gilt, da sich beide Spieler in einem Zyklus befinden
@@ -186,7 +192,7 @@
             2,4;
         }{}
         \FigurZwei{}
-        \caption{Nicht lösbarer Parcours mit Sackgasse}
+        \caption{Figur 2: Nicht lösbarer Parcours mit Sackgasse}
         \label{fig:Figure2}
     \end{figure}
 
@@ -195,33 +201,35 @@
         \begin{tabular}{lll}
             \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
             0.               & \{ 1 \}                        & \{ 2 \}                        \\
-            1.               & \{ 3 \}                        & \{  4\}                          \\
-            2.               & \{ 4 \}                        & \{  \}                           \\
+            1.               & \{ 3 \}                        & \{ 4 \}                        \\
+            2.               & \{ 4 \}                        & \{   \}                           \\
         \end{tabular}
-        \caption{Schrittfolge für \hyperref[fig:Figure2]{Figur 2.}}
+        \caption{Tabelle 2: Schrittfolge für \hyperref[fig:Figure2]{Figur 2.}}
         \label{tab:Table2}
     \end{table}
 
     Hier kommt es bereits im zweiten Schritt dazu, dass die Knotenmenge des zweiten Spielers leer ist.
-    Damit ist es unmöglich das Spieler eins und Spieler zwei sich jemals treffen werden,
+    Damit ist es unmöglich,
+    dass Spieler eins und Spieler zwei zum gleichen Zeitpunkt auf einen Knoten laufen können,
     da Spieler zwei keinen weiteren Schritt gehen kann und sie sich noch nicht auf dem gleichen Feld befinden.
 
-    Im Algorithmus muss also in jedem Schritt der Breitensuche überprüft werden,
-    ob die aktuelle Knotenmenge von beiden Spielern sich
-    mit einem gemeinsamen Zeitpunkt in der Vergangenheit wiederholt.
-    Dazu muss eine Liste an bisherigen Knotenmengen beider Spieler geführt werden.
-    Auch muss überprüft werden ob einer der beiden Knotenmengen leer ist.
-    Ist einer dieser Bedingungen erfüllt, ist der Graph nicht lösbar
+    Im Algorithmus muss daher in jedem Schritt für beide Spieler in der Breitensuche überprüft werden,
+    ob die aktuelle Menge der besuchten Knoten in der Breitensuche
+    bereits in der Schrittfolge des jeweiligen Spielers enthalten ist.
+    Dazu müssen die Schrittfolgen beider Spieler gespeichert werden.
+    Des weiteren muss überprüft werden ob beide Spieler erreichbare Knoten haben.
+    Sollte dies nicht der Fall sein, kann dieser Spieler sich nicht weiter bewegen
+    und sollte noch kein Zielknoten gefunden sein, ist der Parcours damit ungültig.
+    Ist einer dieser Bedingungen erfüllt, ist der Parcours nicht lösbar
     und die Suche nach einem gemeinsamen Feld kann abgebrochen werden.
-    Andernfalls kann überprüft werden,
-    ob die beiden neuen Knotenmengen sich überschneiden.
-    Ist dies der Fall, kann der Parcours in diesem Schritt an einem Feld
+    Sollten sich die beiden Knotenmengen zu einem gemeinsamen Zeitpunkt an mindestens einem Knoten überschneiden,
+    kann der Parcours in diesem Schritt an diesem Schnittknoten
     von beiden Spielern gleichzeitig erreicht werden und ist somit lösbar.
-    Ist keine der Bedingungen Bedingung nicht erfüllt,
+    Ist keine der Bedingungen erfüllt,
     folgt ein weiterer Schritt der Breitensuche.
 
     Sobald der Zielpunkt gefunden ist,
-    wo sich beide Schrittfolgen überschneiden,
+    an dem sich die beide Schrittfolgen überschneiden,
     gilt es einen Weg von den Startknoten zu diesem Zielknoten zu finden.
     Gibt es mehrere Zielpunkte, kann ein beliebiger gewählt werden,
     da alle mit der gleichen Schrittanzahl erreicht werden können.
@@ -229,15 +237,37 @@
     Aus dem ermittelten Zielknoten, den gegebenen Startknoten und
     der generierten Schrittfolge von jedem Startknoten zum Zielknoten,
     lässt sich nun der Weg für jeden der Startknoten bestimmen.
-    Der letzte Eintrag in den Schrittfolgen beinhaltet nun den Zielknoten,
+    Der letzte Eintrag in den Schrittfolgen beinhaltet den Zielknoten,
     während der erste Eintrag den jeweiligen Startknoten enthält.
 
-    Zunächst kann im Weg vom Startknoten zum Zielknoten der Zielknoten selbst an letzter Stelle eingetragen werden.
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+            \State $A = Anzahl_{Schritte}$
+            \State $T = Zielknoten$
+            \State $Weg_{Knotenfolge}$
+            \State Füge $T$ zu $Weg$ an Stelle $A$ hinzu \label{lst:line:zeileVier}
+            \For {$A > 0$}
+                \State $A = A -1$
+                \For {$K_{Knoten} = 1,2,\ldots,N$}
+                    \If{$K$ $zeigt$ $auf$ $T$}
+                        \label{lst:line:zeileAcht}
+                        \State füge $K$ zu $Weg$ an Stelle $A$ hinzu \label{lst:line:zeileNeun}
+                        \State $T = K$
+                    \EndIf
+                \EndFor
+            \EndFor
+        \end{algorithmic}
+        \caption{Algorithmus 1: Wegsuche Algorithmus}
+        \label{alg:Algorithm1}
+    \end{algorithm}
+
+    Wie im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} in Zeile ~\ref{lst:line:zeileVier} dargestellt,
+    kann zunächst im Weg der Zielknoten an letzter Stelle eingetragen werden.
     Es lässt sich nun in jeder Schrittfolge der vorletzte Schritt betrachten.
     In diesem Schritt kann nun ein Knoten ermittelt werden,
-    welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt.
+    welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt (Zeile ~\ref{lst:line:zeileAcht}).
     Ist dieser Knoten gefunden,
-    kann er im Weg an der entsprechenden Stelle (hier an der vorletzten) gespeichert werden.
+    kann er im Weg an der entsprechenden Stelle gespeichert werden (Zeile ~\ref{lst:line:zeileNeun}).
     Dieses Verfahren wird nun solange für den nächsten Schritt und den zuletzt in den Weg eingefügten Knoten wiederholt,
     bis man am Startknoten angelangt ist.
 
@@ -247,9 +277,9 @@
     % Beispiel graph mit matrix daneben zur visualisierung
     Eine Menge von Knoten wird als \texttt{BitSet} dargestellt.
     Ein \texttt{BitSet} in Java ist eine lineare statische Datenstruktur,
-    welche Bits, die alle anhand eines Indexes gesetzt werden können.
+    welche Bits, die alle anhand eines Indexes gesetzt werden können, speichert.
     Die Länge jedes \texttt{BitSet} ist gleich der Anzahl der Knoten des Graphen
-    und jeder Index korrespondiert zu einem Knoten.
+    und jeder Index steht dabei für einen Knoten.
     Ist an diesen Index im \texttt{BitSet} eine eins,
     ist der Knoten in der Knotenmenge enthalten, andernfalls ist er es nicht.
     Beispielsweise gilt $0101 \widehat{=} \{2, 4\}$.
@@ -280,17 +310,19 @@
         \FigurDrei{
             1,2,3::blue;
         }
-        \caption{Graph der Matrix}
+        \caption{Figur 3: Graph der Matrix}
 
         \label{fig:Figure3}
     \end{figure}
 
+    So kann beispielsweise \hyperref[fig:Figure3]{Figur 3.} als das folgende \texttt{BitSet[]} dargestellt werden.
+
     \[
-        Graph = \begin{bmatrix}
-                    0 & 1 & 1 & 0 \\
-                    0 & 0 & 1 & 1 \\
-                    0 & 0 & 0 & 0 \\
-                    0 & 0 & 0 & 0 \\
+        \texttt{BitSet[]}_{Graph} = \begin{bmatrix}
+                                        0 & \textcolor{blue}{1} & 1                   & 0 \\
+                                        0 & 0                   & \textcolor{blue}{1} & 1 \\
+                                        0 & 0                   & 0                   & 0 \\
+                                        0 & 0                   & 0                   & 0 \\
         \end{bmatrix}
     \]
 
@@ -299,12 +331,12 @@
     Index null der \texttt{List} korrespondiert zum Ausgangspunkt,
     daher Schritt null beziehungsweise zur Startposition.
     \[
-        Schrittfolge = \left\lbrace
+        \texttt{List<BitSet>}_{Schrittfolge} = \left\lbrace
         \begin{tabular}{ll}
             \underline{\text{List Index:}} & \underline{\text{BitSet:}} \\
-            0                              & \{  1000\}                   \\
-            1                              & \{  0100\}                   \\
-            2                              & \{  0010\}                   \\
+            0                              & \{ 1000 \}                 \\
+            1                              & \{ 0100 \}                 \\
+            2                              & \{ 0010 \}                 \\
         \end{tabular}
         \right\rbrace
     \]
@@ -317,20 +349,24 @@
     befindet sich an der dritten Position des Weges der Knoten vier.
     Dies wird in der Ausgabe berücksichtigt, wo zu jedem Wert eins addiert wird.
 
-    - Transformation von Idee in Programm
-
-    - kein Echter Code aber Pseudo Code
-
-    - Angeben, in welchen Methoden welcher Algorithmische teil
-
-    - Wie wurde Modelliert
-
-    -
+    In der Implementation wurde der Algorithmus in der Methode
+    \texttt{int[][] sameTargetRoute(BitSet[] graph)} umgesetzt.
+    Dort werden die Schrittfolgen in einer \texttt{do-while Schleife} schrittweise erweitert
+    und auf die in \hyperref[sec:losungsidee]{der Lösungsidee} beschriebenen Bedingungen geprüft.
+    Wenn in der Schleife ein Zielknoten gefunden wird, wird unter der verwendung der Hilfsmethode
+    \texttt{int[] findSingleRouteInTimeline(List<BitSet> timeline, int target, BitSet[] graph)},
+    welche im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} beschrieben ist,
+    der Weg zwischen den Startknoten und dem Zielknoten ermittelt und das Erbegnis anschließend zurückgegeben.
+    Des weiteren wird in der Schleife die Hilfsmethode
+    \texttt{BitSet neighbourNodes(BitSet nodes, BitSet[] graph)},
+    zur Ermittlung der Nachbarsknoten verwendet.
+    Um auf die Wiederholungen der Schrittfolgen zu prüfen, wird außerdem die Methode
+    \texttt{boolean timelineRepeats(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline)} aufgerufen.
+    Zur Ermittlung der Schnittmenge der zwei Schrittfolgen wird
+    \texttt{int firstSameTargetOfTimelines(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline)} benutzt.
 
 
     \section{Beispiele}\label{sec:beispiele}
-
-    - Darstellen, was bei einem Programmablauf passiert
 
     \begin{figure}[h!]
         \centering
@@ -355,7 +391,7 @@
             8,2;
         }{}
         \FigurVier{}
-        \caption{Unendlicher Parcours}
+        \caption{Figur 4: Unendlicher Parcours}
         \label{fig:Figure4}
     \end{figure}
 
@@ -364,15 +400,15 @@
         \begin{tabular}{lll}
             \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
             0.               & \{ 1 \}                        & \{ 2 \}                        \\
-            1.               & \{ 2 \}                        & \{  3, 4\}                       \\
-            2.               & \{ 3, 4\}                      & \{  1, 5\}                       \\
-            3.               & \{ 1, 5 \}                     & \{  2, 6\}                       \\
-            4.               & \{ 2, 6 \}                     & \{  3, 4, 7\}                    \\
-            5.               & \{ 3, 4, 7 \}                  & \{  1, 5, 8\}                    \\
-            6.               & \{  1, 5, 8\}                    & \{ 2, 6 \}                     \\
-            7.               & \{  2, 6\}                       & \{  3, 4, 7\}                    \\
+            1.               & \{ 2 \}                        & \{ 3, 4 \}                     \\
+            2.               & \{ 3, 4 \}                     & \{ 1, 5 \}                     \\
+            3.               & \{ 1, 5 \}                     & \{ 2, 6 \}                     \\
+            4.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
+            5.               & \{ 3, 4, 7 \}                  & \{ 1, 5, 8 \}                  \\
+            6.               & \{ 1, 5, 8 \}                  & \{ 2, 6 \}                     \\
+            7.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
         \end{tabular}
-        \caption{Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
+        \caption{Tabelle 3: Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
         \label{tab:Table3}
     \end{table}
 
@@ -381,6 +417,9 @@
     -Abbruch in Schritt acht, da wiederholung mit Schritt fünf
 
     -teil zyklen (1,2,3,1,2,3,... bei spieler eins) sind dabei nicht ausschlaggebend
+
+    -aufruf in if-abfrage von timelineRepeats in sameTargetRoute gibt true zurück
+    -> return null -> Keine Lösung
 
 
 
@@ -409,7 +448,7 @@
             7,6;
         }{}
         \FigurFuenf{}
-        \caption{Sackgasse Parcours}
+        \caption{Figur 5: Sackgasse Parcours}
         \label{fig:Figure5}
     \end{figure}
 
@@ -418,17 +457,17 @@
         \begin{tabular}{lll}
             \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
             0.               & \{ 1 \}                        & \{ 2 \}                        \\
-            1.               & \{  4\}                          & \{  9\}                          \\
-            2.               & \{  3, 5\}                       & \{  8\}                          \\
-            3.               & \{  1, 6\}                       & \{  7\}                          \\
-            4.               & \{  4\}                          & \{  6\}                          \\
-            5.               & \{  3, 5\}                       & \{  \}                           \\
+            1.               & \{  4 \}                         & \{  9 \}                         \\
+            2.               & \{  3, 5 \}                      & \{  8 \}                         \\
+            3.               & \{  1, 6 \}                      & \{  7 \}                         \\
+            4.               & \{  4 \}                         & \{  6 \}                         \\
+            5.               & \{  3, 5 \}                      & \{  \}                           \\
         \end{tabular}
-        \caption{Schrittfolge für \hyperref[fig:Figure5]{Figur 5.}}
+        \caption{Tabelle 4: Schrittfolge für \hyperref[fig:Figure5]{Figur 5.}}
         \label{tab:Table4}
     \end{table}
 
-    %TODO überprüfen, ob unser Algorithmus wirklich an dieser Stelle abbricht oder eins später 
+%TODO überprüfen, ob unser Algorithmus wirklich an dieser Stelle abbricht oder eins später
     % @ \hyperref[fig:Figure4]{Figur 4.}
     führt an knoten sechs in eine sackgasse für Spieler zwei von Schritt fünf auf sechs
     daher ist es nicht möglich, nach schritt sechs für spieler zwei weiter zu laufen
@@ -436,7 +475,13 @@
     -da beide spieler sich in jedem schritt immer um genau ein feld bewegen müssen
     es ist also nicht möglich für den einen spieler stehen zu bleiben,
     während der andere sich noch weiter bewegt
-    -
+
+    - in sameTargetRoute in der If-Abfrage
+    sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
+    .get(mikaTimeline.size() - 1)
+    .isEmpty()
+    -> return null -> Keine Lösung
+
 
     \begin{figure}[h!]
         \centering
@@ -511,7 +556,7 @@
             1,18,13,10::blue;
             2,19,20,10::red;
         }
-        \caption{huepfburg0.txt Parcours}
+        \caption{Figur 6: huepfburg0.txt Parcours}
         \label{fig:Figure6}
     \end{figure}
 
@@ -524,7 +569,7 @@
             2.               & \{ 4, 7, 13, 18 \}             & \{ 6, 19, 20 \}                \\
             3.               & \{ 5, 7, 10, 13 \}             & \{ 2, 3, 10, 12, 20 \}         \\
         \end{tabular}
-        \caption{Schrittfolge für \hyperref[fig:Figure6]{Figur 6.}}
+        \caption{Tabelle 5: Schrittfolge für \hyperref[fig:Figure6]{Figur 6.}}
         \label{tab:Table5}
     \end{table}
 
@@ -534,7 +579,61 @@
 
     -breitensuche findet im dritten schritt einen gemeinsamen nenner
 
-    %TODO Beispiel, wo mehrere Zielknoten gefunden werden
+    - while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1))); wird in schritt 3 false
+
+    - target wird durch firstSameTargetOf gesetzt
+
+    -routen werden mit findSingleRouteInTimeline gesetzt und zurückgegeben
+
+    \begin{figure}[h!]
+        \centering
+        \NewAdigraph{FigurSieben}{
+            1:0,1;
+            2:6,1;
+            3:1.5,1;
+            4:4.5,1;
+            5:3,0;
+            6:3,1;
+            7:3,2;
+        }{
+            1,3;
+            2,4;
+            3,5;
+            3,6;
+            3,7;
+            4,5;
+            4,6;
+            4,7;
+        }{}
+        \FigurSieben{}
+        \caption{Figur 7: Parcours mit mehreren Zielknoten}
+        \label{fig:Figure7}
+    \end{figure}
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 3 \}                        & \{  4 \}                         \\
+            2.               & \{ 5, 6, 7 \}                  & \{ 5, 6, 7 \}                  \\
+        \end{tabular}
+        \caption{Tabelle 6: Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
+        \label{tab:Table6}
+    \end{table}
+
+    - sonderfall mehrere zielknoten
+
+    - ist beliebig welcher genommen weird, da schrittfolge zu allen gleich lang
+    werde im selben schritt gefunden
+
+    - im algorithmus wird der knoten mit der kleinsten bezeichnung genommen
+
+    - while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1))); wird in schritt 2 false
+
+    - firstSameTarget of liefert 5
+
+    -routen werden erstellt und zurückgegeben
 
 
     \section{Quellcode}
