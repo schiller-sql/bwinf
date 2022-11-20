@@ -367,125 +367,10 @@
 
 
     \section{Beispiele}\label{sec:beispiele}
-
-    \begin{figure}[h!]
+        
+        \begin{figure}[h!]
         \centering
         \NewAdigraph{FigurVier}{
-            1:0,0;
-            2:1,1;
-            3:0,2;
-            4:2,2;
-            5:3,2;
-            6:4,1;
-            7:3,0;
-            8:2,0;
-        }{
-            1,2;
-            2,3;
-            3,1;
-            2,4;
-            4,5;
-            5,6;
-            6,7;
-            7,8;
-            8,2;
-        }{}
-        \FigurVier{}
-        \caption{Figur 4: Unendlicher Parcours}
-        \label{fig:Figure4}
-    \end{figure}
-
-    \begin{table}[h!]
-        \centering
-        \begin{tabular}{lll}
-            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
-            0.               & \{ 1 \}                        & \{ 2 \}                        \\
-            1.               & \{ 2 \}                        & \{ 3, 4 \}                     \\
-            2.               & \{ 3, 4 \}                     & \{ 1, 5 \}                     \\
-            3.               & \{ 1, 5 \}                     & \{ 2, 6 \}                     \\
-            4.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
-            5.               & \{ 3, 4, 7 \}                  & \{ 1, 5, 8 \}                  \\
-            6.               & \{ 1, 5, 8 \}                  & \{ 2, 6 \}                     \\
-            7.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
-        \end{tabular}
-        \caption{Tabelle 3: Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
-        \label{tab:Table3}
-    \end{table}
-
-    -Breitensuche ohne Abbruchbedingung würde hier unendlich lange weiter laufen
-
-    -Abbruch in Schritt acht, da wiederholung mit Schritt fünf
-
-    -teil zyklen (1,2,3,1,2,3,... bei spieler eins) sind dabei nicht ausschlaggebend
-
-    -aufruf in if-abfrage von timelineRepeats in sameTargetRoute gibt true zurück
-    -> return null -> Keine Lösung
-
-
-
-
-    \begin{figure}[h!]
-        \centering
-        \NewAdigraph{FigurFuenf}{
-            1:0,0;
-            2:2,0;
-            3:0,2;
-            4:1,1;
-            5:3,2;
-            6:4,2;
-            7:5,1;
-            8:4,0;
-            9:3,0;
-        }{
-            1,4;
-            4,3;
-            3,1;
-            4,5;
-            5,6;
-            2,9;
-            9,8;
-            8,7;
-            7,6;
-        }{}
-        \FigurFuenf{}
-        \caption{Figur 5: Sackgasse Parcours}
-        \label{fig:Figure5}
-    \end{figure}
-
-    \begin{table}[h!]
-        \centering
-        \begin{tabular}{lll}
-            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
-            0.               & \{ 1 \}                        & \{ 2 \}                        \\
-            1.               & \{  4 \}                         & \{  9 \}                         \\
-            2.               & \{  3, 5 \}                      & \{  8 \}                         \\
-            3.               & \{  1, 6 \}                      & \{  7 \}                         \\
-            4.               & \{  4 \}                         & \{  6 \}                         \\
-            5.               & \{  3, 5 \}                      & \{  \}                           \\
-        \end{tabular}
-        \caption{Tabelle 4: Schrittfolge für \hyperref[fig:Figure5]{Figur 5.}}
-        \label{tab:Table4}
-    \end{table}
-
-%TODO überprüfen, ob unser Algorithmus wirklich an dieser Stelle abbricht oder eins später
-    % @ \hyperref[fig:Figure4]{Figur 4.}
-    führt an knoten sechs in eine sackgasse für Spieler zwei von Schritt fünf auf sechs
-    daher ist es nicht möglich, nach schritt sechs für spieler zwei weiter zu laufen
-
-    -da beide spieler sich in jedem schritt immer um genau ein feld bewegen müssen
-    es ist also nicht möglich für den einen spieler stehen zu bleiben,
-    während der andere sich noch weiter bewegt
-
-    - in sameTargetRoute in der If-Abfrage
-    sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
-    .get(mikaTimeline.size() - 1)
-    .isEmpty()
-    -> return null -> Keine Lösung
-
-
-    \begin{figure}[h!]
-        \centering
-        \NewAdigraph{FigurSechs}{
             1:3,0;
             2:-3.5,-1;
             3:-1.5,0;
@@ -552,12 +437,12 @@
             20,3;
             20,10:3;
         }
-        \FigurSechs{
+        \FigurVier{
             1,18,13,10::blue;
             2,19,20,10::red;
         }
-        \caption{Figur 6: huepfburg0.txt Parcours}
-        \label{fig:Figure6}
+        \caption{Figur 4: huepfburg0.txt Parcours}
+        \label{fig:Figure4}
     \end{figure}
 
     \begin{table}[h!]
@@ -569,25 +454,36 @@
             2.               & \{ 4, 7, 13, 18 \}             & \{ 6, 19, 20 \}                \\
             3.               & \{ 5, 7, 10, 13 \}             & \{ 2, 3, 10, 12, 20 \}         \\
         \end{tabular}
-        \caption{Tabelle 5: Schrittfolge für \hyperref[fig:Figure6]{Figur 6.}}
-        \label{tab:Table5}
+        \caption{Tabelle 3: Schrittfolge für \hyperref[fig:Figure4]{Figur 4.}}
+        \label{tab:Table3}
     \end{table}
 
-    -der graph aus dem beispiel huepfburg0.txt
+	Bei \hyperref[fig:Figure4]{Figur 4.} handelt es sich um den Beispielparcours aus der Aufgabenstellung 
+	beziehungsweise um den Parcours aus huepfburg0.txt aus den Eingabedateien.
+	Es handelt sich daher um einen lösbaren Parcours, 
+	in dem sich beide Spieler im dritten Schritt auf Feld zehn treffen.
+	Wie \hyperref[tab:Table3]{Tabelle 3.} zu entnehmen ist, ergibt sich im dritten Schritt der Knoten zehn aus
+	der Schnittmenge der zwei Breitensuchen.
+	In der Methode \hyperref[lst:sameTargetRoute]{\texttt{int[][] sameTargetRoute(\ldots)}} 
+	liefert die Bedingung in der \texttt{do-while Schleife} in Schritt drei \texttt{false}.
+	Daher wird im Anschluss der Zielknoten durch die Methode 
+	\hyperref[lst:firstSameTargetOfTimelines]{\texttt{int firstSameTargetOfTimelines(\ldots)} }
+	gesetzt und die Wege mit \hyperref[lst:findSingleRouteInTimeline]{\texttt{int[] findSingleRouteInTimeline(\ldots)}} gesetzt und anschließend wie folgt ausgegeben ausgegeben.
+	
+	\begin{lstlisting}[frame=single, title=Programmausgabe Figur 4., breaklines=true]
+  Ergebnis für huepfburg0.txt
+	Der Parcours hat folgende Lösung:
+	Zielfeld: 10
+	Anzahl an Schritten: 4
+	Sasha's Weg: 
+	1 -> 18 -> 13 -> 10
+	Mika's Weg: 
+	2 -> 19 -> 20 -> 10
+    \end{lstlisting}
 
-    -lösbarer parcours
-
-    -breitensuche findet im dritten schritt einen gemeinsamen nenner
-
-    - while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1))); wird in schritt 3 false
-
-    - target wird durch firstSameTargetOf gesetzt
-
-    -routen werden mit findSingleRouteInTimeline gesetzt und zurückgegeben
-
-    \begin{figure}[h!]
+        \begin{figure}[h!]
         \centering
-        \NewAdigraph{FigurSieben}{
+        \NewAdigraph{FigurFuenf}{
             1:0,1;
             2:6,1;
             3:1.5,1;
@@ -605,9 +501,9 @@
             4,6;
             4,7;
         }{}
-        \FigurSieben{}
-        \caption{Figur 7: Parcours mit mehreren Zielknoten}
-        \label{fig:Figure7}
+        \FigurFuenf{}
+        \caption{Figur 5: Parcours mit mehreren Zielknoten}
+        \label{fig:Figure5}
     \end{figure}
 
     \begin{table}[h!]
@@ -618,23 +514,147 @@
             1.               & \{ 3 \}                        & \{  4 \}                         \\
             2.               & \{ 5, 6, 7 \}                  & \{ 5, 6, 7 \}                  \\
         \end{tabular}
-        \caption{Tabelle 6: Schrittfolge für \hyperref[fig:Figure4]{Figur 3.}}
+        \caption{Tabelle 4: Schrittfolge für \hyperref[fig:Figure5]{Figur 5.}}
+        \label{tab:Table4}
+    \end{table}
+
+	In \hyperref[fig:Figure5]{Figur 5.} erreichen beide Spieler im gleichen Schritt die Knoten { 5, 6, 7 }.
+	Wie in \hyperref[fig:Figure4]{Figur 4.} beschrieben, wird die \texttt{do-while Schleife} beendet.
+	Die Methode \hyperref[lst:firstSameTargetOfTimelines]{\texttt{int firstSameTargetOfTimelines(\ldots)} } 
+	gibt hier Knoten fünf zurück, da \texttt{nextSetBit(\ldots)} den Knoten mit dem kleinsten Bezeichner gibt.
+	Für die Lösung ist es unerheblich, ob ein oder mehrere Zielknoten gefunden werden, 
+	da alle Zielknoten im gleichen Schritt erreicht werden. 
+	Daher wird eine Lösung für den Parcours ausgegeben.
+	
+		\begin{lstlisting}[frame=single, title=Programmausgabe Figur 5., breaklines=true]
+  Ergebnis für Figur5.txt
+	Der Parcours hat folgende Lösung:
+	Zielfeld: 5
+	Anzahl an Schritten: 3
+	Sasha's Weg: 
+	1 -> 3 -> 5
+	Mika's Weg: 
+	2 -> 4 -> 5
+    \end{lstlisting}
+
+    \begin{figure}[h!]
+        \centering
+        \NewAdigraph{FigurSechs}{
+            1:0,0;
+            2:1,1;
+            3:0,2;
+            4:2,2;
+            5:3,2;
+            6:4,1;
+            7:3,0;
+            8:2,0;
+        }{
+            1,2;
+            2,3;
+            3,1;
+            2,4;
+            4,5;
+            5,6;
+            6,7;
+            7,8;
+            8,2;
+        }{}
+        \FigurSechs{}
+        \caption{Figur 6: Unendlicher Parcours}
+        \label{fig:Figure6}
+    \end{figure}
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{ 2 \}                        & \{ 3, 4 \}                     \\
+            2.               & \{ 3, 4 \}                     & \{ 1, 5 \}                     \\
+            3.               & \{ 1, 5 \}                     & \{ 2, 6 \}                     \\
+            4.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
+            5.               & \{ 3, 4, 7 \}                  & \{ 1, 5, 8 \}                  \\
+            6.               & \{ 1, 5, 8 \}                  & \{ 2, 6 \}                     \\
+            7.               & \{ 2, 6 \}                     & \{ 3, 4, 7 \}                  \\
+        \end{tabular}
+        \caption{Tabelle 5: Schrittfolge für \hyperref[fig:Figure6]{Figur 6.}}
+        \label{tab:Table5}
+    \end{table}
+    
+    Bei \hyperref[fig:Figure6]{Figur 6.} handelt es sich um einen Parcours ohne Lösung.
+    Dies ist erkennbar, da beide Spieler sich zeitgleich in ihrer Schrittfolge mit einem vorherigem Schritt wiederholen.
+    Relevant ist hierbei die Abbruchbedingung der Breitensuche in 
+    \hyperref[lst:sameTargetRoute]{\texttt{int[][] sameTargetRoute(\ldots)}}.
+    Ohne diese würde es zu einer Endlosschleife kommen.
+    In der \texttt{if Abfrage} in der Schleife, liefert der Aufruf der Methode \hyperref[lst:timelineRepeats]{\texttt{boolean timelineRepeats(\ldots)}} ein \texttt{true} in Schritt sieben.
+    Die Knotenmenge \{2, 6\} von Spieler eins, wiederholt sich hier mit Schritt vier, 
+    während sich zeitgleich die Knotenmenge \{3, 4, 7\} bei Spieler zwei, ebenfalls mit Schritt vier wiederholt.
+    Daher wird hier \texttt{null} zurückgegeben und der Algorithmus beendet.
+    
+    \begin{lstlisting}[frame=single, title=Programmausgabe Figur 6., breaklines=true]
+  Ergebnis für Figur6.txt
+	Der Parcours hat keine Lösung!
+    \end{lstlisting}
+    
+	
+    \begin{figure}[h!]
+        \centering
+        \NewAdigraph{FigurSieben}{
+            1:0,0;
+            2:2,0;
+            3:0,2;
+            4:1,1;
+            5:3,2;
+            6:4,2;
+            7:5,1;
+            8:4,0;
+            9:3,0;
+        }{
+            1,4;
+            4,3;
+            3,1;
+            4,5;
+            5,6;
+            2,9;
+            9,8;
+            8,7;
+            7,6;
+        }{}
+        \FigurSieben{}
+        \caption{Figur 7: Sackgasse Parcours}
+        \label{fig:Figure7}
+    \end{figure}
+
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{lll}
+            \textbf{Schritt} & \textbf{Spieler 1 Knotenmenge} & \textbf{Spieler 2 Knotenmenge} \\
+            0.               & \{ 1 \}                        & \{ 2 \}                        \\
+            1.               & \{  4 \}                         & \{  9 \}                         \\
+            2.               & \{  3, 5 \}                      & \{  8 \}                         \\
+            3.               & \{  1, 6 \}                      & \{  7 \}                         \\
+            4.               & \{  4 \}                         & \{  6 \}                         \\
+            5.               & \{  3, 5 \}                      & \{  \}                           \\
+        \end{tabular}
+        \caption{Tabelle 6: Schrittfolge für \hyperref[fig:Figure7]{Figur 7.}}
         \label{tab:Table6}
     \end{table}
 
-    - sonderfall mehrere zielknoten
-
-    - ist beliebig welcher genommen weird, da schrittfolge zu allen gleich lang
-    werde im selben schritt gefunden
-
-    - im algorithmus wird der knoten mit der kleinsten bezeichnung genommen
-
-    - while (!sashaTimeline.get(sashaTimeline.size() - 1).intersects(mikaTimeline.get(mikaTimeline.size() - 1))); wird in schritt 2 false
-
-    - firstSameTarget of liefert 5
-
-    -routen werden erstellt und zurückgegeben
-
+	Der Graph von \hyperref[fig:Figure7]{Figur 7.} führt in eine Sackgasse.
+	Nach Schritt fünf ist es Spieler zwei nicht möglich weiter zu laufen, da es keine erreichbaren Knoten gibt.
+	Die Aufgabenstellung erfordert, dass sich in jedem Schritt beide Spieler bewegen müssen.
+	Da sich beide Spieler nicht auf dem gleichen knoten befinden (daher der Parcours noch nicht gelößt ist),
+	kann er für ungültig erklärt werden.
+	In \hyperref[lst:sameTargetRoute]{\texttt{int[][] sameTargetRoute(\ldots)}} wird in der \texttt{if Abfrage}, durch 
+	\texttt{sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
+    .get(mikaTimeline.size() - 1)
+    .isEmpty()} gefrüft, ob einer der beiden Spieler keine erreichbaren Knoten mehr hat.
+    Hier ist diese Bedingung \texttt{true} womit \texttt{null} zurückgegeben wird.
+    
+     \begin{lstlisting}[frame=single, title=Programmausgabe Figur 7., breaklines=true]
+  Ergebnis für Figur7.txt
+	Der Parcours hat keine Lösung!
+    \end{lstlisting}
 
     \section{Quellcode}
     \label{sec:quellcode}
@@ -664,6 +684,7 @@
 
 
     \begin{lstlisting}[frame=single,language=Java,title=Methode sameTargetRoute,breaklines=true]
+    \label{lst:sameTargetRoute}
     /**
      * Findet eine Route, vom nullten und ersten Knoten,
      * zu einem gemeinsamen Knoten in einer gleichen Anzahl von Schritten.
@@ -698,6 +719,7 @@
 
 
     \begin{lstlisting}[frame=single,language=Java,title=Methode firstSameTargetOfTimelines,breaklines=true]
+    \label{lst:firstSameTargetOfTimelines}
     /**
      * Vergleicht den jeweils letzten Schritt der Schrittfolgen miteinander
      * und gibt den gemeinsamen besuchten Knoten zurück.
@@ -715,6 +737,7 @@
 
 
     \begin{lstlisting}[frame=single,language=Java,title=Methode findSingleRouteInTimeline,breaklines=true]
+    \label{lst:findSingleRouteInTimeline}
     /**
      * Ermittelt den Weg vom Zielpunkt zurück zum Startpunkt entgegengesetzt der Kantenrichtung des Graphen.
      *
@@ -768,6 +791,7 @@
 
 
     \begin{lstlisting}[frame=single,language=Java,title=Methode timelineRepeats,breaklines=true]
+    \label{lst:timelineRepeats}
     /**
      * Ermittelt, ob die zwei Zeitleisten sich zu einem Zeitpunkt mit ihrem letzten Eintrag wiederholen.
      * Es wird daher festgestellt, ob beide Zeitleisten zu einem vorherigen Zeitpunkt an den genau gleichen Knoten waren,
