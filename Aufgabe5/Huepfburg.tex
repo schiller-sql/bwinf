@@ -343,20 +343,20 @@
     Dies wird in der Ausgabe berücksichtigt, wo zu jedem Wert eins addiert wird.
 
     In der Implementation wurde der Algorithmus in der Methode
-    \texttt{int[][] sameTargetRoute(BitSet[] graph)} umgesetzt.
+    \texttt{int[][] sameTargetRoute(\ldots)} umgesetzt.
     Dort werden die Schrittfolgen in einer \texttt{do-while Schleife} schrittweise erweitert
     und auf die in \hyperref[sec:losungsidee]{der Lösungsidee} beschriebenen Bedingungen geprüft.
     Wenn in der Schleife ein Zielknoten gefunden wird, wird unter der verwendung der Hilfsmethode
-    \texttt{int[] findSingleRouteInTimeline(List<BitSet> timeline, int target, BitSet[] graph)},
+    \texttt{int[] findSingleRouteInTimeline(\ldots)},
     welche im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} beschrieben ist,
     der Weg zwischen den Startknoten und dem Zielknoten ermittelt und das Erbegnis anschließend zurückgegeben.
     Des weiteren wird in der Schleife die Hilfsmethode
-    \texttt{BitSet neighbourNodes(BitSet nodes, BitSet[] graph)},
+    \texttt{BitSet neighbourNodes(\ldots)},
     zur Ermittlung der Nachbarsknoten verwendet.
     Um auf die Wiederholungen der Schrittfolgen zu prüfen, wird außerdem die Methode
-    \texttt{boolean timelineRepeats(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline)} aufgerufen.
+    \texttt{boolean timelineRepeats(\ldots)} aufgerufen.
     Zur Ermittlung der Schnittmenge der zwei Schrittfolgen wird
-    \texttt{int firstSameTargetOfTimelines(List<BitSet> sashaTimeline, List<BitSet> mikaTimeline)} benutzt.
+    \texttt{int firstSameTargetOfTimelines(\ldots)} benutzt.
 
 
     \section{Beispiele}\label{sec:beispiele}
