@@ -75,56 +75,133 @@
     \vspace{0.5cm}
 
 	\section{Lösungsidee}\label{sec:losungsidee}
-    	In der Aufgabe "Störung" geht es darum, ein Buch nach mit Lücken versehener Lückentexten (Eingabedateien) zu durchsuchen.
-		Herausgefunden werden sollen alle Stellen im Buch, die ein Lückentext vervollständigen können.
-		In Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
+    	In der Aufgabe "Störung" geht es darum,
+    	ein Buch nach mit Lücken versehener Lückentexten (Eingabedateien) zu durchsuchen.
+		Herausgefunden werden sollen alle Stellen im Buch,
+		die ein Lückentext vervollständigen können.
+		In Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen
+		und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
 
-		Der Aufgabenstellung und der Form der vorgegebenen Lückentexte lässt sich Folgendes über den Aufbau der Lückentexte entnehmen:
+		Der Aufgabenstellung
+		und der Form der vorgegebenen Lückentexte lässt sich Folgendes über den Aufbau der Lückentexte entnehmen:
 		\begin{itemize}
-			\item jede Lücke wird durch einen Unterstrich ("\_") dargestellt,
+			\item jede Lücke wird durch einen Unterstrich (\_) dargestellt,
 			\item alle Worte in den Lückentexten werden kleingeschrieben,
 			\item Satz- oder Sonderzeichen werden in den Lückentexten nicht verwendet,
-			\item daraus folgt, dass sich alle Lückentexte innerhalb eines geschlossenen Satzes beziehungsweise innerhalb eines durch Kommata abgetrennten Teilsatzes befinden.
+			\item daraus folgt,
+			dass sich alle Lückentexte innerhalb eines geschlossenen Satzes beziehungsweise innerhalb eines durch Kommata abgetrennten Teilsatzes befinden.
 		\end{itemize}
 
-		Um die Stellen im Buch zu finden, bietet es sich an zunächst nach dem ersten Wort des Lückentextes zu suchen.
+		Um die Stellen im Buch zu finden,
+		bietet es sich an zunächst nach dem ersten Wort des Lückentextes zu suchen.
 		Dafür wird Zeile für Zeile im Buch durchsucht.
-		Beginnt ein Lückentext mit einer oder mehreren Lücken, soll trotzdem nach dem ersten Wort (das erste Wort bedeutet hier die erste Stelle, an der keine Lücke mehr steht) in der Eingabedatei gesucht werden.
-		Um die Position zu ermitteln, soll allerdings im Buch dieselbe Anzahl an Worten von der Position des ersten Wortes zurückgegangen werden, wie der Lückentext Lücken am Anfang hat.
-		Alle dabei gefundenen Stellen wiederum sollen dann auch auf den Rest des Lückentextes überprüft werden, indem sie Wort für Wort mit dem Lückentext verglichen werden.
-		Unterstriche - im Kontext also Lücken im Lückentext - dürfen dabei für jedes Wort stehen und beim Vergleichen wird somit das nächste Wort im Buch übersprungen.
-		Trifft der Algorithmus an einer Stelle auf keine Übereinstimmung oder findet dieser einen Beginn eines neuen Absatzes durch eine leere Zeile, wird dieser abgebrochen und die nächste Position wird überprüft.
-		Bei einem Satzzeichen kann der Suchvorgang ebenfalls abgebrochen werden, da die Lückentexte alle nur über einen Teilsatz verlaufen.
-		Wird der Algorithmus nicht abgebrochen, handelt es sich bei der durchsuchten Stelle um eine mögliche Lösung des Lückentextes.
-		Wurden so eine oder sogar mehrere Stellen gefunden, welche den Lückentext vervollständigen könnte, können die darin enthaltenen Lücken durch die jeweiligen Worte ersetzt werden.
-		Diese Lösungen können dann mit der Position, da nach dieser in der Aufgabenstellung gefragt war, ausgegeben werden.
+		Beginnt ein Lückentext mit einer oder mehreren Lücken,
+		soll trotzdem nach dem ersten Wort
+		(das erste Wort bedeutet hier die erste Stelle,
+		an der keine Lücke mehr steht)
+		in der Eingabedatei gesucht werden.
+		Um die Position zu ermitteln,
+		soll allerdings im Buch dieselbe Anzahl an Worten von der Position des ersten Wortes zurückgegangen werden,
+		wie der Lückentext Lücken am Anfang stehen hat.
+		Alle dabei gefundenen Stellen wiederum sollen dann auch auf den Rest des Lückentextes überprüft werden,
+		indem sie Wort für Wort mit dem Lückentext verglichen werden.
+		Das erste Wort muss nicht verglichen werden,
+		da es,
+		falls der Lückentext mit einem Unterstrich beginnt,
+		für jedes Wort stehen darf
+		oder,
+		falls nicht,
+		bereits im ersten Schritt überprüft wurde.
+		Unterstriche
+		- im Kontext der Aufgabe also Lücken im Lückentext -
+		dürfen dabei für jedes Wort stehen
+		und beim Vergleichen wird somit das nächste Wort im Buch übersprungen.
+		Trifft der Algorithmus an einer Stelle auf keine Übereinstimmung
+		oder findet dieser einen Beginn eines neuen Absatzes durch eine leere Zeile,
+		wird dieser abgebrochen
+		und die nächste Position wird überprüft.
+		Bei einem Satzzeichen kann der Suchvorgang ebenfalls abgebrochen werden,
+		da die Lückentexte alle nur über einen Teilsatz verlaufen.
+		Wurde der Algorithmus bis zum letzten Wort im Lückentext nicht abgebrochen,
+		handelt es sich bei der durchsuchten Stelle um eine mögliche Lösung des Lückentextes.
+		Wurden so eine oder sogar mehrere Stellen gefunden,
+		welche den Lückentext vervollständigen könnte,
+		können die darin enthaltenen Lücken durch die jeweiligen Worte ersetzt werden.
+		Diese Lösungen können dann mit der Position,
+		da nach dieser in der Aufgabenstellung gefragt war,
+		ausgegeben werden.
 
 	\section{Umsetzung}\label{sec:umsetzung}
 		Zunächst müssen sowohl das Buch als auch die Eingabedateien eingelesen werden.
-		Für die Eingabedateien bieten sich Listen an, da sie Wort für Wort verglichen werden sollen.
-		Speichert man diese also direkt einzeln als Worte ab, kann man mithilfe des Index auf einzelne zugreifen.
+		Für die Eingabedateien bieten sich Listen an,
+		da sie Wort für Wort mit dem Buch,
+		beziehungsweise Ausschnitten daraus,
+		verglichen werden sollen.
+		Speichert man diese also direkt einzeln als Worte ab,
+		kann man mithilfe des Indexes auf einzelne zugreifen.
 		Um das Buch einzulesen .
 
-		Um die Lösungsidee umzusetzen, kann man den Suchprozess in zwei Schritte unterteilen:
+		Um die Lösungsidee umzusetzen,
+		kann man den Suchprozess in zwei Schritte unterteilen:
 		Der erste besteht aus dem Suchen des jeweils ersten Wortes der Lückentexte im Buch.
-		Die Suchergebnisse, also Positionen im Buch, die mit demselben Wort beginnen, können dann im zweiten Schritt auch auf die Korrektheit der weiteren Worte überprüft werden.
+		Die Suchergebnisse,
+		also Positionen im Buch,
+		die mit demselben Wort beginnen,
+		können dann im zweiten Schritt auch auf die Korrektheit der weiteren Worte überprüft werden.
+		
 
 	\section{Beispiele}\label{sec:beispiele}
-		Lässt man das Programm laufen, werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
-		Dabei wird zunächst die Position im Buch angegeben, gefolgt von dem Teilsatz, welcher den jeweilige Lückentext vervollständigt.
+		Lässt man das Programm laufen,
+		werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
+		Dabei wird zunächst die Position im Buch angegeben,
+		gefolgt von dem Teilsatz,
+		welcher den jeweilige Lückentext vervollständigt.
 		
-		Unter den Eingabedateien gibt es einige Sonderfälle:
+		Unter den Eingabedateien können folgende Sonderfälle auftreten:
 
 		Lückentexte können\ldots
-		\begin{itemize}
+		
+		\begin{enumerate}
 			\item \ldots mehrere Lücken direkt nacheinander haben,
 			\item \ldots mit einer Lücke beginnen,
 			\item \ldots mit einer Lücke enden.
-		\end{itemize}
-		Unter den vorgegebenen Eingabedateien befinden sich zwar keine, die mit einer Lücke beginnen, trotzdem könnten solche durch den Algorithmus vervollständigt werden.
+		\end{enumerate}
 		
-		Als Ausgabe erhält man folgenden Text im Konsolenfenster:
+		Unter den vorgegebenen Eingabedateien befinden sich zwar keine,
+		die mit einer Lücke beginnen,
+		trotzdem könnten solche durch den Algorithmus vervollständigt werden.
+		
+		Als Ausgabe für die sechs vorgegebenen Eingabedateien erhält man folgenden Text im Konsolenfenster:
+
+
+		
+		Störung 0 und Störung 1 bieten sich als Beispiel für die ersten beiden Sonderfälle an.
+		Störung 0 hat sogar drei Lücken direkt nacheinander
+		und ist somit der Lückentext mit der längsten Lücke.
+		Störung 1 endet mit einer Lücke und wird daher als Beispiel für Sonderfall 2 genommen.
+		
+		Sieht man sich den Ablauf des Algorithmus für Störung 0 an,
+		läuft erstmal alles wie bei allen weiteren Eingabedateien.
+		Die Methode \hyperref{} gibt eine Liste zurück,
+		die Stellen im Buch enthalten,
+		die mit dem Wort "das" beginnen.
+		Dann wird mit dieser Liste die Methode \hyperref{} aufgerufen.
+		Diese geht jede einzelne gegebene Position durch,
+		indem sie erstmal ab der Stelle den Rest der Zeile des Buchs speichert
+		und bei zu wenigen Worten auch noch die nächste Zeile anhängt.
+		Der dadurch zusammengestellte Text wird ebenfalls in eine Liste aus einzelnen Worten zerteilt.
+		Diese Elemente der erstellten Liste werden mit denen mit demselben Index in der Liste des Lückentextes verglichen,
+		wobei das erste Element und Lücken (_) übersprungen werden.
+		
+
 
 	\section{Quellcode}\label{sec:quellcode}
+		\begin{lstlisting}[frame=single, language=Java, title=Methode getPositions, breaklines=true]\label{lst:getPositions}
+			
+		\end{lstlisting}
+		
+		\begin{lstlisting}[frame=single, language=Java, title=Methode checkPositions, breaklines=true]\label{lst:checkPositions}
+			
+		\end{lstlisting}
    
 \end{document}

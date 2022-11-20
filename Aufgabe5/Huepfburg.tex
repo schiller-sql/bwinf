@@ -98,14 +98,13 @@
     \tableofcontents
 
     \vspace{0.5cm}
-%TODO: Schrittfolge als Begriff durchgängig verwenden
 
 
     \section{Lösungsidee}\label{sec:losungsidee}
+    
     Der Aufgabenstellung zu entnehmen ist,
-    dass sich beide Spieler immer genau gleichzeitig,
-    um genau einen Punkt,
-    entlang der Pfeilrichtung bewegen und der Parcours als absolviert gilt,
+    dass sich beide Spieler immer genau gleichzeitig um genau einen Punkt entlang der Pfeilrichtung bewegen
+    und der Parcours als absolviert gilt,
     wenn sich beide gleichzeitig auf den gleichen Punkt bewegen.
     Dabei ist die Startposition der Spieler jeweils immer identisch.
 
@@ -114,10 +113,7 @@
     während die Knoten repräsentativ für die Felder stehen.
 
     Die abstrahierte Problemstellung der Aufgabe ist es,
-    für jeden der zwei Ausgangspunkte,
-    jeweils einen Weg zu einem Knoten,
-    in einem gerichteten und ungewichteten Graphen,
-    zu finden.
+    für jeden der zwei Ausgangspunkte jeweils einen Weg zu einem Knoten in einem gerichteten und ungewichteten Graphen zu finden.
     Dieser muss von beiden Ausgangsknoten mit der gleichen Anzahl an Schritten zu erreichen sein.
     Dabei darf die Schrittfolge nie entgegengesetzt zur Kantenrichtung verlaufen.
 
@@ -129,12 +125,10 @@
     Wenn es sich um einen lösbaren Parcours handelt,
     wird für beide Spieler im selben Schritt mindestens ein gleicher Knoten gefunden.
 
-    Sollte der Parcours nicht lösbar ist,
-    ist die Menge der markierten Knoten,
-    für beide Spieler zur gleichen Zeit,
-    irgendwann gleich der Menge,
-    der zu einem früheren Zeitpunkt markierten Knoten.
-    So kommt es in \hyperref[fig:Figure1]{Figur 1.}
+    Sollte der Parcours nicht lösbar sein,
+    wiederholen sich die Knotenmengen
+    für beide Spieler ab demselben Zeitpunkt.
+    So kommt es in \hyperref[fig:Figure1]{Figur 1}
     zu einer zeitgleichen Wiederholung der Knotenmenge bei beiden Spielern.
 
     \begin{figure}
@@ -162,13 +156,13 @@
             2.               & \{ 3 \}                        & \{ 1 \}                        \\
             3.               & \{ 1 \}                        & \{ 2 \}                        \\
         \end{tabular}
-        \caption{Tabelle 1: Schrittfolge für \hyperref[fig:Figure1]{Figur 1.}}
+        \caption{Tabelle 1: Schrittfolge für \hyperref[fig:Figure1]{Figur 1}}
         \label{tab:Table1}
     \end{table}
 
-    In Schritt drei findet bei beiden Spielern eine Wiederholung zu Schritt null statt.
-    Damit kann der Parcours sicher für ungültig erklärt werden
-    und die Suche nach einem gemeinsamen Zielpunkt kann abgebrochen werden.
+    In Schritt drei findet bei beiden Spielern eine Wiederholung zu Schritt 0 statt.
+    Damit kann der Parcours sicher für ungültig erklärt
+    und die Suche nach einem gemeinsamen Zielpunkt abgebrochen werden.
     Dies gilt, da sich beide Spieler in einem Zyklus befinden
     und im ersten Durchlauf des Zyklus kein gemeinsamer Punkt gefunden wurde.
 
@@ -177,7 +171,7 @@
     und somit für einen der beiden Spieler kein Schritt mehr möglich ist.
     Da die Aufgabenstellung allerdings vorgibt, dass sich in jedem Schritt beide Spieler bewegen müssen,
     ist der Parcours damit für ungültig zu erklären.
-    So kommt es in \hyperref[fig:Figure2]{Figur 2.} zu einer solchen Sackgasse für einen der Spieler.
+    So kommt es in \hyperref[fig:Figure2]{Figur 2} zu einer solchen Sackgasse für einen der Spieler.
 
     \begin{figure}[!h]
         \centering
@@ -204,27 +198,28 @@
             1.               & \{ 3 \}                        & \{ 4 \}                        \\
             2.               & \{ 4 \}                        & \{   \}                           \\
         \end{tabular}
-        \caption{Tabelle 2: Schrittfolge für \hyperref[fig:Figure2]{Figur 2.}}
+        \caption{Tabelle 2: Schrittfolge für \hyperref[fig:Figure2]{Figur 2}}
         \label{tab:Table2}
     \end{table}
 
     Hier kommt es bereits im zweiten Schritt dazu, dass die Knotenmenge des zweiten Spielers leer ist.
     Damit ist es unmöglich,
     dass Spieler eins und Spieler zwei zum gleichen Zeitpunkt auf einen Knoten laufen können,
-    da Spieler zwei keinen weiteren Schritt gehen kann und sie sich noch nicht auf dem gleichen Feld befinden.
+    da Spieler zwei keinen weiteren Schritt gehen kann
+    und sie sich noch nicht auf dem gleichen Feld befinden.
 
     Im Algorithmus muss daher in jedem Schritt für beide Spieler in der Breitensuche überprüft werden,
     ob die aktuelle Menge der besuchten Knoten in der Breitensuche
     bereits in der Schrittfolge des jeweiligen Spielers enthalten ist.
     Dazu müssen die Schrittfolgen beider Spieler gespeichert werden.
-    Des weiteren muss überprüft werden ob beide Spieler erreichbare Knoten haben.
-    Sollte dies nicht der Fall sein, kann dieser Spieler sich nicht weiter bewegen
+    Des Weiteren muss überprüft werden, ob beide Spieler erreichbare Knoten haben.
+    Sollte dies nicht der Fall sein, kann dieser Spieler sich nicht weiterbewegen
     und sollte noch kein Zielknoten gefunden sein, ist der Parcours damit ungültig.
     Ist einer dieser Bedingungen erfüllt, ist der Parcours nicht lösbar
     und die Suche nach einem gemeinsamen Feld kann abgebrochen werden.
     Sollten sich die beiden Knotenmengen zu einem gemeinsamen Zeitpunkt an mindestens einem Knoten überschneiden,
-    kann der Parcours in diesem Schritt an diesem Schnittknoten
-    von beiden Spielern gleichzeitig erreicht werden und ist somit lösbar.
+    kann der Parcours in diesem Schritt an diesem Schnittknoten von beiden Spielern gleichzeitig erreicht werden
+    und ist somit lösbar.
     Ist keine der Bedingungen erfüllt,
     folgt ein weiterer Schritt der Breitensuche.
 
@@ -232,10 +227,9 @@
     an dem sich die beide Schrittfolgen überschneiden,
     gilt es einen Weg von den Startknoten zu diesem Zielknoten zu finden.
     Gibt es mehrere Zielpunkte, kann ein beliebiger gewählt werden,
-    da alle mit der gleichen Schrittanzahl erreicht werden können.
+    da alle mit der gleichen Schrittanzahl beider Spieler erreicht werden können.
 
-    Aus dem ermittelten Zielknoten, den gegebenen Startknoten und
-    der generierten Schrittfolge von jedem Startknoten zum Zielknoten,
+    Aus dem ermittelten Zielknoten, den gegebenen Startknoten und der generierten Schrittfolge von jedem Startknoten zum Zielknoten,
     lässt sich nun der Weg für jeden der Startknoten bestimmen.
     Der letzte Eintrag in den Schrittfolgen beinhaltet den Zielknoten,
     während der erste Eintrag den jeweiligen Startknoten enthält.
@@ -261,38 +255,36 @@
         \label{alg:Algorithm1}
     \end{algorithm}
 
-    Wie im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} in Zeile ~\ref{lst:line:zeileVier} dargestellt,
+    Wie im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} in Zeile~\ref{lst:line:zeileVier} dargestellt,
     kann zunächst im Weg der Zielknoten an letzter Stelle eingetragen werden.
     Es lässt sich nun in jeder Schrittfolge der vorletzte Schritt betrachten.
     In diesem Schritt kann nun ein Knoten ermittelt werden,
-    welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt (Zeile ~\ref{lst:line:zeileAcht}).
+    welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt (Zeile~\ref{lst:line:zeileAcht}).
     Ist dieser Knoten gefunden,
-    kann er im Weg an der entsprechenden Stelle gespeichert werden (Zeile ~\ref{lst:line:zeileNeun}).
+    kann er im Weg an der entsprechenden Stelle gespeichert werden (Zeile~\ref{lst:line:zeileNeun}).
     Dieses Verfahren wird nun solange für den nächsten Schritt und den zuletzt in den Weg eingefügten Knoten wiederholt,
     bis man am Startknoten angelangt ist.
 
 
     \section{Umsetzung}\label{sec:umsetzung}
 
-    % Beispiel graph mit matrix daneben zur visualisierung
     Eine Menge von Knoten wird als \texttt{BitSet} dargestellt.
     Ein \texttt{BitSet} in Java ist eine lineare statische Datenstruktur,
-    welche Bits, die alle anhand eines Indexes gesetzt werden können, speichert.
+    welche Bits, die alle anhand eines Indexes gesetzt werden können,
+    speichert.
     Die Länge jedes \texttt{BitSet} ist gleich der Anzahl der Knoten des Graphen
     und jeder Index steht dabei für einen Knoten.
-    Ist an diesen Index im \texttt{BitSet} eine eins,
-    ist der Knoten in der Knotenmenge enthalten, andernfalls ist er es nicht.
+    Steht an diesem Index im \texttt{BitSet} eine 1,
+    ist der Knoten in der Knotenmenge enthalten,
+    andernfalls ist er es nicht.
     Beispielsweise gilt $0101 \widehat{=} \{2, 4\}$.
-    Da der erste Index eines \texttt{BitSet} null ist,
-    korrespondiert der Index null zu Knoten eins des Parcours.
+    Da der erste Index eines \texttt{BitSet} 0 ist,
+    korrespondiert der Index 0 zu Knoten eins des Parcours.
 
     Ein Graph wird als \texttt{BitSet[]} dargestellt.
     Jeder Index des Arrays korrespondiert zu einem Knoten.
-    Das am Index eines Knoten enthaltene \texttt{BitSet}, ist eine Knotenmenge.
+    Das am Index eines Knoten enthaltene \texttt{BitSet} ist eine Knotenmenge.
     Diese stellt da, zu welchen Knoten eine Kante ausgeht.
-
-
-
 
     \begin{figure}[!h]
         \centering
@@ -315,7 +307,7 @@
         \label{fig:Figure3}
     \end{figure}
 
-    So kann beispielsweise \hyperref[fig:Figure3]{Figur 3.} als das folgende \texttt{BitSet[]} dargestellt werden.
+    So kann beispielsweise \hyperref[fig:Figure3]{Figur 3} als das folgende \texttt{BitSet[]} dargestellt werden.
 
     \[
         \texttt{BitSet[]}_{Graph} = \begin{bmatrix}
@@ -328,8 +320,8 @@
 
     Die Schrittfolge ist eine \texttt{List<BitSet>},
     d.h. eine \texttt{List} aus \texttt{BitSet}.
-    Index null der \texttt{List} korrespondiert zum Ausgangspunkt,
-    daher Schritt null beziehungsweise zur Startposition.
+    Index 0 der \texttt{List} korrespondiert zum Ausgangspunkt,
+    daher Schritt 0,  beziehungsweise zur Startposition.
     \[
         \texttt{List<BitSet>}_{Schrittfolge} = \left\lbrace
         \begin{tabular}{ll}
@@ -342,8 +334,9 @@
     \]
 
     Ein Weg ist ein \texttt{int[]}.
-    Dabei repräsentiert der Index null den Ausgangspunkt des Weges.
-    Aufgrund der Tatsache, dass im Graphen der Index null, dem Knoten eins entspricht,
+    Dabei repräsentiert der Index 0 den Ausgangspunkt des Weges.
+    Aufgrund der Tatsache,
+    dass im Graphen der Index 0, dem Knoten eins entspricht,
     sind die Werte im Weg um eins niedriger eingetragen, als die tatsächlichen Knoten.
     Ist beispielsweise am Index zwei der Integer drei eingetragen,
     befindet sich an der dritten Position des Weges der Knoten vier.
@@ -458,11 +451,11 @@
         \label{tab:Table3}
     \end{table}
 
-	Bei \hyperref[fig:Figure4]{Figur 4.} handelt es sich um den Beispielparcours aus der Aufgabenstellung 
+	Bei \hyperref[fig:Figure4]{Figur 4} handelt es sich um den Beispielparcours aus der Aufgabenstellung
 	beziehungsweise um den Parcours aus huepfburg0.txt aus den Eingabedateien.
 	Es handelt sich daher um einen lösbaren Parcours, 
 	in dem sich beide Spieler im dritten Schritt auf Feld zehn treffen.
-	Wie \hyperref[tab:Table3]{Tabelle 3.} zu entnehmen ist, ergibt sich im dritten Schritt der Knoten zehn aus
+	Wie \hyperref[tab:Table3]{Tabelle 3} zu entnehmen ist, ergibt sich im dritten Schritt der Knoten zehn aus
 	der Schnittmenge der zwei Breitensuchen.
 	In der Methode \hyperref[lst:sameTargetRoute]{\texttt{int[][] sameTargetRoute(\ldots)}} 
 	liefert die Bedingung in der \texttt{do-while Schleife} in Schritt drei \texttt{false}.
