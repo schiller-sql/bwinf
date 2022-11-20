@@ -1,14 +1,14 @@
-\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\documentclass[a4paper, 10pt, ngerman]{scrartcl}
 \usepackage{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
-\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+\usepackage[a4paper, margin=2.5cm, footskip=0.5cm]{geometry}
 
 % Die nächsten vier Felder bitte anpassen:
 \newcommand{\Aufgabe}{Aufgabe 1: Störung} % Aufgabennummer und Aufgabennamen angeben
-\newcommand{\TeamId}{00919}% Team-ID aus dem PMS angeben
+\newcommand{\TeamId}{00919} % Team-ID aus dem PMS angeben
 \newcommand{\TeamName}{Team-Name} % Team-Namen angeben
-\newcommand{\Namen}{Ole Deifuß}% Namen der Bearbeiter/-innen dieser Aufgabe angeben
+\newcommand{\Namen}{Ole Deifuß} % Namen der Bearbeiter/-innen dieser Aufgabe angeben
 
 % Kopf- und Fußzeilen
 \usepackage{scrlayer-scrpage, lastpage}
@@ -38,21 +38,38 @@
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 \lstset{
-    keywordstyle=\color{blue},commentstyle=\color{mygreen},
-    stringstyle=\color{mymauve},rulecolor=\color{black},
-    basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
-    captionpos=b, % sets the caption-position to bottom
-    keepspaces=true, % keeps spaces in text
-    numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
-    showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+	keywordstyle=\color{blue},commentstyle=\color{mygreen},
+	stringstyle=\color{mymauve},rulecolor=\color{black},
+	basicstyle=\footnotesize\ttfamily,numberstyle=\tiny\color{mygray},
+	captionpos=b, % sets the caption-position to bottom
+	keepspaces=true, % keeps spaces in text
+	numbers=left, numbersep=5pt, showspaces=false,showstringspaces=true,
+	showtabs=false, stepnumber=2, tabsize=2, title=\lstname
+	inputencoding = utf8, % Input encoding
+	extendedchars = true, % Extended ASCII
+	literate = % Support additional characters
+	{á}{{\'a}}1  {é}{{\'e}}1  {í}{{\'i}}1 {ó}{{\'o}}1  {ú}{{\'u}}1
+	{Á}{{\'A}}1  {É}{{\'E}}1  {Í}{{\'I}}1 {Ó}{{\'O}}1  {Ú}{{\'U}}1
+	{à}{{\`a}}1  {è}{{\`e}}1  {ì}{{\`i}}1 {ò}{{\`o}}1  {ù}{{\`u}}1
+	{À}{{\`A}}1  {È}{{\'E}}1  {Ì}{{\`I}}1 {Ò}{{\`O}}1  {Ù}{{\`U}}1
+	{ä}{{\"a}}1  {ë}{{\"e}}1  {ï}{{\"i}}1 {ö}{{\"o}}1  {ü}{{\"u}}1
+	{Ä}{{\"A}}1  {Ë}{{\"E}}1  {Ï}{{\"I}}1 {Ö}{{\"O}}1  {Ü}{{\"U}}1
+	{â}{{\^a}}1  {ê}{{\^e}}1  {î}{{\^i}}1 {ô}{{\^o}}1  {û}{{\^u}}1
+	{Â}{{\^A}}1  {Ê}{{\^E}}1  {Î}{{\^I}}1 {Ô}{{\^O}}1  {Û}{{\^U}}1
+	{œ}{{\oe}}1  {Œ}{{\OE}}1  {æ}{{\ae}}1 {Æ}{{\AE}}1  {ß}{{\ss}}1
+	{ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1  {Ø}{{\O}}1   {å}{{\r a}}1
+	{Å}{{\r A}}1 {ã}{{\~a}}1  {õ}{{\~o}}1 {Ã}{{\~A}}1  {Õ}{{\~O}}1
+	{ñ}{{\~n}}1  {Ñ}{{\~N}}1  {¿}{{?`}}1  {¡}{{!`}}1
+	{°}{{\textdegree}}1 {º}{{\textordmasculine}}1 {ª}{{\textordfeminine}}1
 }
+
 \lstdefinelanguage{JavaScript}{ % JavaScript ist als einzige Sprache noch nicht vordefiniert
-    keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
-    morecomment=[l]{//},
-    morecomment=[s]{/*}{*/},
-    morestring=[b]',
-    morestring=[b]",
-    sensitive=true
+keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+morecomment=[l]{//},
+morecomment=[s]{/*}{*/},
+morestring=[b]',
+morestring=[b]",
+sensitive=true
 }
 
 % Diese beiden Pakete müssen zuletzt geladen werden
@@ -69,103 +86,187 @@
 
 \begin{document}
 
-	\maketitle
-	\tableofcontents
+\maketitle
+\tableofcontents
 
-    \vspace{0.5cm}
+\vspace{0.5cm}
 
-	\section{Lösungsidee}\label{sec:losungsidee}
-    	In der Aufgabe "Störung" geht es darum,
-    	ein Buch nach mit Lücken versehener Lückentexten (Eingabedateien) zu durchsuchen.
-		Herausgefunden werden sollen alle Stellen im Buch,
-		die ein Lückentext vervollständigen können.
-		In Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen
-		und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
+\section{Lösungsidee}\label{sec:losungsidee}
+\subsection{Aufgabenstellung und Informationen zur Form}\label{sec:aufgabenstellung}
+In der Aufgabe \textbf{Störung} geht es darum,
+ein Buch nach mit Lücken versehener Lückentexten (Eingabedateien) zu durchsuchen.
+Herausgefunden werden sollen alle Stellen im Buch,
+die ein Lückentext vervollständigen können.
+In Stellen im Buch müssen die im Lückentext vorgegebenen Worte genau an den richtigen Positionen stehen
+und in jede Lücke des Lückentextes darf exakt ein Wort hineinpassen.
 
-		Der Aufgabenstellung
-		und der Form der vorgegebenen Lückentexte lässt sich Folgendes über den Aufbau der Lückentexte entnehmen:
-		\begin{itemize}
-			\item jede Lücke wird durch einen Unterstrich (\_) dargestellt,
-			\item alle Worte in den Lückentexten werden kleingeschrieben,
-			\item Satz- oder Sonderzeichen werden in den Lückentexten nicht verwendet,
-			\item daraus folgt,
-			dass sich alle Lückentexte innerhalb eines geschlossenen Satzes beziehungsweise innerhalb eines durch Kommata abgetrennten Teilsatzes befinden.
-		\end{itemize}
+Der Aufgabenstellung
+und der Form der vorgegebenen Lückentexte lässt sich Folgendes über den Aufbau der Lückentexte entnehmen:
+\begin{itemize}
+	\item jede Lücke wird durch einen Unterstrich (\_) dargestellt,
+	\item alle Worte in den Lückentexten werden kleingeschrieben,
+	\item Satz- oder Sonderzeichen werden in den Lückentexten nicht verwendet,
+	\item daraus folgt,
+	dass sich alle Lückentexte innerhalb eines geschlossenen Satzes beziehungsweise innerhalb eines durch Kommata abgetrennten Teilsatzes befinden.
+\end{itemize}
 
-		Um die Stellen im Buch zu finden,
-		bietet es sich an zunächst nach dem ersten Wort des Lückentextes zu suchen.
-		Dafür wird Zeile für Zeile im Buch durchsucht.
-		Beginnt ein Lückentext mit einer oder mehreren Lücken,
-		soll trotzdem nach dem ersten Wort
-		(das erste Wort bedeutet hier die erste Stelle,
-		an der keine Lücke mehr steht)
-		in der Eingabedatei gesucht werden.
-		Um die Position zu ermitteln,
-		soll allerdings im Buch dieselbe Anzahl an Worten von der Position des ersten Wortes zurückgegangen werden,
-		wie der Lückentext Lücken am Anfang stehen hat.
-		Alle dabei gefundenen Stellen wiederum sollen dann auch auf den Rest des Lückentextes überprüft werden,
-		indem sie Wort für Wort mit dem Lückentext verglichen werden.
-		Das erste Wort muss nicht verglichen werden,
-		da es,
-		falls der Lückentext mit einem Unterstrich beginnt,
-		für jedes Wort stehen darf
-		oder,
-		falls nicht,
-		bereits im ersten Schritt überprüft wurde.
-		Unterstriche
-		- im Kontext der Aufgabe also Lücken im Lückentext -
-		dürfen dabei für jedes Wort stehen
-		und beim Vergleichen wird somit das nächste Wort im Buch übersprungen.
-		Trifft der Algorithmus an einer Stelle auf keine Übereinstimmung
-		oder findet dieser einen Beginn eines neuen Absatzes durch eine leere Zeile,
-		wird dieser abgebrochen
-		und die nächste Position wird überprüft.
-		Bei einem Satzzeichen kann der Suchvorgang ebenfalls abgebrochen werden,
-		da die Lückentexte alle nur über einen Teilsatz verlaufen.
-		Wurde der Algorithmus bis zum letzten Wort im Lückentext nicht abgebrochen,
-		handelt es sich bei der durchsuchten Stelle um eine mögliche Lösung des Lückentextes.
-		Wurden so eine oder sogar mehrere Stellen gefunden,
-		welche den Lückentext vervollständigen könnte,
-		können die darin enthaltenen Lücken durch die jeweiligen Worte ersetzt werden.
-		Diese Lösungen können dann mit der Position,
-		da nach dieser in der Aufgabenstellung gefragt war,
-		ausgegeben werden.
+\subsection{Suchalgorithmus}\label{sec:suchalgorithmus}
+Um die Stellen im Buch zu finden,
+bietet es sich an zunächst nach dem ersten Wort des Lückentextes zu suchen.
+Dafür wird Zeile für Zeile im Buch durchsucht.
+Beginnt ein Lückentext mit einer oder mehreren Lücken,
+soll trotzdem nach dem ersten Wort
+(das erste Wort bedeutet hier die erste Stelle,
+an der keine Lücke mehr steht)
+in der Eingabedatei gesucht werden.
+Um die Position zu ermitteln,
+soll allerdings im Buch dieselbe Anzahl an Worten von der Position des ersten Wortes zurückgegangen werden,
+wie der Lückentext Lücken am Anfang stehen hat.
+Alle dabei gefundenen Stellen wiederum sollen dann auch auf den Rest des Lückentextes überprüft werden,
+indem sie Wort für Wort mit dem Lückentext verglichen werden.
+Das erste Wort muss nicht verglichen werden,
+da es,
+falls der Lückentext mit einem Unterstrich beginnt,
+für jedes Wort stehen darf
+oder,
+falls nicht,
+bereits im ersten Schritt überprüft wurde.
+Unterstriche
+- im Kontext der Aufgabe also Lücken im Lückentext -
+dürfen dabei für jedes Wort stehen
+und beim Vergleichen wird somit das nächste Wort im Buch übersprungen.
+Trifft der Algorithmus an einer Stelle auf keine Übereinstimmung
+oder findet dieser einen Beginn eines neuen Absatzes durch eine leere Zeile,
+wird dieser abgebrochen
+und die nächste Position wird überprüft.
+Bei einem Satzzeichen kann der Suchvorgang ebenfalls abgebrochen werden,
+da die Lückentexte alle nur über einen Teilsatz verlaufen.
+Wurde der Algorithmus bis zum letzten Wort im Lückentext nicht abgebrochen,
+handelt es sich bei der durchsuchten Stelle um eine mögliche Lösung des Lückentextes.
+Wurden so eine oder sogar mehrere Stellen gefunden,
+welche den Lückentext vervollständigen könnte,
+können die darin enthaltenen Lücken durch die jeweiligen Worte ersetzt werden.
+Diese Lösungen können dann mit der Position,
+da nach dieser in der Aufgabenstellung gefragt war,
+ausgegeben werden.
 
-	\section{Umsetzung}\label{sec:umsetzung}
-		Zunächst müssen sowohl das Buch als auch die Eingabedateien eingelesen werden.
-		Für die Eingabedateien bieten sich Listen an,
-		da sie Wort für Wort mit dem Buch,
-		beziehungsweise Ausschnitten daraus,
-		verglichen werden sollen.
-		Speichert man diese also direkt einzeln als Worte ab,
-		kann man mithilfe des Indexes auf einzelne zugreifen.
-		Um das Buch einzulesen .
 
-		Um die Lösungsidee umzusetzen,
-		kann man den Suchprozess in zwei Schritte unterteilen:
-		Der erste besteht aus dem Suchen des jeweils ersten Wortes der Lückentexte im Buch.
-		Die Suchergebnisse,
-		also Positionen im Buch,
-		die mit demselben Wort beginnen,
-		können dann im zweiten Schritt auch auf die Korrektheit der weiteren Worte überprüft werden.
+\section{Umsetzung}\label{sec:umsetzung}
+\subsection{Einlesen der Eingabedateien}
+Zunächst müssen sowohl das Buch als auch die Eingabedateien eingelesen werden.
+		
+Das Buch wird Zeile für Zeile eingelesen
+und als Liste gespeichert.
+		
+Für die Eingabedateien bieten sich ebenfalls Listen an,
+da sie Wort für Wort mit dem Buch,
+beziehungsweise Ausschnitten daraus,
+verglichen werden sollen.
+Speichert man diese also direkt einzeln als Worte ab,
+kann man mithilfe des Indexes auf bestimmte davon zugreifen.
+
+\subsection{Methoden}
+Die Methode \hyperref[sec:getPositions()]{\texttt{getPositions(\ldots)}} sucht für eine einzelne Eingabedatei die passenden Stellen im Buch,
+die mit demselben Wort beginnen,
+wie der Lückentext der Eingabedatei.
+Falls der Lückentext mit einer Lücke beginnt,
+muss die Methode mit einer \textbf{If-Bedingung} prüfen,
+ob sich an erster Stelle der gegebenen Liste ein Unterstrich befindet.
+Ist dies der Fall,
+wird ein Zähler erhöht,
+damit nach dem nächsten Wort des Lückentextes gesucht wird.
+Wurde dieses erste Wort im Lückentext gefunden,
+wird mit einer \textbf{For-Schleife} durch das Buch iteriert.
+Findet der Algorithmus dabei dieses Wort wieder,
+wird sowohl die Zeile
+(beziehungsweise die Zeile - 1, da eine Liste mit dem Index 0 beginnt)
+als auch der Index in der Zeile als Array gespeichert
+und an eine Liste angehängt,
+die am Ende der Methode zurückgegeben wird.
+mit einer \textbf{While-Schleife} wird dieser Suchprozess solange innerhalb einer Zeile ausgeführt,
+bis der zurückgegebene Index -1 ist.
+Das ist der Fall,
+wenn das Wort nicht mehr darin enthalten ist.
+Sollte der Lückentext mit einer Lücke beginnen,
+wird von der gespeicherten Position wieder mit einer \texttt{For-Schleife},
+bevor sie an die Liste angehängt wird,
+noch die jeweilige Anzahl an Worten im Buch zurückgegangen.
+Das kann man durch die Leerzeichen im Buch gut zählen,
+es soll dementsprechend einfach die Position nach dem letzten Leerzeichen angegeben werden.
+
+Die in der Methode \hyperref[sec:getPositions()]{\texttt{getPositions(\ldots)}} herausgefundenen Positionen werden dann der zweiten Methode \hyperref[sec:checkPositions()]{\texttt{checkPositions(\ldots)}} als Parameter gegeben.
+Diese iteriert durch die Liste der Positionen
+und sucht sich erstmal den Text nach der jeweiligen Stelle raus.
+Hat diese Liste nicht mindestens die Anzahl an Worten wie der Lückentextes,
+was passieren kann,
+wenn die Stelle nahe des Endes der Zeile im Buch steht,
+werden mit einer \textbf{For-Schleife} noch so viele Zeilen daran angehängt,
+bis die Anzahl gleich oder sogar größer ist.
+Da der Algorithmus nicht auf Zeichensetzung achtet,
+kann es passieren,
+dass in so einem Text ein Satz
+oder sogar ein Absatz endet.
+Da aber nach jeder Zeile ein Leerzeichen eingefügt wird,
+damit nicht das letzte Wort der ersten Zeile
+und das erste Wort der zweiten Zeile ohne Abstand aneinander hängen,
+gibt es im Text nach einer leeren Zeile,
+also einem Absatz oder ähnlichem,
+zwei Leerzeichen direkt hintereinander.
+Findet der Algorithmus so eine Stelle,
+soll direkt die nächste Position untersucht werden,
+da Lückentexte niemals über ein Satzende hinweg verlaufen.
+Der dadurch zusammengesetzte Text wird dann auch in eine Liste aus Worten umgewandelt.
+Diese muss allerdings zunächst noch mit einer weiteren \textbf{For-Schleife} von Satz- und Sonderzeichen befreit werden,
+da diese nicht von den Worten bei trennen durch die Leerzeichen entfernt werden.
+Erst dann werden mit einer dritten \texttt{For-Schleife} die Liste aus dem Buch und die des Lückentextes miteinander verglichen.
+Darin prüft eine \texttt{If-Else If-Else-Bedingung},
+ob
+\begin{enumerate}
+\item das aktuelle Element des Buchs mit dem aktuellen Element der Liste des Lückentextes übereinstimmt,
+\item das aktuelle Element der Liste des Lückentextes keine Lücke ist oder
+\item keins der beiden obigen Ereignisse der Fall ist.
+\end{enumerate}
+Ist das aktuelle Element beider Listen identisch,
+wird mit einer weiteren \texttt{If-Bedingung} überprüft,
+ob es sich dabei um das letzte Element der Liste des Lückentextes handelt.
+Ist das der Fall,
+wird die Position an die Liste angehängt,
+die am Ende der Methode zurückgegeben wird,
+falls aber nicht,
+wird weiter durch die beiden Listen iteriert.
+Wenn das Element in der Liste des Lückentextes keine Lücke ist, kann die \texttt{For-Schleife} abgebrochen werden,
+da die erste \texttt{If-Bedingung} nicht den Wert \texttt{true} hatte
+und somit die aktuellen Elemente nicht übereinstimmen.
+Hat keine der beiden obigen Bedingungen den Wert \texttt{true} erhalten,
+handelt es sich bei dem aktuellen Element der Liste des Lückentextes um eine Lücke.
+Dabei muss auch wieder geprüft werden,
+ob es das letzte Element ist.
+Ist es dies,
+kann auch in dieser Situation die Position an die Liste der korrekten Positionen angehängt werden.
+
+Da beide Methoden jeweils nur eine Eingabedatei prüfen können,
+müssen diese für jede Eingabedatei einmal ausgeführt werden,
+was in der \texttt{main}-Methode des Programms geschieht.
+Diese hat keine Relevanz für den Algorithmus,
+weshalb sie nicht unter \hyperref[sec:quellcode]{\texttt{Quellcode}} zu finden ist.
 		
 
-	\section{Beispiele}\label{sec:beispiele}
-		Lässt man das Programm laufen,
-		werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
-		Dabei wird zunächst die Position im Buch angegeben,
-		gefolgt von dem Teilsatz,
-		welcher den jeweilige Lückentext vervollständigt.
-		
-		Unter den Eingabedateien können folgende Sonderfälle auftreten:
+\section{Beispiele}\label{sec:beispiele}
+Lässt man das Programm laufen,
+werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
+Dabei wird zunächst die Position im Buch angegeben,
+gefolgt von dem Teilsatz,
+welcher den jeweilige Lückentext vervollständigt.
 
-		Lückentexte können\ldots
-		
-		\begin{enumerate}
-			\item \ldots mehrere Lücken direkt nacheinander haben,
-			\item \ldots mit einer Lücke beginnen,
-			\item \ldots mit einer Lücke enden.
-		\end{enumerate}
+Unter den Eingabedateien können folgende Sonderfälle auftreten:
+
+Lückentexte können\ldots
+
+\begin{enumerate}
+	\item \ldots mehrere Lücken direkt nacheinander haben,
+	\item \ldots mit einer Lücke beginnen,
+	\item \ldots mit einer Lücke enden.
+\end{enumerate}
 		
 		Unter den vorgegebenen Eingabedateien befinden sich zwar keine,
 		die mit einer Lücke beginnen,
@@ -182,26 +283,119 @@
 		
 		Sieht man sich den Ablauf des Algorithmus für Störung 0 an,
 		läuft erstmal alles wie bei allen weiteren Eingabedateien.
-		Die Methode \hyperref{} gibt eine Liste zurück,
+		Die Methode \hyperref[lst:getPosition]{getPositions} gibt eine Liste zurück,
 		die Stellen im Buch enthalten,
-		die mit dem Wort "das" beginnen.
-		Dann wird mit dieser Liste die Methode \hyperref{} aufgerufen.
+		die mit dem Wort \texttt{das} beginnen.
+		Dann wird mit dieser Liste die Methode \hyperref[lst:checkPosition]{checkPositions} aufgerufen.
 		Diese geht jede einzelne gegebene Position durch,
 		indem sie erstmal ab der Stelle den Rest der Zeile des Buchs speichert
 		und bei zu wenigen Worten auch noch die nächste Zeile anhängt.
 		Der dadurch zusammengestellte Text wird ebenfalls in eine Liste aus einzelnen Worten zerteilt.
 		Diese Elemente der erstellten Liste werden mit denen mit demselben Index in der Liste des Lückentextes verglichen,
-		wobei das erste Element und Lücken (_) übersprungen werden.
-		
+		wobei das erste Element und Lücken (\_) übersprungen werden.
+\clearpage
 
 
-	\section{Quellcode}\label{sec:quellcode}
-		\begin{lstlisting}[frame=single, language=Java, title=Methode getPositions, breaklines=true]\label{lst:getPositions}
-			
-		\end{lstlisting}
-		
-		\begin{lstlisting}[frame=single, language=Java, title=Methode checkPositions, breaklines=true]\label{lst:checkPositions}
-			
+\section{Quellcode}\label{sec:quellcode}
+\subsection{getPositions(\ldots)}\label{sec:getPositions()}
+\begin{lstlisting}[frame=single, language=Java, title=Methode getPositions, breaklines=true, label=lst:getPosition]
+/**
+* Die Methode "getPositions" sucht für eine durch den Parameter gegebene Eingabedatei das erste Wort im Buch.
+* Dabei wird jede Zeile des Buchs einzeln auf das Anfangswort durchsucht
+* und bei einem Fund wird sowohl die Zeile als auch die "Spalte" (der Index in der Zeile, an der das Wort beginnt) als Array an die Liste von Positionen hinzugefügt.
+* Falls an erster Stelle der Eingabedatei eine Lücke ("_") steht, wird nach dem zweiten Wort gesucht und dann die Position für das vorherige Wort bestimmt.
+* Diese Liste wird am Ende der Methode zurückgegeben.
+*
+* @param stoerung Die Eingabedatei, nach der das Buch durchsucht werden soll
+* @return Eine Liste von Positionen, an denen dasselbe Wort steht wie das erste Wort der Eingabedatei
+*
+*/
+private static List<int[]> getPositions(List<String> stoerung) {
+	List<int[]> positions = new ArrayList<>();
+    int startPosition = 0;
+    while (Objects.equals(stoerung.get(startPosition),"_")) {
+    	startPosition++;
+    }
+    for (int lineNumber = 0; lineNumber < book.size(); lineNumber++) {
+        String lineText = book.get(lineNumber).toLowerCase();
+        int index = lineText.indexOf(stoerung.get(startPosition));
+        while (index >= 0) {
+        	int tempIndex = index;
+            int tempLineNumber = lineNumber;
+            for (int i = 0; i < startPosition; i++) {
+                if (tempIndex - 1 <= 0) {
+                    tempLineNumber--;
+                    lineText = book.get(tempLineNumber).toLowerCase();
+                    tempIndex = lineText.length() - 1;
+                }
+                tempIndex = lineText.lastIndexOf(" ", tempIndex - 2);
+                tempIndex++;
+            }
+            positions.add(new int[]{tempLineNumber, tempIndex});
+            index = lineText.indexOf(stoerung.get(startPosition), index + 1);
+        }
+    }
+    return positions;
+}
+\end{lstlisting}
+\clearpage
+
+\subsection{checkPositions(\ldots)}\label{sec:checkPositions()}
+\begin{lstlisting}[frame=single, language=Java, title=Methode checkPositions, breaklines=true, label=lst:checkPosition]
+			/**
+    		 * Die Methode "checkPositions" untersucht für jede durch den Parameter "positions" gegebene Position,
+     		* ob auch der Rest der Eingabedatei, die durch den Parameter "stoerung" gegeben ist,
+     		* durch die nach der Position folgenden Worte vervollständigt werden kann.
+     		* Dabei wird ersteinmal eine Liste aus Worten erstellt, das mit dem durch die Position gegebenen Wort startet.
+     		* Hat diese nicht mindestens die Länge der Eingabedatei, wird auch die nächste Zeile hinzugefügt.
+     		* Alle Elemente in der Liste werden danach erstmal von Sonderzeichen bereinigt, da diese auch nicht in der Eingabedatei vorgegeben sind.
+    		* Dann wird Wort für Wort mit denen der Eingabedatei verglichen, wobei Unterstriche (also Lücken in der Eingabedatei) nicht verglichen werden,
+     		* sondern jedes Wort akzeptieren.
+     		* Sobald an einer Stelle keine Übereinstellung gefunden wird, wird der Suchvorgang für die eine Position beendet.
+     		* Alle Stellen, die die Eingabedatei "lösen" können, werden an eine Liste angefügt, die nach Ende der Methode zurückgegeben wird.
+     		*
+     		* @param positions Eine Liste von Positionen, die überprüft werden soll
+     		* @param stoerung Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
+     		* @return Eine Liste von Positionen, die die Eingabedatei "lösen" können
+     		*/
+    		private static List<int[]> checkPositions(List<int[]> positions, List<String> stoerung) {
+        		List<int[]> rightPositions = new ArrayList<>();
+        		positionLoop:
+        		for (int[] position : positions) {
+            		StringBuilder text = new StringBuilder(book.get(position[0]).substring(position[1]).toLowerCase());
+            		int counter = 1;
+            		while (text.toString().split(" ").length < stoerung.size()) {
+                		if (position[0] + counter >= book.size()) {
+                    		break positionLoop;
+                		}
+                		text.append(" ").append(book.get(position[0] + counter).toLowerCase());
+                		counter++;
+           			}
+            		if (text.toString().contains("  ")) {
+                 		// Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
+                 		// Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
+                		continue;
+           			}
+            		String[] lines = text.toString().split(" ");
+            		for (int i = 1; i < lines.length; i++) {
+                		lines[i] = lines[i].replaceAll("[^[a-zA-Z0-9äöüß]]", "");
+            		}
+            		for (int index = 0; index < stoerung.size(); index++) {
+                		if (Objects.equals(stoerung.get(index), lines[index])) {
+                    		if (index == stoerung.size() - 1) {
+                        		rightPositions.add(position);
+                    		}
+               			} else if (!Objects.equals(stoerung.get(index), "_")) {
+                    		break;
+                		} else {
+                    		if (index == stoerung.size() - 1) {
+                        		rightPositions.add(position);
+                    		}
+                		}
+            		}
+        		}
+        		return rightPositions;
+    		}
 		\end{lstlisting}
    
 \end{document}
