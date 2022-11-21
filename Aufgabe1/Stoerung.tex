@@ -268,7 +268,7 @@ Lückentexte können \ldots
 \begin{enumerate}
 	\item \hyperref[sec:ersterSonderfall]{\ldots mehrere Lücken direkt nacheinander haben,}\label{sonderfallEins}
 	\item \hyperref[sec:zweiterSonderfall]{\ldots mit einer Lücke beginnen},\label{sonderfallZwei}
-	\item \ldots mit einer Lücke enden.\label{sonderfallDrei}
+	\item \hyperref[sec:dritterSonderfall]{\ldots mit einer Lücke enden.}\label{sonderfallDrei}
 	\newcounter{enumTemp}
     \setcounter{enumTemp}{\theenumi}
 \end{enumerate}
@@ -288,12 +288,12 @@ bei denen \ldots
 
 \begin{enumerate}
 	\setcounter{enumi}{\theenumTemp}
-	\item \ldots eine zu untersuchende Stelle im Buch am Ende einer Zeile steht,\label{sonderfallVier}
-	\item \ldots das erste Wort eines Lückentextes mehrmals in einer Zeile vorkommt oder\label{sonderfallFuenf}
-	\item \ldots der \hyperref[sonderfallZwei]{\texttt{zweite Sonderfall}} aus der obigen Liste gegeben ist
+	\item \hyperref[sec:vierterSonderfall]{\ldots eine zu untersuchende Stelle im Buch am Ende einer Zeile steht,}\label{sonderfallVier}
+	\item \hyperref[sec:fuenfterSonderfall]{\ldots das erste Wort eines Lückentextes mehrmals in einer Zeile vorkommt oder}\label{sonderfallFuenf}
+	\item \hyperref[sec:sechsterSonderfall]{\ldots der \hyperref[sonderfallZwei]{\texttt{zweite Sonderfall}} aus der obigen Liste gegeben ist
 	und zudem das erste Wort,
 	nach dem der Algorithmus sucht,
-	am Anfang einer Zeile steht.\label{sonderfallSechs}
+	am Anfang einer Zeile steht.}\label{sonderfallSechs}
 \end{enumerate}
 
 Bevor die einzelnen Sonderfälle anhand von Beispielen erklärt werden,
@@ -507,7 +507,7 @@ nicht mindestens die Länge der Liste des Lückentextes besitzt.
 Auch der \hyperref[sonderfallFuenf]{\texttt{Sonderfall 5}} lässt sich anhand der \hyperref[tab:listeStoerung0]{\texttt{Tabelle für Störung Nr.0}} erklären.
 Dort stehen an Index 6 und 7 der Liste beide Male die Zeile 136 (135 in der Liste).
 Um beide Zeilen zu finden,
-darf der Suchalgorithmus der ersten Methode \hyperref[sec:getPosition()]{getPositions(\ldots)} nicht abgebrochen werden,
+darf der Suchalgorithmus der ersten Methode \hyperref[sec:getPositions()]{getPositions(\ldots)} nicht abgebrochen werden,
 sobald er eine Stelle in einer Zeile gefunden hat.
 Dafür wurde eine \textbf{While-Schleife} verwendet,
 die erst abbricht,
