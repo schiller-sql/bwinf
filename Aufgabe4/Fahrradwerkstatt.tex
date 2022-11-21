@@ -95,10 +95,11 @@
 
 \section{Teilaufgabe 2}\label{sec:begruendung2}
 Es werden nicht alle Kunden zufrieden sein, da der Auftrag eines Kunden A, der vor anderen Kunden einen Auftrag vergibt,
-nicht um bedingt als erstes bearbeitet wird. Dies passiert wenn der Auftrag von Kunde A
+nicht um bedingt als erstes bearbeitet wird.
+Dies passiert, wenn der Auftrag von einem Kunden
 nicht als einziger eingegangener Auftrag zur Verfügung steht und wenn die anderen Aufträge kürzer sind,
-aber nach dem des Kunden A eingegangen sind.
-Im schlimmsten Fall, ist der Kunde A mit seinem Auftrag sogar als letztes dran.
+aber nach dem des Kunden eingegangen sind.
+Im schlimmsten Fall, ist der Kunde mit seinem Auftrag sogar als letztes dran.
 
 \section{Teilaufgabe 3}\label{sec:begruendung3 }
 Wenn man in einem echten Geschäft bestimmte Kunden einfach vorlassen würden,
@@ -109,9 +110,11 @@ vor einem anderen Kunden B lässt, es dauert für B immer länger.
 Nur in Ausnahmen lässt man einen Kunden nach vorne.
 So könnte auch Marc entscheiden, dass ein ganz kurzer Auftrag vor einem ganz langen Auftrag geschoben wird,
 wenn es die Wartezeit des langen Auftrages kaum vergrößert
-und der lange Auftrag noch nicht viel warten musste. Wo aber die Grenze genau ist,
+und der lange Auftrag noch nicht viel warten musste.
+Wo aber die Grenze genau ist,
 ist arbiträr, mathematisch nicht belegt und sollte deshalb vom Verkäufer stammen,
-möglicherweise auch wie er seine Kunden einschätzt.  Deswegen kann dies nicht algorithmisch dargestellt werden.
+möglicherweise auch wie er seine Kunden einschätzt.
+ Deswegen kann dies nicht algorithmisch dargestellt werden.
 
 Eine weitere Ausnahme könnte liegen, wenn es sich um einen Kunden handelt,
 der von Marc besonders geschätzt wird oder es eine Gebühr gibt für schnelleres Reparieren.
@@ -121,7 +124,8 @@ in der Reihenfolge wann dessen Auftrag eingegangen ist.
 
 \section{Lösungsidee}\label{sec:losungsidee}
 Der Aufgabenstellung zu entnehmen, ist das jeder Auftrag eine Dauer und einen Zeitpunkt besitzt,
-wo der Auftrag in die Fahrradwerkstatt eingeht. Außerdem werden die Aufträge in den Eingabedateien
+wo der Auftrag in die Fahrradwerkstatt eingeht.
+Außerdem werden die Aufträge in den Eingabedateien
 nach Eingangszeitpunkt sortiert, wo der erste Auftrag den Auftrag darstellt, der zuerst eingeht.
 Die Aufträge dürfen aber immer nur von 9 Uhr bis 17 Uhr (also dem Arbeitstag) abgearbeitet werden
 und erst nachdem ein Auftrag
@@ -135,13 +139,13 @@ einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet wer
 egal welches Verfahren zur Auswahl des zu bearbeitenden Auftrages benutzt wird.
 Dieser verfahrensunabhängige Algorithmus wird im folgenden zuerst beschrieben.
 
-Der Algorithmus funktioniert grob,
+Der Algorithmus funktioniert so,
 dass sich immer die Zeit gemerkt wird
 und in einer Schleife immer ein Auftrag bearbeitet wird
 und dementsprechend die Zeit immer weiter addiert wird.
 Wenn es aber keinen Auftrag zu bearbeiten gibt,
 wird die Zeit auf den nächsten Zeitpunkt gesetzt,
-wo es wieder min. einen Auftrag zur Wahl gibt,
+wo es wieder mindestens einen Auftrag zur Wahl gibt,
 der eingegangen ist und bearbeitet werden kann.
 
 Im konkreten wird sich als erstes gemerkt, was die aktuelle Zeit ist und wann der jetzige Arbeitstag zu Ende ist.
@@ -216,7 +220,7 @@ und sich der Anfang des nächsten Tages gemerkt wird.
 Dann befindet man sich vor der Auswahl des nächsten Auftrages auch am nächsten Tag.
 
 Wenn in der äußeren Schleife aber kein nicht-bearbeiteter Auftrag ausgewählt werden kann,
-muss gewartet werden, bis min. ein nächste Auftrag eingegangen ist.
+muss gewartet werden, bis mindestens ein nächste Auftrag eingegangen ist.
 Es kann jedoch nicht einfach die aktuelle Zeit direkt
 auf die Eingangszeit des nächsten Auftrages gesetzt werden,
 da sich das Ende des aktuellen Arbeitstages immer gemerkt werden muss.
@@ -239,7 +243,7 @@ kann aus der gesamten Wartezeit geteilt
 durch die Anzahl aller Aufträge ermittelt werden.
 
 Damit im Algorithmus sich gemerkt werden kann,
-welche Aufträge eingegangen sind bzw. bearbeitet wurden
+welche Aufträge eingegangen sind beziehungsweise bearbeitet wurden
 und welche noch nicht, werden zwei Container betrachtet,
 einen für die eingegangen und einen für die noch nicht eingegangenen.
 Ist ein Auftrag bearbeitet, ist er in keinem der beiden Container.
@@ -254,7 +258,8 @@ und die äußere Schleife kann dann beendet werden.
 
 Was bei der Delegation des Verfahrens zur Bestimmung des nächsten Auftrages beachtet werden muss,
 ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container der eingegangenen Aufträge bewegt wird,
-dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist
+dieser einsortiert wird.
+Das heißt das der Container der eingegangen Aufträge sortiert ist
 und zwar Verfahrens abhängig,
 da das einsortieren auch an das Verfahren delegiert wird.
 
@@ -325,7 +330,8 @@ Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Au
 	      und es muss ein Auftrag daraus entfernt werden und zurückgegeben werden.
 	Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
 	      und sich nur in der Sortierung unterscheiden ist die Auswahl des Auftrages schon implementiert in der abstrakten Klasse
-	      und muss nicht mehr in den Unterklassen unterschieden. Da aber andere Verfahren möglich sind,
+	      und muss nicht mehr in den Unterklassen unterschieden.
+	      Da aber andere Verfahren möglich sind,
 	      die entweder nicht sortieren oder die Sortierung nur teilweise berücksichtigen, gibt es diese Methode trotzdem.
 	      
 	      Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
