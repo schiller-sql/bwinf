@@ -2,13 +2,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Main {
     private static final List<String> book = new ArrayList<>();
     @SuppressWarnings("unchecked")
-    private static final List<String>[] stoerungen = new ArrayList[6];
+    private static final List<String>[] stoerungen = new ArrayList[7];
 
     public static void main(String[] args) {
         evaluatingFiles();
@@ -20,7 +23,7 @@ public class Main {
             }
             System.out.println();
             for (int[] result : results) {
-                System.out.println("Zeile: " + result[0]);
+                System.out.println("Zeile: " + (result[0] + 1));
                 System.out.println("'" + getText(result[0], result[1]) + "'");
             }
             System.out.println();
@@ -36,12 +39,11 @@ public class Main {
      *
      * @param stoerung Die Eingabedatei, nach der das Buch durchsucht werden soll
      * @return Eine Liste von Positionen, an denen dasselbe Wort steht wie das erste Wort der Eingabedatei
-     *
      */
     private static List<int[]> getPositions(List<String> stoerung) {
         List<int[]> positions = new ArrayList<>();
         int startPosition = 0;
-        while (Objects.equals(stoerung.get(startPosition),"_")) {
+        while (Objects.equals(stoerung.get(startPosition), "_")) {
             startPosition++;
         }
         for (int lineNumber = 0; lineNumber < book.size(); lineNumber++) {
@@ -79,7 +81,7 @@ public class Main {
      * Alle Stellen, die die Eingabedatei "lösen" können, werden an eine Liste angefügt, die nach Ende der Methode zurückgegeben wird.
      *
      * @param positions Eine Liste von Positionen, die überprüft werden soll
-     * @param stoerung Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
+     * @param stoerung  Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
      * @return Eine Liste von Positionen, die die Eingabedatei "lösen" können
      */
     private static List<int[]> checkPositions(List<int[]> positions, List<String> stoerung) {
@@ -96,8 +98,8 @@ public class Main {
                 counter++;
             }
             if (text.toString().contains("  ")) {
-                 // Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
-                 // Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
+                // Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
+                // Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
                 continue;
             }
             String[] lines = text.toString().split(" ");
@@ -125,7 +127,7 @@ public class Main {
      * Die Methode "getText" sucht für die durch die Zeile und den Index in der Zeile gegebene Stelle den nächsten Teilsatz.
      * Dabei wird das nächste Satzzeichen gesucht und der Text zwischen der gegebenen Stelle und dem Satzzeichen zurückgegeben.
      *
-     * @param line Die Zeile, in der der Text beginnt
+     * @param line   Die Zeile, in der der Text beginnt
      * @param column Die Spalte, in der der Text beginnt
      * @return Der (Teil-)Satz, der sich an der durch die Parameter bestimmten Stelle befindet
      */

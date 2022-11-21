@@ -154,10 +154,10 @@ ausgegeben werden.
 \section{Umsetzung}\label{sec:umsetzung}
 \subsection{Einlesen der Eingabedateien}
 Zunächst müssen sowohl das Buch als auch die Eingabedateien eingelesen werden.
-		
+
 Das Buch wird Zeile für Zeile eingelesen
 und als Liste gespeichert.
-		
+
 Für die Eingabedateien bieten sich ebenfalls Listen an,
 da sie Wort für Wort mit dem Buch,
 beziehungsweise Ausschnitten daraus,
@@ -249,9 +249,10 @@ müssen diese für jede Eingabedatei einmal ausgeführt werden,
 was in der \textbf{main}-Methode des Programms geschieht.
 Diese hat keine Relevanz für den Algorithmus,
 weshalb sie nicht unter \hyperref[sec:quellcode]{\texttt{Quellcode}} zu finden ist.
-		
+
 
 \section{Beispiele}\label{sec:beispiele}
+\subsection{Sonderfälle im Überblick}\label{ueberblickSondefaelle}
 Lässt man das Programm laufen,
 werden für jede der sechs Eingabedateien die passenden Lösungen ausgegeben.
 Dabei wird zunächst die Position im Buch angegeben,
@@ -269,7 +270,7 @@ Lückentexte können \ldots
 	\newcounter{enumTemp}
     \setcounter{enumTemp}{\theenumi}
 \end{enumerate}
-		
+
 Unter den vorgegebenen Eingabedateien befinden sich zwar keine,
 die mit einer Lücke beginnen,
 trotzdem könnten solche durch den Algorithmus vervollständigt werden.
@@ -286,19 +287,128 @@ bei denen \ldots
 \begin{enumerate}
 	\setcounter{enumi}{\theenumTemp}
 	\item \ldots eine zu untersuchende Stelle im Buch am Ende einer Zeile steht,\label{sonderfallVier}
-	\item \ldots der \hyperref[sonderfallDrei]{\texttt{dritte Sonderfall}} aus der obigen Liste gegeben ist
+	\item \ldots das erste Wort eines Lückentextes mehrmals in einer Zeile vorkommt oder\label{sonderfallFuenf}
+	\item \ldots der \hyperref[sonderfallZwei]{\texttt{zweite Sonderfall}} aus der obigen Liste gegeben ist
 	und zudem das erste Wort,
 	nach dem der Algorithmus sucht,
-	am Anfang einer Zeile steht.\label{sonderfallFünf}
+	am Anfang einer Zeile steht.\label{sonderfallSechs}
 \end{enumerate}
 
-Als Ausgabe für die sechs vorgegebenen Eingabedateien erhält man folgenden Text im Konsolenfenster:
+Bevor die einzelnen Sonderfälle anhand von Beispielen erklärt werden,
+sollte angemerkt werden,
+dass in der Ausgabe des Programms nicht exakt der vervollständigte Lückentext steht,
+sondern jeweils der gesamte Teilsatz,
+in dem diese Stelle zu finden ist.
+Dies ist beabsichtigt,
+der ausgegebene Text wird durch eine weitere Methode,
+die nicht relevant für den Algorithmus ist
+und daher nicht unter \hyperref[sec:quellcode]{\texttt{Quellcode}} zu finden ist,
+zusammengestellt.
+Diese sucht den Abschnitt zwischen dem letzten und nächsten Satz- beziehungsweise Sonderzeichen heraus.
 
-\begin{figure}[h]
+\subsection{Sonderfall 1}\label{sec:ersterSonderfall}
+\hyperref[sonderfallEins]{\texttt{Sonderfall 1}} stellt keine Besonderheit in der Arbeitsweise des Algorithmus dar,
+sondern unterscheidet sich ausschließlich von den anderen Lückentexten durch dessen Form.
+Dafür kann man als Beispiel die erste Eingabedatei wählen,
+diese hat drei Lücken direkt hintereinander:
 
-\end{figure}
+``\textbf{das \_ mir \_ \_ \_ vor}``.
 
+Zunächst wird für den Lückentext nach dem ersten Wort im Buch gesucht,
+welches hier ``\textbf{das}`` ist.
+Mit der dadurch erstellten Liste,
+aus der man in \hyperref[tab:listeStoerung0]{\texttt{Tabelle 1}} einen Ausschnitt sehen kann,
+wird dann die zweite Methode \hyperref[sec:checkPositions()]{\texttt{checkPositions}(\ldots)} aufgerufen.
+\begin{table}\label{tab:listeStoerung0}
+\centering
+\begin{tabular}{lll}
+	\textbf{Index in Liste} & \textbf{Zeile} & \textbf{Index in Zeile}\\
+	0 & 35 & 4\\
+	1 & 61 & 5\\
+	2 & 67 & 4\\
+	3 & 88 & 28\\
+	4 & 111 & 3\\
+	5 & 115 & 4\\
+	6 & 135 & 44\\
+	7 & 135 & 54\\
+	\ldots & \ldots
+\end{tabular}
+\caption{Liste der Methode \hyperref[sec:getPositions()]{\texttt{getPositions}(\ldots)} für Störung Nr.0}
+\end{table}
+Diese prüft jedes Element der Liste einzeln.
+Nimmt man die erste Position
+(Zeile 36,
+da der Index mit 0 startet)
+und sucht diese im Buch,
+erhält man folgende Zeile:
 
+``\textbf{Das Steuer hält ein Kindesarm}``.
+
+Diese wird Wort für Wort verglichen.
+An zweiter Stelle im Lückentext steht eine Lücke,
+daher darf dort jedes Wort eingesetzt werden.
+Das nächste Wort,
+welches dementsprechend überprüft werden muss,
+ist das Wort ``\textbf{mir}`` aus dem Lückentext.
+Im Ausschnitt aus dem Buch steht allerdings ``\textbf{hält}``.
+Der Suchalgorithmus wird für diese eine Stelle abgebrochen,
+da die beiden Worte nicht miteinander übereinstimmen.
+
+Die erste Position,
+an der auch die zweite Methode fündig wird,
+ist in Zeile 440
+(in der Liste würde 439 stehen).
+Dort steht folgender Satz:
+
+``\textbf{»Das kommt mir gar nicht richtig vor,«}``.
+
+Bei diesem wird ebenso jedes Wort mit dem Lückentext abgeglichen.
+Da Lücken aber einfach übersprungen werden,
+weil sie für jedes erdenkliche Wort stehen können,
+kann man erkennen,
+dass mehrere Lücken hintereinander kein Problem für den Algorithmus darstellen.
+
+\subsection{Sonderfall 2}\label{sec:zweiterSonderfall}
+Da der Algorithmus immer nach dem ersten Wort des Lückentextes suchen soll,
+stellt \hyperref[sonderfallZwei]{\texttt{Sonderfall 2}} das aufwendigste Problem dar.
+Nach einer Lücke
+- im Kontext der Eingabedateien also ein Unterstrich -
+kann schlecht im Buch gesucht werden.
+Also muss nach dem ersten Element der Liste des Lückentextes gesucht werden,
+das keine Lücke ist.
+Als Beispiel hierfür bietet sich keine der vorgegebenen Eingabedateien an,
+deshalb wurde eine weitere Eingabedatei dazu gefügt
+(stoerung7.txt).
+Der darin enthaltene Lückentext ist folgender:
+
+``\textbf{\_ kleine Thür \_ \_ verschlossen}``.
+
+Hier wird nach dem Wort ``\textbf{kleine}`` gesucht,
+da es das erste schon angegebene Wort im Lückentext ist.
+Würde man allerdings einfach dieses Wort dem Suchalgorithmus der ersten Methode \hyperref[sec:getPositions()]{\texttt{getPositions(\ldots)}} geben,
+würden auch in der zweiten Methode \hyperref[sec:checkPositions()]{\texttt{checkPositions(\ldots)}} nur Stellen zurückgegeben werden,
+die mit dem Wort ``\textbf{kleine}`` beginnen.
+Es könnten im schlimmsten Fall sogar Positionen gefunden werden,
+die den Lückentext vervollständigen könnten,
+wäre die Lücke am Anfang nicht.
+
+Um das zu verhindern,
+muss von der Position des ersten Wortes im Lückentext aus,
+also hier wieder ``\texttt{kleine}``,
+dieselbe Anzahl an Worten im Buch zurückgegangen werden,
+wie der Lückentext Lücken am Beginn stehen hat.
+
+Steht das erste Wort nach den Lücken Am Anfang des Lückentextes am Anfang einer Zeile,
+ergibt sich ein weiterer Sonderfall,
+der im Abschnitt \hyperref[sec:sechsterSonderfall]{\texttt{Sonderfall 6}} behandelt wird.
+
+\subsection{Sonderfall 3}\label{sec:dritterSonderfall}
+
+\subsection{Sonderfall 4}\label{sec:vierterSonderfall}
+
+\subsection{Sonderfall 5}\label{sec:fuenfterSonderfall}
+
+\subsection{Sonderfall 6}\label{sec:sechsterSonderfall}
 
 \clearpage
 
