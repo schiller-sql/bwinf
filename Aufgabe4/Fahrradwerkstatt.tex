@@ -584,7 +584,7 @@ Im nächsten Schleifen Durchgang,
 wird dann der Auftrag genommen der um 1980 eingeht, also die nun aktuelle Zeit.
 Wäre die Zeit also nicht zum nächsten Tag gesetzt worden,
 wäre dieser Auftrag nicht genommen.
-
+\newpage
 \subsection{Drittes Beispiel}\label{sec:beispiel3}
 Pausen zwischen Aufgaben: Wenn es keine eingegangene Aufgaben gibt,
 muss gewartet werden bis die nächsten eintrifft.
@@ -652,18 +652,10 @@ Längste Wartezeit in allen Aufträgen: 120 minuten
 
 Man sieht in der Ausgabe, das zwischen den beiden Aufträgen zwei Stunden gewartet werden muss. 
 Dann fängt der dritte äußere Schleifendurchgang genau da an, bis gewartet wurde
-und es gibt min. eine eingegangene Aufgabe, die ausgewählt und bearbeitet werden kann.
-
-%\begin{tikzpicture}
-%\draw (0,0) -- (4,0) -- (4,4) -- (0,4) -- (0,0);
-%\end{tikzpicture}
+und es gibt mindestens eine eingegangene Aufgabe, die ausgewählt und bearbeitet werden kann.
 
 
-
-
-
-
-
+\newpage
 \section{Quellcode}\label{sec:quellcode}\label{LastPage}
 \begin{lstlisting}[frame=single,language=Java,title=Klasse Task,breaklines=true]
 	/**
@@ -715,6 +707,7 @@ und es gibt min. eine eingegangene Aufgabe, die ausgewählt und bearbeitet werde
         }
     }
 	\end{lstlisting}
+\newpage
 \begin{lstlisting}[frame=single,language=Java,title=Klasse FiFoTaskPriorityDelegate,breaklines=true]
     /**
      * Eine Implementation von {@link TaskPriorityDelegate}, die immer den Auftrag der als neuestes eingegangen ist,
