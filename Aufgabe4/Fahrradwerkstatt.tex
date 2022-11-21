@@ -386,6 +386,8 @@ Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 540, dauer: 
     Aufgabe Abgeschlossen um 660
     Die Aufgabe ging ein um 540
     Es musste also 120 Minuten auf die Aufgabe gewartet werden
+    
+*Äußerer Schleifendurchgang*
 \end{lstlisting}
 [...]
 \begin{lstlisting}[numbers=none]
@@ -446,21 +448,9 @@ während die zweite bis zum Ende der Aufgabe bearbeitet am nächsten Tag.
 \textbf{ Auswahl nach kürzester Dauer:}
 \begin{lstlisting}[numbers=none]
 *Äußerer Schleifendurchgang*
-Aktuelle Zeit: 540
-Ende dieses Arbeitstages: 1020
-Alle schon eingegangenen Aufgaben
-{eingangsZeit: 540, dauer: 120}
-
-Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 540, dauer: 120}
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Es wurden 120 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 660
-
-    Aufgabe Abgeschlossen um 660
-    Die Aufgabe ging ein um 540
-    Es musste also 120 Minuten auf die Aufgabe gewartet werden
-
+\end{lstlisting}
+[...]
+\begin{lstlisting}[numbers=none]
 
 *Äußerer Schleifendurchgang*
 Aktuelle Zeit: 660
@@ -486,24 +476,22 @@ Ende dieses Arbeitstages: 1020
 Alle schon eingegangenen Aufgaben
 {eingangsZeit: 600, dauer: 180}
 {eingangsZeit: 780, dauer: 300}
+
+Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 600, dauer: 180}
+
+     *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
+     Es wurden 180 der Aufgabe abgearbeitet
+     Man ist nun bei der Zeit 960
+
+     Aufgabe Abgeschlossen um 960
+     Die Aufgabe ging ein um 600
+     Es musste also 360 Minuten auf die Aufgabe gewartet werden
+
+
+*Äußerer Schleifendurchgang*
 \end{lstlisting}
 [...]
 \begin{lstlisting}[numbers=none]
-Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 780, dauer: 300}
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Es wurden 60 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 1020
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Man befindet sich am Ende des Tages, neuer Tag bei 1980
-    Neues Ende des Tages bei 2460
-    Es wurden 240 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 2220
-
-    Aufgabe Abgeschlossen um 2220
-    Die Aufgabe ging ein um 780
-    Es musste also 1440 Minuten auf die Aufgabe gewartet werden
 
 Durchschnittliche Wartezeit pro Auftrag: 510.0 minuten
 Gesamte Wartezeit für alle Aufträge: 2040 minuten
@@ -578,20 +566,9 @@ Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 1980, dauer:
 
 
 *Äußerer Schleifendurchgang*
-Aktuelle Zeit: 2100
-Ende dieses Arbeitstages: 2460
-Alle schon eingegangenen Aufgaben
-{eingangsZeit: 1020, dauer: 180}
-
-Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 1020, dauer: 180}
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Es wurden 180 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 2280
-
-    Aufgabe Abgeschlossen um 2280
-    Die Aufgabe ging ein um 1020
-    Es musste also 1260 Minuten auf die Aufgabe gewartet werden
+\end{lstlisting}
+[...]
+\begin{lstlisting}[numbers=none]
 
 
 Durchschnittliche Wartezeit pro Auftrag: 620.0 minuten
