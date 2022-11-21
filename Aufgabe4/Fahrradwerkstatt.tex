@@ -277,60 +277,75 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 
 
 \section{Umsetzung}\label{sec:umsetzung}
-\begin{itemize}
-	\item Zeit beziehungsweise Dauer wird als Integer in Minuten dargestellt und Zeitpunkte als Zeit von 0 aus.
-	\item Ein Auftrag wird als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt dargestellt.
-	\item Wenn der gemerkte Zeitpunkt für das Ende des jetzigen Arbeitstages (17 Uhr),
+
+Bei der Umsetzung wird Zeit, beziehungsweise Dauer, als Integer in Minuten dargestellt
+und Zeitpunkte als Zeit von 0 aus.
+Wenn der gemerkte Zeitpunkt für das Ende des jetzigen Arbeitstages (17 Uhr),
 	zum Ende des nächsten Arbeitstages (17 Uhr am nächsten Tag)  werden soll,
 	muss der Zeitpunkt lediglich mit 24 Stunden ($24 * 60$ Minuten) addiert werden.
-	\item Wenn die aktuelle Zeit gleich dem Ende des jetzigen Arbeitstages ist (17 Uhr)
+	Wenn die aktuelle Zeit gleich dem Ende des jetzigen Arbeitstages ist (17 Uhr)
 	und auf den Anfang des nächsten Arbeitstages (nächsten Tag 9 Uhr) gestellt werden soll,
 	muss die Zeit mit $(24 - 17) + 9 = 16$ Stunden ($16 * 60$ Minuten) addiert werden 
-	\item Wenn die Zeit größer als das gemerkten Ende des Arbeitstages ist,
+Wenn die Zeit größer als das gemerkten Ende des Arbeitstages ist,
 	man aber die Zeit nur auf dem Anfang des Arbeitstages nach den gemerkten Ende das Arbeitstages setzten möchte,
-	muss man die Zeit gleich des jetzigen gemerkten Ende des Arbeitstages + 9 setzen.
-	\item Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
-	      wo jedoch sich gemerkt wird, welche Aufträge noch nicht waren.
+	muss man die Zeit gleich des jetzigen gemerkten Ende des Arbeitstages $+ 16$ setzen.
+
+Ein Auftrag wird als Klassenobjekt \texttt{Task} mit Dauer und Eingangszeitpunkt dargestellt.
+
+Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
+	      wo jedoch sich gemerkt wird, welche Aufträge davon noch nicht eingegangen sind.
 	      Da alle Aufträge sortiert sind, nach Eingangszeitpunkt, wird sich konkret nur der Index gemerkt,
 	      wo der zugehörige Auftrag der erste Auftrag ist, der noch nicht eingegangen ist.
-	\item Wenn am Anfang in der äußeren Schleife alle Aufträge,
+	Wenn am Anfang der äußeren Schleife alle Aufträge,
 	die sich in den eingegangen Aufträgen befinden sollten, dorthin bewegt werden,
-	lediglich der Index verschoben, bis der Auftrag vom Index nicht mehr eingegangen sein sollte.
+	wird lediglich der Index verschoben,
+	bis der Auftrag vom Index nicht mehr eingegangen sein sollte.
+	Also bis der Auftrag vom Index wieder der erste Auftrag ist,
+	der nach der aktuellen Zeit nicht mehr eingegangen ist.
 	Während also der Index verschoben wird,
 	kann immer der Auftrag vom Index in die eingegangen Aufträge eingetragen werden,
 	bis ein Auftrag gefunden wird,
-	der nach der aktuellen Zeit noch nicht eingegangen ist.
-	\item Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
+	der nach der aktuellen Zeit noch nicht eingegangen ist
+	und deshalb nicht eingetragen wird.	
+	Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
 	      die nur die Aufträge enthält, die auch schon eingegangen sind.
-	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
+	      
+	      Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
 	      durch eine abstrakte Klasse \texttt{TaskPriorityDelegate}.
 	      An einem Objekt einer Unterklasse dieser abstrakten Klassen wird
 	      also das Auswählen des nächsten Auftrages delegiert.
 	      Jedes Verfahren des Auswählen des nächsten Auftrages wird
 	      also als eine Unterklasse dieser abstrakten Klasse dargestellt.
-	\item Die abstrakte Klasse hat zwei Methoden, die sich jeweils um das Sortieren
+	Die abstrakte Klasse hat zwei Methoden, die sich jeweils um das Sortieren
 	      der neu eingegangenen Aufträge in die schon eingegangen Aufträge
 	      und um das Auswählen der schon sortierten eingegangen Aufträge kümmern.
 	      Bei der sortierenden Methode, wird die Liste an schon eingegangenen Aufträgen gegeben
 	      und ein gegebener Auftrag soll dort einsortiert werden.
 	      Bei der auswählenden Methode wird auch die Liste an schon eingegangenen Aufträgen gegeben
 	      und es muss ein Auftrag daraus entfernt werden und zurückgegeben werden.
-	\item Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
+	Da beide Verfahren und damit Implementationen der Klasse immer den ersten Auftrag auswählen
 	      und sich nur in der Sortierung unterscheiden ist die Auswahl des Auftrages schon implementiert in der abstrakten Klasse
 	      und muss nicht mehr in den Unterklassen unterschieden. Da aber andere Verfahren möglich sind,
 	      die entweder nicht sortieren oder die Sortierung nur teilweise berücksichtigen, gibt es diese Methode trotzdem.
-	\item Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	      
+	      Die Klasse \texttt{FiFoTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
 	      nach der Reihenfolge der eingehenden Aufträge.
-	\item Die Klasse \texttt{ShortestDurationTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
+	Die Klasse \texttt{ShortestDurationTaskPriorityDelegate} implementiert \texttt{TaskPriorityDelegate}
 	      nach der aufsteigenden Dauer der eingehenden Aufträge.
-	\item In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
+	In der Methode \texttt{simulateProcessingTasks} wird die Abarbeitung von den Aufträgen simuliert.
 	      Es wird ein \texttt{TaskPriorityDelegate} gegeben und eine Liste von Aufträgen.
+	      Die Methode delegiert also das Sortieren und Auswählen von eingegangenen Aufträgen
+	      an den \texttt{TaskPriorityDelegate},
+	      indem die beiden Methoden des gegebenen Objektes Aufgerufen wird
+	      mit der Liste, wo einsortiert werden soll
+	      und gegebenenfalls dem Auftrag der einsortiert werden soll.
+	      Wenn ein Auftrag ausgewählt werden soll, gibt die aufgerufene Methode diesen zurück.
 	      Ausgegeben wird dann die durchschnittliche, längste und gesamte Wartezeit.
-	\item Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode
+	Die Methode \texttt{simulateProcessingTasks} wird deshalb in der \texttt{main} Methode
 	      mit jeder Kombination von jedem \texttt{TaskPriorityDelegate} und jeder Eingabedatei aufgerufen.
 	      Alle Unterklassen vom \texttt{TaskPriorityDelegate} sind als Array
 	      in der Konstante \texttt{taskPriorityDelegates} eingetragen.
-\end{itemize}
+
 
 \section{Beispiele}\label{sec:beispiele}
 Erstes Beispiel, Vergleich zwischen Auswahl von Aufträgen nach ihrer Eingangsreihenfolge
