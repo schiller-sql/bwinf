@@ -2,13 +2,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Main {
     private static final List<String> book = new ArrayList<>();
     @SuppressWarnings("unchecked")
-    private static final List<String>[] stoerungen = new ArrayList[6];
+    private static final List<String>[] stoerungen = new ArrayList[7];
 
     public static void main(String[] args) {
         evaluatingFiles();
@@ -20,7 +23,7 @@ public class Main {
             }
             System.out.println();
             for (int[] result : results) {
-                System.out.println("Zeile: " + result[0]);
+                System.out.println("Zeile: " + (result[0] + 1));
                 System.out.println("'" + getText(result[0], result[1]) + "'");
             }
             System.out.println();
@@ -31,20 +34,35 @@ public class Main {
      * Die Methode "getPositions" sucht für eine durch den Parameter gegebene Eingabedatei das erste Wort im Buch.
      * Dabei wird jede Zeile des Buchs einzeln auf das Anfangswort durchsucht
      * und bei einem Fund wird sowohl die Zeile als auch die "Spalte" (der Index in der Zeile, an der das Wort beginnt) als Array an die Liste von Positionen hinzugefügt.
+     * Falls an erster Stelle der Eingabedatei eine Lücke ("_") steht, wird nach dem zweiten Wort gesucht und dann die Position für das vorherige Wort bestimmt.
      * Diese Liste wird am Ende der Methode zurückgegeben.
      *
      * @param stoerung Die Eingabedatei, nach der das Buch durchsucht werden soll
      * @return Eine Liste von Positionen, an denen dasselbe Wort steht wie das erste Wort der Eingabedatei
-     *
      */
     private static List<int[]> getPositions(List<String> stoerung) {
         List<int[]> positions = new ArrayList<>();
+        int startPosition = 0;
+        while (Objects.equals(stoerung.get(startPosition), "_")) {
+            startPosition++;
+        }
         for (int lineNumber = 0; lineNumber < book.size(); lineNumber++) {
-            String line = book.get(lineNumber).toLowerCase();
-            int index = line.indexOf(stoerung.get(0));
+            String lineText = book.get(lineNumber).toLowerCase();
+            int index = lineText.indexOf(stoerung.get(startPosition));
             while (index >= 0) {
-                positions.add(new int[]{lineNumber, index});
-                index = line.indexOf(stoerung.get(0), index + 1);
+                int tempIndex = index;
+                int tempLineNumber = lineNumber;
+                for (int i = 0; i < startPosition; i++) {
+                    if (tempIndex - 1 <= 0) {
+                        tempLineNumber--;
+                        lineText = book.get(tempLineNumber).toLowerCase();
+                        tempIndex = lineText.length() - 1;
+                    }
+                    tempIndex = lineText.lastIndexOf(" ", tempIndex - 2);
+                    tempIndex++;
+                }
+                positions.add(new int[]{tempLineNumber, tempIndex});
+                index = lineText.indexOf(stoerung.get(startPosition), index + 1);
             }
         }
         return positions;
@@ -63,7 +81,7 @@ public class Main {
      * Alle Stellen, die die Eingabedatei "lösen" können, werden an eine Liste angefügt, die nach Ende der Methode zurückgegeben wird.
      *
      * @param positions Eine Liste von Positionen, die überprüft werden soll
-     * @param stoerung Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
+     * @param stoerung  Die Eingabedatei, nach der die möglichen Positionen überprüft werden sollen
      * @return Eine Liste von Positionen, die die Eingabedatei "lösen" können
      */
     private static List<int[]> checkPositions(List<int[]> positions, List<String> stoerung) {
@@ -80,13 +98,15 @@ public class Main {
                 counter++;
             }
             if (text.toString().contains("  ")) {
+                // Zwei aufeinander folgende Leerzeichen nach dem Anfügen eines Leerzeichens an jede Zeile bedeuten, dass hier eine leere Zeile im Buch war.
+                // Daher kann diese Stelle das Bruchstück, welches sich immer innerhalb eines Satzes befindet, nicht vervollständigen.
                 continue;
             }
             String[] lines = text.toString().split(" ");
-            for (int index = 0; index < lines.length; index++) {
-                lines[index] = lines[index].replaceAll("[^[a-zA-Z0-9äöüß]]", "");
+            for (int i = 1; i < lines.length; i++) {
+                lines[i] = lines[i].replaceAll("[^[a-zA-Z0-9äöüß]]", "");
             }
-            for (int index = 1; index < stoerung.size(); index++) {
+            for (int index = 0; index < stoerung.size(); index++) {
                 if (Objects.equals(stoerung.get(index), lines[index])) {
                     if (index == stoerung.size() - 1) {
                         rightPositions.add(position);
@@ -107,7 +127,7 @@ public class Main {
      * Die Methode "getText" sucht für die durch die Zeile und den Index in der Zeile gegebene Stelle den nächsten Teilsatz.
      * Dabei wird das nächste Satzzeichen gesucht und der Text zwischen der gegebenen Stelle und dem Satzzeichen zurückgegeben.
      *
-     * @param line Die Zeile, in der der Text beginnt
+     * @param line   Die Zeile, in der der Text beginnt
      * @param column Die Spalte, in der der Text beginnt
      * @return Der (Teil-)Satz, der sich an der durch die Parameter bestimmten Stelle befindet
      */
@@ -118,7 +138,9 @@ public class Main {
         int counter = 1;
         while (startIndex < 0 || endIndex < 0) {
             if (startIndex < 0) {
-                text.insert(0, (book.get(line - counter) + " "));
+                String tempLine = book.get(line - counter);
+                text.insert(0, (tempLine) + " ");
+                column = (book.get(line - counter)).length();
             }
             if (endIndex < 0) {
                 text.append(" ").append(book.get(line + counter));
@@ -131,13 +153,14 @@ public class Main {
     }
 
     /**
-     * Die Methode "formatText" ersetzt alle im Buch vorkommende Sonderzeichen mit einem Doppelkreuz ("#").
+     * Die Methode "formatText" ersetzt alle Sonderzeichen im durch den Parameter "text" gegebenen Text mit einem Doppelkreuz ("#").
+     * Bei den Worten "und" und "oder" wird jeweils auch ein Doppelkreuz hinzugefügt.
      *
      * @param text Der zu bearbeitende Text
      * @return Der bearbeitete Text
      */
     private static String formatText(StringBuilder text) {
-        return text.toString().replaceAll("[.!?,»«'\"()\\[\\]]", "#");
+        return text.toString().replaceAll("[^a-zA-Z0-9äöüß ]", "#").replaceAll(" und ", "#und ").replaceAll(" oder ", "#oder ");
     }
 
     /**
