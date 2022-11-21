@@ -368,7 +368,7 @@ x    13 | 780 & 5 | 300 \\
     \caption{Erstes Beispiel Aufträge}
     \label{tab:Table1}
  \end{table}
-
+\newpage
 \textbf{Eingangsreihenfolge:}
 \begin{lstlisting}[numbers=none]
 *Äußerer Schleifendurchgang*
@@ -386,25 +386,9 @@ Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 540, dauer: 
     Aufgabe Abgeschlossen um 660
     Die Aufgabe ging ein um 540
     Es musste also 120 Minuten auf die Aufgabe gewartet werden
-
-
-*Äußerer Schleifendurchgang*
-Aktuelle Zeit: 660
-Ende dieses Arbeitstages: 1020
-Alle schon eingegangenen Aufgaben
-{eingangsZeit: 600, dauer: 180}
-{eingangsZeit: 660, dauer: 120}
-
-Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 600, dauer: 180}
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Es wurden 180 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 840
-
-    Aufgabe Abgeschlossen um 840
-    Die Aufgabe ging ein um 600
-    Es musste also 240 Minuten auf die Aufgabe gewartet werden
-
+\end{lstlisting}
+[...]
+\begin{lstlisting}[numbers=none]
 
 *Äußerer Schleifendurchgang*
 Aktuelle Zeit: 840
@@ -458,7 +442,7 @@ doch die vierte Aufgabe dauert bis zum Tag danach,
 weshalb man zwei innere Schleifengänge sehen kann.
 Der erste innere Schleifengang bearbeitet die Aufgabe bis zum Ende des Tages,
 während die zweite bis zum Ende der Aufgabe bearbeitet am nächsten Tag.
-
+\newpage
 \textbf{ Auswahl nach kürzester Dauer:}
 \begin{lstlisting}[numbers=none]
 *Äußerer Schleifendurchgang*
@@ -502,24 +486,9 @@ Ende dieses Arbeitstages: 1020
 Alle schon eingegangenen Aufgaben
 {eingangsZeit: 600, dauer: 180}
 {eingangsZeit: 780, dauer: 300}
-
-Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 600, dauer: 180}
-
-    *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
-    Es wurden 180 der Aufgabe abgearbeitet
-    Man ist nun bei der Zeit 960
-
-    Aufgabe Abgeschlossen um 960
-    Die Aufgabe ging ein um 600
-    Es musste also 360 Minuten auf die Aufgabe gewartet werden
-
-
-*Äußerer Schleifendurchgang*
-Aktuelle Zeit: 960
-Ende dieses Arbeitstages: 1020
-Alle schon eingegangenen Aufgaben
-{eingangsZeit: 780, dauer: 300}
-
+\end{lstlisting}
+[...]
+\begin{lstlisting}[numbers=none]
 Es gibt eingegangene Aufgaben, Ausgewählte Aufgabe: {eingangsZeit: 780, dauer: 300}
 
     *Innerer Schleifendurchgang um Aufgabe zu bearbeiten*
@@ -823,6 +792,7 @@ und es gibt min. eine eingegangene Aufgabe, die ausgewählt und bearbeitet werde
             new ShortestDurationTaskPriorityDelegate(),
     	};
 	\end{lstlisting}
+\newpage
 \begin{lstlisting}[frame=single,language=Java,title=Methode simulateProcessingTasks,breaklines=true]
 	/**
      * Für alle Eingabedateien werden alle Verfahren durchgeführt
