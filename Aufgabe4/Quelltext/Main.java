@@ -201,7 +201,7 @@ public class Main {
                 while (time < targetedTime) {
                     time = targetedTime;
                     if (time >= nextBreak) {
-                        time = nextBreak + 9;
+                        time = nextBreak + (9 + (24 - 17)) * 60;
                         nextBreak += 24 * 60;
                     }
                 }
