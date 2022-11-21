@@ -354,7 +354,8 @@ Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Au
 
 
 \section{Beispiele}\label{sec:beispiele}
-Erstes Beispiel, Vergleich zwischen Auswahl von Aufträgen nach ihrer Eingangsreihenfolge
+\subsection{Erstes Beispiel}\label{sec:beispiel1}
+Vergleich zwischen Auswahl von Aufträgen nach ihrer Eingangsreihenfolge
 und Auswahl nach kürzester Dauer: 
  \begin{table}[htb]
     \centering
@@ -444,7 +445,7 @@ doch die vierte Aufgabe dauert bis zum Tag danach,
 weshalb man zwei innere Schleifengänge sehen kann.
 Der erste innere Schleifengang bearbeitet die Aufgabe bis zum Ende des Tages,
 während die zweite bis zum Ende der Aufgabe bearbeitet am nächsten Tag.
-\newpage
+
 \textbf{ Auswahl nach kürzester Dauer:}
 \begin{lstlisting}[numbers=none]
 *Äußerer Schleifendurchgang*
@@ -505,8 +506,8 @@ Bei dem Verfahren der Auswahl nach kürzester Dauer wird das mit der kürzeren D
 beim Verfahren die von der Eingangsreihenfolge abhängig ist,
 wird die Aufgabe genommen die zuerst eingegangen ist.
 
-
-Zweites Beispiel: Beachtung des Sonderfalls, wo ein Auftrag genau dann endet, wo der Arbeitstag endet.
+\subsection{Zweites Beispiel}\label{sec:beispiel2}
+Beachtung des Sonderfalls, wo ein Auftrag genau dann endet, wo der Arbeitstag endet.
 Dabei ist die Auswahl der Aufträge nach der kürzesten Dauer wichtig,
 da als der Arbeitstag endet es einen Auftrag gibt der aber länger ist,
 als einer der eingeht am Anfang des nächsten Tages.
@@ -583,7 +584,9 @@ Im nächsten Schleifen Durchgang,
 wird dann der Auftrag genommen der um 1980 eingeht, also die nun aktuelle Zeit.
 Wäre die Zeit also nicht zum nächsten Tag gesetzt worden,
 wäre dieser Auftrag nicht genommen.
-Drittes Beispiel: Pausen zwischen Aufgaben. Wenn es keine eingegangene Aufgaben gibt,
+
+\subsection{Drittes Beispiel}\label{sec:beispiel3}
+Pausen zwischen Aufgaben: Wenn es keine eingegangene Aufgaben gibt,
 muss gewartet werden bis die nächsten eintrifft.
 
 \begin{table}[htb]
