@@ -7,7 +7,7 @@
 % Die nächsten vier Felder bitte anpassen:
 \newcommand{\Aufgabe}{Aufgabe 1: Störung} % Aufgabennummer und Aufgabennamen angeben
 \newcommand{\TeamId}{00919} % Team-ID aus dem PMS angeben
-\newcommand{\TeamName}{Team-Name} % Team-Namen angeben
+\newcommand{\TeamName}{Object Grind} % Team-Namen angeben
 \newcommand{\Namen}{Ole Deifuß} % Namen der Bearbeiter/-innen dieser Aufgabe angeben
 
 % Kopf- und Fußzeilen
@@ -188,7 +188,7 @@ bis der zurückgegebene Index -1 ist.
 Das ist der Fall,
 wenn das Wort nicht mehr darin enthalten ist.
 Sollte der Lückentext mit einer Lücke beginnen,
-wird von der gespeicherten Position wieder mit einer \texttt{For-Schleife},
+wird von der gespeicherten Position wieder mit einer \textbf{For-Schleife},
 bevor sie an die Liste angehängt wird,
 noch die jeweilige Anzahl an Worten im Buch zurückgegangen.
 Das kann man durch die Leerzeichen im Buch gut zählen,
@@ -218,8 +218,8 @@ da Lückentexte niemals über ein Satzende hinweg verlaufen.
 Der dadurch zusammengesetzte Text wird dann auch in eine Liste aus Worten umgewandelt.
 Diese muss allerdings zunächst noch mit einer weiteren \textbf{For-Schleife} von Satz- und Sonderzeichen befreit werden,
 da diese nicht von den Worten bei trennen durch die Leerzeichen entfernt werden.
-Erst dann werden mit einer dritten \texttt{For-Schleife} die Liste aus dem Buch und die des Lückentextes miteinander verglichen.
-Darin prüft eine \texttt{If-Else If-Else-Bedingung},
+Erst dann werden mit einer dritten \textbf{For-Schleife} die Liste aus dem Buch und die des Lückentextes miteinander verglichen.
+Darin prüft eine \textbf{If/Else-If/Else-Bedingung},
 ob
 \begin{enumerate}
 \item das aktuelle Element des Buchs mit dem aktuellen Element der Liste des Lückentextes übereinstimmt,
@@ -227,17 +227,17 @@ ob
 \item keins der beiden obigen Ereignisse der Fall ist.
 \end{enumerate}
 Ist das aktuelle Element beider Listen identisch,
-wird mit einer weiteren \texttt{If-Bedingung} überprüft,
+wird mit einer weiteren \textbf{If-Bedingung} überprüft,
 ob es sich dabei um das letzte Element der Liste des Lückentextes handelt.
 Ist das der Fall,
 wird die Position an die Liste angehängt,
 die am Ende der Methode zurückgegeben wird,
 falls aber nicht,
 wird weiter durch die beiden Listen iteriert.
-Wenn das Element in der Liste des Lückentextes keine Lücke ist, kann die \texttt{For-Schleife} abgebrochen werden,
-da die erste \texttt{If-Bedingung} nicht den Wert \texttt{true} hatte
+Wenn das Element in der Liste des Lückentextes keine Lücke ist, kann die \textbf{For-Schleife} abgebrochen werden,
+da die erste \textbf{If-Bedingung} nicht den Wert \textbf{true} hatte
 und somit die aktuellen Elemente nicht übereinstimmen.
-Hat keine der beiden obigen Bedingungen den Wert \texttt{true} erhalten,
+Hat keine der beiden obigen Bedingungen den Wert \textbf{true} erhalten,
 handelt es sich bei dem aktuellen Element der Liste des Lückentextes um eine Lücke.
 Dabei muss auch wieder geprüft werden,
 ob es das letzte Element ist.
@@ -246,7 +246,7 @@ kann auch in dieser Situation die Position an die Liste der korrekten Positionen
 
 Da beide Methoden jeweils nur eine Eingabedatei prüfen können,
 müssen diese für jede Eingabedatei einmal ausgeführt werden,
-was in der \texttt{main}-Methode des Programms geschieht.
+was in der \textbf{main}-Methode des Programms geschieht.
 Diese hat keine Relevanz für den Algorithmus,
 weshalb sie nicht unter \hyperref[sec:quellcode]{\texttt{Quellcode}} zu finden ist.
 		
@@ -260,39 +260,46 @@ welcher den jeweilige Lückentext vervollständigt.
 
 Unter den Eingabedateien können folgende Sonderfälle auftreten:
 
-Lückentexte können\ldots
+Lückentexte können \ldots
 
 \begin{enumerate}
-	\item \ldots mehrere Lücken direkt nacheinander haben,
-	\item \ldots mit einer Lücke beginnen,
-	\item \ldots mit einer Lücke enden.
+	\item \ldots mehrere Lücken direkt nacheinander haben,\label{sonderfallEins}
+	\item \ldots mit einer Lücke beginnen,\label{sonderfallZwei}
+	\item \ldots mit einer Lücke enden.\label{sonderfallDrei}
+	\newcounter{enumTemp}
+    \setcounter{enumTemp}{\theenumi}
 \end{enumerate}
 		
-		Unter den vorgegebenen Eingabedateien befinden sich zwar keine,
-		die mit einer Lücke beginnen,
-		trotzdem könnten solche durch den Algorithmus vervollständigt werden.
-		
-		Als Ausgabe für die sechs vorgegebenen Eingabedateien erhält man folgenden Text im Konsolenfenster:
+Unter den vorgegebenen Eingabedateien befinden sich zwar keine,
+die mit einer Lücke beginnen,
+trotzdem könnten solche durch den Algorithmus vervollständigt werden.
+
+Neben den drei Sonderfällen,
+die sich aus der Form der Eingabedateien ergeben,
+gibt es auch Sonderfälle,
+die zwar vom Algorithmus besonders behandelt werden müssen,
+bei denen dies allerdings nicht beim Betrachten der Eingabedateien auffällt.
+
+Dazu zählen Fälle,
+bei denen \ldots
+
+\begin{enumerate}
+	\setcounter{enumi}{\theenumTemp}
+	\item \ldots eine zu untersuchende Stelle im Buch am Ende einer Zeile steht,\label{sonderfallVier}
+	\item \ldots der \hyperref[sonderfallDrei]{\texttt{dritte Sonderfall}} aus der obigen Liste gegeben ist
+	und zudem das erste Wort,
+	nach dem der Algorithmus sucht,
+	am Anfang einer Zeile steht.\label{sonderfallFünf}
+\end{enumerate}
+
+Als Ausgabe für die sechs vorgegebenen Eingabedateien erhält man folgenden Text im Konsolenfenster:
+
+\begin{figure}[h]
+
+\end{figure}
 
 
-		
-		Störung 0 und Störung 1 bieten sich als Beispiel für die ersten beiden Sonderfälle an.
-		Störung 0 hat sogar drei Lücken direkt nacheinander
-		und ist somit der Lückentext mit der längsten Lücke.
-		Störung 1 endet mit einer Lücke und wird daher als Beispiel für Sonderfall 2 genommen.
-		
-		Sieht man sich den Ablauf des Algorithmus für Störung 0 an,
-		läuft erstmal alles wie bei allen weiteren Eingabedateien.
-		Die Methode \hyperref[lst:getPosition]{getPositions} gibt eine Liste zurück,
-		die Stellen im Buch enthalten,
-		die mit dem Wort \texttt{das} beginnen.
-		Dann wird mit dieser Liste die Methode \hyperref[lst:checkPosition]{checkPositions} aufgerufen.
-		Diese geht jede einzelne gegebene Position durch,
-		indem sie erstmal ab der Stelle den Rest der Zeile des Buchs speichert
-		und bei zu wenigen Worten auch noch die nächste Zeile anhängt.
-		Der dadurch zusammengestellte Text wird ebenfalls in eine Liste aus einzelnen Worten zerteilt.
-		Diese Elemente der erstellten Liste werden mit denen mit demselben Index in der Liste des Lückentextes verglichen,
-		wobei das erste Element und Lücken (\_) übersprungen werden.
+
 \clearpage
 
 
@@ -338,6 +345,7 @@ private static List<int[]> getPositions(List<String> stoerung) {
     return positions;
 }
 \end{lstlisting}
+
 \clearpage
 
 \subsection{checkPositions(\ldots)}\label{sec:checkPositions()}
