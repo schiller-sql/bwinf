@@ -266,8 +266,8 @@ Unter den Eingabedateien können folgende Sonderfälle auftreten:
 Lückentexte können \ldots
 
 \begin{enumerate}
-	\item \ldots mehrere Lücken direkt nacheinander haben,\label{sonderfallEins}
-	\item \ldots mit einer Lücke beginnen,\label{sonderfallZwei}
+	\item \hyperref[sec:ersterSonderfall]{\ldots mehrere Lücken direkt nacheinander haben,}\label{sonderfallEins}
+	\item \hyperref[sec:zweiterSonderfall]{\ldots mit einer Lücke beginnen},\label{sonderfallZwei}
 	\item \ldots mit einer Lücke enden.\label{sonderfallDrei}
 	\newcounter{enumTemp}
     \setcounter{enumTemp}{\theenumi}
@@ -308,6 +308,57 @@ und daher nicht unter \hyperref[sec:quellcode]{\texttt{Quellcode}} zu finden ist
 zusammengestellt.
 Diese sucht den Abschnitt zwischen dem letzten und nächsten Satz- beziehungsweise Sonderzeichen heraus.
 
+\clearpage
+
+Die gesamte Ausgabe des Programms sieht folgendermaßen aus:
+
+\begin{lstlisting}[title=Ausgabe des Programms, breaklines=true, label=lst:ausgabe]
+Störung Nr.0:
+das _ mir _ _ _ vor 
+Zeile: 440
+'Das kommt mir gar nicht richtig vor,'
+
+Störung Nr.1:
+ich muß _ clara _ 
+Zeile: 425
+'Ich muß in Clara verwandelt sein!'
+Zeile: 441
+'Ich muß doch Clara sein,'
+
+Störung Nr.2:
+fressen _ gern _ 
+Zeile: 213
+'Fressen Katzen gern Spatzen?'
+Zeile: 214
+'Fressen Katzen gern Spatzen?'
+Zeile: 214
+'Fressen Spatzen gern Katzen?'
+
+Störung Nr.3:
+das _ fing _ 
+Zeile: 2319
+'und das Spiel fing an.'
+Zeile: 3301
+'Das Publikum fing an,'
+
+Störung Nr.4:
+ein _ _ tag 
+Zeile: 2293
+'es ist ein sehr schöner Tag!'
+
+Störung Nr.5:
+wollen _ so _ sein 
+Zeile: 2185
+'Wollen Sie so gut sein,'
+
+Störung Nr.6:
+_ kleine thür _ _ verschlossen 
+Zeile: 465
+'die kleine Thür war wieder verschlossen'
+\end{lstlisting}
+
+\clearpage
+
 \subsection{Sonderfall 1}\label{sec:ersterSonderfall}
 \hyperref[sonderfallEins]{\texttt{Sonderfall 1}} stellt keine Besonderheit in der Arbeitsweise des Algorithmus dar,
 sondern unterscheidet sich ausschließlich von den anderen Lückentexten durch dessen Form.
@@ -325,15 +376,19 @@ wird dann die zweite Methode \hyperref[sec:checkPositions()]{\texttt{checkPositi
 \centering
 \begin{tabular}{lll}
 	\textbf{Index in Liste} & \textbf{Zeile} & \textbf{Index in Zeile}\\
-	0 & 35 & 4\\
-	1 & 61 & 5\\
-	2 & 67 & 4\\
-	3 & 88 & 28\\
-	4 & 111 & 3\\
-	5 & 115 & 4\\
-	6 & 135 & 44\\
-	7 & 135 & 54\\
-	\ldots & \ldots
+	0 & 35 & 4 \\
+	1 & 61 & 5 \\
+	2 & 67 & 4 \\
+	3 & 88 & 28 \\
+	4 & 111 & 3 \\
+	5 & 115 & 4 \\
+	6 & 135 & 44 \\
+	7 & 135 & 54 \\
+	\ldots & \ldots & \ldots \\
+	26 & 308 & 64 \\
+	\ldots & \ldots & \ldots \\
+	41 & 439 & 1 \\
+	\ldots & \ldots & \ldots \\
 \end{tabular}
 \caption{Liste der Methode \hyperref[sec:getPositions()]{\texttt{getPositions}(\ldots)} für Störung Nr.0}
 \end{table}
@@ -380,7 +435,7 @@ Also muss nach dem ersten Element der Liste des Lückentextes gesucht werden,
 das keine Lücke ist.
 Als Beispiel hierfür bietet sich keine der vorgegebenen Eingabedateien an,
 deshalb wurde eine weitere Eingabedatei dazu gefügt
-(stoerung7.txt).
+(stoerung6.txt).
 Der darin enthaltene Lückentext ist folgender:
 
 ``\textbf{\_ kleine Thür \_ \_ verschlossen}``.
@@ -405,12 +460,77 @@ ergibt sich ein weiterer Sonderfall,
 der im Abschnitt \hyperref[sec:sechsterSonderfall]{\texttt{Sonderfall 6}} behandelt wird.
 
 \subsection{Sonderfall 3}\label{sec:dritterSonderfall}
+Um den \hyperref[sonderfallDrei]{\texttt{Sonderfall 3}} zu erklären,
+bietet sich Störung Nr.1 an.
+Diese endet mit einer Lücke.
+Bei einem solchen Fall passiert nicht viel anderes als bei anderen Lückentexten,
+doch am Ende der zweiten Methode \hyperref[sec:checkPositions()]{\texttt{checkPositions(\ldots)}},
+während jedes Wort geprüft wird,
+wird für das letzte Element der Else Teil der \textbf{If-Bedingung} ausgeführt,
+da es sich um eine Lücke handelt.
+Hier muss mit einer weiteren \textbf{If-Bedingung} geprüft werden,
+ob es sich dabei um das letzte Element der Liste des Lückentextes handelt.
+Ist es das,
+so wie es in dem Fall der Störung Nr.1 ist,
+muss die jeweilige Stelle auch an die Liste richtiger Positionen angehängt werden.
 
 \subsection{Sonderfall 4}\label{sec:vierterSonderfall}
+Für den \hyperref[sonderfallVier]{\texttt{Sonderfall 4}} ist es egal,
+welchen Lückentext man als Beispiel wählt.
+Es kann bei allen passieren.
+Da bereits eine \hyperref[tab:listeStoerung0]{\texttt{Tabelle für Störung Nr.0}} abgebildet wurde,
+kann man diese auch hier als Beispiel verwenden.
+In der Liste kommt beim Index 26 eine Stelle,
+an der das Wort ``\textbf{das}`` am Ende der Zeile 309
+(in der Liste 308)
+steht:
+
+``\textbf{glatt; und als sie sich ganz müde gearbeitet hatte, setzte sich das}``
+
+Hier muss beim Prüfvorgang in der zweiten Methode \hyperref[sec:checkPositions()]{\texttt{checkPositions(\ldots)}} auch die nächste Zeile an den Textausschnitt aus dem Buch angehängt werden.
+Das geschieht immer,
+wenn eine Liste aus Worten,
+die aus dem Textausschnitt erstellt wird,
+nicht mindestens die Länge der Liste des Lückentextes besitzt.
 
 \subsection{Sonderfall 5}\label{sec:fuenfterSonderfall}
+Auch der \hyperref[sonderfallFuenf]{\texttt{Sonderfall 5}} lässt sich anhand der \hyperref[tab:listeStoerung0]{\texttt{Tabelle für Störung Nr.0}} erklären.
+Dort stehen an Index 6 und 7 der Liste beide Male die Zeile 136 (135 in der Liste).
+Um beide Zeilen zu finden,
+darf der Suchalgorithmus der ersten Methode \hyperref[sec:getPosition()]{getPositions(\ldots)} nicht abgebrochen werden,
+sobald er eine Stelle in einer Zeile gefunden hat.
+Dafür wurde eine \textbf{While-Schleife} verwendet,
+die erst abbricht,
+wenn der von der Methode zurückgegebene Index -1 ist.
+Das passiert,
+falls das gesuchte Wort nicht in dem gegebenen Text enthalten ist.
 
 \subsection{Sonderfall 6}\label{sec:sechsterSonderfall}
+\hyperref[sonderfallSechs]{\texttt{Sonderfall 6}} ist nur eine Erweiterung von \hyperref[sonderfallZwei]{\texttt{Sonderfall 2}}.
+Allerdings macht dieser nochmal eine größeres Problem auf:
+wird in der Methode \hyperref[sec:getPositions()]{\texttt{getPositions(\ldots)}} nach einem Wort gesucht,
+das nicht das erste Element in der Liste des Lückentextes ist,
+muss die Methode,
+bevor sie die Position an die Liste möglicher Positionen anhängt,
+von dieser Position aus so viele Worte zurückgehen,
+wie der Lückentext Lücken am Anfang stehen hat.
+Die Anzahl der Lücken am Anfang des Lückentextes wird zu Beginn der Methode bereits gespeichert.
+Am Ende,
+vor dem Anhängen,
+wird anhand der Leerzeichen von der jeweiligen Stelle die korrekte Position ermittelt,
+an der der Lückentext beginnt.
+Ist dieser aber über zwei Zeilen im Buch verteilt,
+muss nicht nur in der Zeile,
+in der das erste Wort steht,
+zurückgegangen werden,
+sondern auch in der davor.
+Mit einer \textbf{For-Schleife} wird für jede Lücke zu Beginn des Lückentextes genau ein Wort im Buch zurückgegangen.
+In dieser \textbf{For-Schleife} wiederum wird geprüft,
+ob aktuelle Element am Anfang einer neuen Zeile steht.
+Tut es das,
+wird die vorherige Zeile ohne Offset in den bestehenden Text eingefügt.
+So kann das Buch auch nach Lückentexten mit Lücken am Anfang durchsucht werden,
+die zudem auch über mehr als eine Zeile verteilt stehen.
 
 \clearpage
 
