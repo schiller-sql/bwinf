@@ -30,6 +30,8 @@
 \usepackage{graphicx}
 
 % Für Algorithmen
+\usepackage{algorithm}
+
 \usepackage{algpseudocode}
 
 % Für Quelltext
@@ -133,85 +135,138 @@ einer der schon eingegangen Aufträge sein und gibt es keinen, muss gewartet wer
 egal welches Verfahren zur Auswahl des zu bearbeitenden Auftrages benutzt wird.
 Dieser verfahrensunabhängige Algorithmus wird im folgenden zuerst beschrieben.
 
-Als erstes wird sich gemerkt, was die aktuelle Zeit ist und wann der jetzige Arbeitstag zu ende ist.
-Am Anfang ist die aktuelle Zeit 9 Uhr und der Arbeitstag zu ende um 17 Uhr.
-Die maximale und gesamte Wartezeit werden sich auch gemerkt.
-Es wird sich außerdem ein Container an eingegangen und noch nicht eingegangen Aufträgen gemerkt.
+Der Algorithmus funktioniert grob,
+dass sich immer die Zeit gemerkt wird
+und in einer Schleife immer ein Auftrag bearbeitet wird
+und dementsprechend die Zeit immer weiter addiert wird.
+Wenn es aber keinen Auftrag zu bearbeiten gibt,
+wird die Zeit auf den nächsten Zeitpunkt gesetzt,
+wo es wieder min. einen Auftrag zur Wahl gibt,
+der eingegangen ist und bearbeitet werden kann.
 
-Nun wird in einer Schleife, bis es keine eingegangenen und noch nicht eingegangenen Aufträge gibt, folgendes gemacht:
+Im konkreten wird sich als erstes gemerkt, was die aktuelle Zeit ist und wann der jetzige Arbeitstag zu Ende ist.
+Am Anfang ist die aktuelle Zeit 9 Uhr und der Arbeitstag zu Ende um 17 Uhr.
+Die maximale und gesamte Wartezeit werden sich auch gemerkt.
+Alle Aufträge und ob sie schon bearbeitet worden sind, werden sich auch gemerkt.
+
+In einer äußeren Schleife wird zunächst ein Auftrag ausgewählt,
+nach dem momentanen Verfahren zur Auswahl der Aufträge.
+Dieser Auftrag muss nach der aktuellen Zeit schon eingegangen sein,
+darf aber noch nicht bearbeitet worden sein, da er zum Bearbeiten ausgewählt wird.
+
+Man merkt sich nun die schon bearbeitete Zeit des Auftrages (also am Anfang 0).
+Der Auftrag wird dann mit dem folgenden Algorithmus bearbeitet:
+In einer Schleife, bis der Auftrag bearbeitet wurde, also bis die schon bearbeitete Zeit des Auftrages,
+der Dauer des Auftrages entspricht:
 \begin{itemize}
-	\item Alle Aufträge die im Container der noch nicht eingegangenen Aufträge sind,
-	      aber schon eingegangen sind laut aktueller Zeit, werden von den nicht eingegangenen zu den eingegangenen Containern bewegt.
-	\item Gibt es eingegangene Aufträge:
-	      \begin{itemize}
-		      \item Von den eingegangenen Aufträgen wird nach dem aktuellen Verfahren
-		            zur Bestimmung des nächst zu bearbeitenden Auftrages, ein Auftrag bestimmt.
-		      \item Es wird sich der Fortschritt des Auftrages in Zeit gemerkt, also am Anfang 0.
-		      \item In einer Schleife bis der Auftrag fertig bearbeitet ist:
-		            \begin{itemize}
-			            \item Wenn die Zeit am gemerkten Ende des jetzigen Arbeitstages ist, wird die Zeit zum nächsten Tag um 9 Uhr gestellt,
+\item Wenn die Zeit am gemerkten Ende des jetzigen Arbeitstages ist, wird die Zeit zum nächsten Tag um 9 Uhr gestellt,
 			                  also dem beginn des nächsten Arbeitstages und
 			                  es wird sich nun das Ende des nächsten Arbeitstages gemerkt, also am nächsten Tag um 17 Uhr.
-			                  D.h. die Simulation befindet vorher am Ende eines Arbeitstages und sich jetzt am nächsten Arbeitstag
-			                  und weiß wann dort das Ende dieses Arbeitstages ist.
-			            \item Anhand der Differenz zwischen der momentanen Zeit und des gemerkten Endes dieses Arbeitstages,
+			                  D.h. die Simulation befindet vorher am Ende eines Arbeitstages
+			                  und befindet sich nun am Anfang des nächsten Arbeitstages und weiß wann dieser Endet.
+			            \item Anhand der Differenz zwischen der momentanen Zeit
+			            	  und des gemerkten Endes dieses Arbeitstages,
 			                  kann ermittelt werden wie viel Zeit noch in in diesem Arbeitstag verbleibt.
 			            \item Anhand der Differenz zwischen dem Fortschritt des Auftrages
-			                  und der Dauer des Auftrages, kann ermittelt werden wie viel Zeit noch vom Auftrag übrig bleibt.
-			            \item Das kürzere der beiden, also entweder Verbleib des Arbeitstages oder Verbleib des Auftrages,
-			                  wird gewählt und an die Zeit und an dem Fortschritt des Auftrages addiert.
-			            \item So befindet man sich zeitlich nun am Ende des Auftrages, am Ende des Arbeitstages
-			                  oder in einem Sonderfall, beidem. Befindet man sich am Ende des Auftrages (oder beidem),
-			                  wird die Schleife nun abgebrochen, da die verbleibende Zeit zum Fortschritt addiert wurde
-			                  und der Fortschritt so vollständig ist, was die Abbruchbedingung der Schleife ist.
-			                  Falls man sich aber nur am Ende des Tages befindet,
-			                  wird am Anfang des nächsten Durchlaufs der Schleife,
-			                  zeitlich zum nächsten Tag gesprungen und der Auftrag wird weiter bearbeitet.
-		            \end{itemize}
-		      \item Nun ist die aktuelle Zeit genau am Zeitpunkt der Fertigstellung des Auftrages.
-		      \item Durch die Differenz der aktuellen Zeit und des Eingangszeitpunktes des bearbeiteten Auftrages,
-		            lässt sich die Wartezeit für diesen Auftrag ermitteln.
-		            Die gesamte Wartezeit kann dementsprechend mit dieser Wartezeit addiert werden
-		            und das Maximum der Wartezeit kann mit dieser Wartezeit ersetzt werden, wenn sie größer ist als das bisherige Maximum.
-		      \item Da man sich genau an dem Zeitpunkt der Fertigstellung des Auftrages nun befindet,
-		            bleibt der Sonderfall zu beachten: Wenn der Auftrag genau dann fertiggestellt ist,
-		            wo der Arbeitstag endet, ist die aktuelle Zeit noch am Ende dieses Arbeitstages,
-		            obwohl man eigentlich beim nächsten Durchlauf in der äußeren Schleife,
-		            schon wieder am nächsten Tag um 9 Uhr sein möchte und sich merken möchte wann der nächste Arbeitstag endet.
-		            Das muss sein, weil zwischen den beiden Arbeitstagen können neue Aufträge eingehen
-		            und manche Verfahren zur Auswahl des nächsten Auftrages
-		            wollen möglicherweise zwischen allen eingegangen Aufträgen wählen.
-		      \item Deswegen wird nochmal falls die Zeit am gemerkten Ende des jetzigen Arbeitstages ist,
-		            die Zeit zum Beginn des nächsten Arbeitstages gestellt und sich das Ende das nächsten Arbeitstages gemerkt.
-	      \end{itemize}
-	\item Gibt es keine eingegangen Aufträge, muss gewartet werden, bis zur Eingangszeit des nächsten Auftrages:
-	      \begin{itemize}
-		      \item Dafür wird in einer Schleife bis die aktuelle Zeit größer gleich der Eingangszeit des nächsten Auftrages ist:
-		            \begin{itemize}
-			            \item Die aktuelle Zeit gleich der Eingangszeit des nächsten Auftrages gesetzt.
-			            \item Ist die aktuelle Zeit jetzt nach dem gemerkten Ende des Arbeitstages,
-			                  wird die aktuelle Zeit auf dem Anfang das nächsten Tages nach dem gemerkten Ende des Arbeitstages gesetzt.
-			                  Und das Ende das Arbeitstag wird sich als das Ende des nächsten Arbeitstages gemerkt.
-		            \end{itemize}
-		      \item Nun ist man im ersten Zeitpunkt, wo min. ein neuer Auftrag eingeht.
-		      \item Der Sonderfall, das dieser Zeitpunkt genau am Ende eines Arbeitstages ist,
-		            ist aber nicht möglich, da die Zeit zum neuen Arbeitstag in der Schleife am Ende verschoben wird.
-	      \end{itemize}
+			                  und der Dauer des Auftrages,
+			                  kann ermittelt werden wie lange der Auftrag noch bearbeitet werden muss.
+			            \item Das kürzere der beiden,
+			            	  also entweder Verbleib des Arbeitstages oder Verbleib des Auftrages,
+			                  wird gewählt.
+			                  Diese Zeit wird dann an die aktuelle Zeit
+			                  und die bearbeitete Zeit des Auftrages addiert.
+			            \item So befindet man sich also nun zeitlich am Ende der Bearbeitung des Auftrages,
+			            	  oder am Ende dieses Tages,
+			            	  wenn der Auftrag nicht mehr im aktuellen Tag zu schaffen war.
+			            	  Es gibt auch einen Sonderfall,
+			            	  wenn der Auftrag genau am Ende eines Tages bearbeitet wurde.
+			            	  Dann wird aber trotzdem, da der Auftrag bearbeitet ist,
+			            	  die Schleife abgebrochen.
+			            	  Ist aber nur des Ende des Tages erreicht,
+			            	  wird beim nächsten Durchlauf der Schleife
+			            	  zum nächsten Tag gesprungen und dort weiter bearbeitet,
+			            	  wie es im ersten Stichpunkt beschrieben ist.
 \end{itemize}
-Nun kann anhand der gesamten Wartezeit geteilt durch die Anzahl der Aufträge, der Durchschnitt ermittelt werden
-und für die maximale Wartezeit, das schon gemerkte Maximum genommen werden.
+Der Algorithmus unterbricht also immer am Ende des Tages den Auftrag,
+um dann am nächsten Tag weiter den Auftrag zu bearbeiten.
+Nach der Schleife ist der Algorithmus also an dem Zeitpunkt,
+wo die Aufgabe fertig bearbeitet wurde.
+
+Da zu jedem Auftrag die Eingangszeit vermerkt ist,
+kann anhand der Differenz der Eingangszeit
+und der aktuellen Zeit, die Wartezeit des Kunden für den ausgewählten Auftrag errechnet werden.
+Diese wird der gesamten Wartezeit addiert
+und wenn sie größer ist als das bisherige Maximum an Wartezeit,
+wird das bisherige Maximum damit ersetzt.
+
+Nun kann der nächste Auftrag in der äußeren Schleife bearbeitet werden.
+Wenn jedoch der Sonderfall eintritt, dass der Auftrag genau dann beendet wurde,
+wo der Tag endet,
+kann jedoch nicht direkt
+der nächste Auftrag zum Bearbeiten ausgewählt werden.
+Denn die aktuelle Zeit wäre noch am Ende eines Tages,
+was heißt, dass nur von den Aufträgen ausgewählt werden kann,
+die bis dahin eingegangen sind.
+Da jedoch erst am nächsten Tag angefangen wird,
+am nächsten Auftrag zu arbeiten,
+könnte noch ein Auftrag am Anfang dieses Tages eingehen, der auch zur Auswahl stehen sollte.
+Deswegen muss im Sonderfall vor dem nächsten Durchgang in der äußeren Schleife
+die Zeit gleich dem Anfang des nächsten Tages gesetzt werden 
+und sich der Anfang des nächsten Tages gemerkt wird.
+Dann befindet man sich vor der Auswahl des nächsten Auftrages auch am nächsten Tag.
+
+Wenn in der äußeren Schleife aber kein nicht-bearbeiteter Auftrag ausgewählt werden kann,
+muss gewartet werden, bis min. ein nächste Auftrag eingegangen ist.
+Es kann jedoch nicht einfach die aktuelle Zeit direkt
+auf die Eingangszeit des nächsten Auftrages gesetzt werden,
+da sich das Ende des aktuellen Arbeitstages immer gemerkt werden muss.
+Deswegen wird in einer Schleife
+bis die aktuelle Zeit an dem Zeitpunkt ist,
+wo der nächste Auftrag eingeht oder schon eingegangen ist, folgendes gemacht:
+\begin{itemize}
+\item Die aktuelle Zeit wird an den Zeitpunkt gesetzt,
+wo der nächste Auftrag eingeht.
+\item Ist die aktuelle Zeit gleich oder nach dem Ende des aktuellen Arbeitstages,
+wird die Zeit an den Anfang des nächsten Arbeitstages gesetzt
+und das gemerkte Ende des Arbeitstages an das Ende des nächsten Arbeitstages.
+\end{itemize}
+
+Die äußere Schleife wird beendet,
+wenn alle Aufträge bearbeitet worden sind.
+Für die Aufgabenstellung wurde die maximale Wartezeit bereits gemerkt.
+Die durchschnittliche Wartezeit
+kann aus der gesamten Wartezeit geteilt
+durch die Anzahl aller Aufträge ermittelt werden.
+
+Damit im Algorithmus sich gemerkt werden kann,
+welche Aufträge eingegangen sind bzw. bearbeitet wurden
+und welche noch nicht, werden zwei Container betrachtet,
+einen für die eingegangen und einen für die noch nicht eingegangenen.
+Ist ein Auftrag bearbeitet, ist er in keinem der beiden Container.
+Am Anfang der äußeren Schleife, wo ein Auftrag zu bearbeiten ausgewählt wird,
+werden vorher alle Aufträge,
+die nach der aktuellen Zeit eingegangen sind,
+aber noch im Container der noch nicht eingegangen Aufträge sind,
+in den Container der schon eingegangenen Aufträge bewegt.
+Es wird dann von diesem Container ein Auftrag zum Bearbeiten ausgewählt und entfernt.
+Sind beide Container also leer, sind alle Aufträge bearbeitet worden
+und die äußere Schleife kann dann beendet werden.
 
 Was bei der Delegation des Verfahrens zur Bestimmung des nächsten Auftrages beachtet werden muss,
 ist das wenn in der äußeren Schleife ein neuer Auftrag in den Container der eingegangenen Aufträge bewegt wird,
-dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist und zwar Verfahrens abhängig,
+dieser einsortiert wird. Das heißt das der Container der eingegangen Aufträge sortiert ist
+und zwar Verfahrens abhängig,
 da das einsortieren auch an das Verfahren delegiert wird.
 
 Was also unterschiedlich bei den Verfahren sein kann, ist wie ein neu eingegangener Auftrag
-in den schon eingegangenen Aufträgen einsortiert wird
-und wie von den schon eingegangenen Aufträgen ein zu bearbeitender Auftrag ermittelt wird.
+in den schon eingegangenen Aufträgen einsortiert wird,
+aber auch wie vom sortierten Container der schon eingegangenen Aufträgen
+ein zu bearbeitender Auftrag ermittelt wird.
 
-Die beiden Verfahren der Bestimmung des nächst zu bearbeitenden Auftrages wählen immer den ersten Auftrag
-aus dem sortierten Container der eingegangenen Aufträge. Sie sortieren jedoch die Aufträge unterschiedlich.
+Die beiden in der Aufgabenstellung verlangten Verfahren der Bestimmung
+des nächst zu bearbeitenden Auftrages wählen immer den ersten Auftrag
+aus dem sortierten Container der eingegangenen Aufträge.
+Sie sortieren jedoch die Aufträge unterschiedlich.
 Das ursprüngliche Verfahren hängt einfach immer nur den neusten eingegangen Auftrag
 in den Container der schon eingegangenen Aufträge hinten ein.
 Da beim Auswählen des zu bearbeitenden Auftrages das erste ausgewählt wird,
