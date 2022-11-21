@@ -292,12 +292,14 @@ so dass das erste immer der Auftrag mit der geringsten Dauer ist.
 	\item Die nicht eingegangenen Aufträge werden dargestellt als eine Liste von allen Aufträgen,
 	      wo jedoch sich gemerkt wird, welche Aufträge noch nicht waren.
 	      Da alle Aufträge sortiert sind, nach Eingangszeitpunkt, wird sich konkret nur der Index gemerkt,
-	      wo der zugehörige Auftrag der erste Auftrag ist, der sich noch nicht in den eingegangen Aufträgen befindet.
-	\item Deswegen, in der äußeren Schleife, wird auch, wenn alle Aufträge die sich noch nicht
-	      in den eingegangenen Aufträgen befinden, sich dort aber laut der Zeit sich befinden sollten,
-	      lediglich der Index des ersten Auftrages, der sich nicht mehr in den eingegangen Aufträgen befindet,
-	      erhöht, bis der Auftrag mit dem Index eine höhere Eingangszeit hat als was die momentane Zeit ist.
-	      D.h. wenn dieser Auftrag nach der aktuellen Zeit noch nicht eingegangen ist.
+	      wo der zugehörige Auftrag der erste Auftrag ist, der noch nicht eingegangen ist.
+	\item Wenn am Anfang in der äußeren Schleife alle Aufträge,
+	die sich in den eingegangen Aufträgen befinden sollten, dorthin bewegt werden,
+	lediglich der Index verschoben, bis der Auftrag vom Index nicht mehr eingegangen sein sollte.
+	Während also der Index verschoben wird,
+	kann immer der Auftrag vom Index in die eingegangen Aufträge eingetragen werden,
+	bis ein Auftrag gefunden wird,
+	der nach der aktuellen Zeit noch nicht eingegangen ist.
 	\item Die schon eingegangenen Aufträge werden dargestellt als sortierte Liste von Aufträgen,
 	      die nur die Aufträge enthält, die auch schon eingegangen sind.
 	\item Die Delegation der Bestimmung des nächst zu bearbeitenden Auftrages erfolgt
