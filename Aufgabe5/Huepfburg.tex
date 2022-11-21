@@ -257,12 +257,12 @@
 
     Wie im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} in Zeile~\ref{lst:line:zeileVier} dargestellt,
     kann zunächst im Weg der Zielknoten an letzter Stelle eingetragen werden.
-    Es lässt sich nun in jeder Schrittfolge der vorletzte Schritt betrachten.
-    In diesem Schritt kann nun ein Knoten ermittelt werden,
+    Es lässt sich jetzt in jeder Schrittfolge der vorletzte Schritt betrachten.
+    In diesem Schritt kann jetzt ein Knoten ermittelt werden,
     welcher als Nachbar entlang der Kantenrichtung den Zielknoten besitzt (Zeile~\ref{lst:line:zeileAcht}).
     Ist dieser Knoten gefunden,
     kann er im Weg an der entsprechenden Stelle gespeichert werden (Zeile~\ref{lst:line:zeileNeun}).
-    Dieses Verfahren wird nun solange für den nächsten Schritt und den zuletzt in den Weg eingefügten Knoten wiederholt,
+    Dieses Verfahren wird jetzt so lange für den nächsten Schritt und den zuletzt in den Weg eingefügten Knoten wiederholt,
     bis man am Startknoten angelangt ist.
 
 
@@ -284,7 +284,7 @@
     Ein Graph wird als \texttt{BitSet[]} dargestellt.
     Jeder Index des Arrays korrespondiert zu einem Knoten.
     Das am Index eines Knoten enthaltene \texttt{BitSet} ist eine Knotenmenge.
-    Diese stellt da, zu welchen Knoten eine Kante ausgeht.
+    Diese stellt dar, zu welchen Knoten eine Kante ausgeht.
 
     \begin{figure}[!h]
         \centering
@@ -321,7 +321,7 @@
     Die Schrittfolge ist eine \texttt{List<BitSet>},
     d.h. eine \texttt{List} aus \texttt{BitSet}.
     Index 0 der \texttt{List} korrespondiert zum Ausgangspunkt,
-    daher Schritt 0,  beziehungsweise zur Startposition.
+    daher Schritt 0, beziehungsweise zur Startposition.
     \[
         \texttt{List<BitSet>}_{Schrittfolge} = \left\lbrace
         \begin{tabular}{ll}
@@ -349,10 +349,10 @@
     Wenn in der Schleife ein Zielknoten gefunden wird, wird unter der verwendung der Hilfsmethode
     \texttt{int[] findSingleRouteInTimeline(\ldots)},
     welche im \hyperref[alg:Algorithm1]{Wegsuche Algorithmus} beschrieben ist,
-    der Weg zwischen den Startknoten und dem Zielknoten ermittelt und das Erbegnis anschließend zurückgegeben.
-    Des weiteren wird in der Schleife die Hilfsmethode
+    der Weg zwischen den Startknoten und dem Zielknoten ermittelt und das Ergebnis anschließend zurückgegeben.
+    Des Weiteren wird in der Schleife die Hilfsmethode
     \texttt{BitSet neighbourNodes(\ldots)},
-    zur Ermittlung der Nachbarsknoten verwendet.
+    zur Ermittlung der Nachbarknoten verwendet.
     Um auf die Wiederholungen der Schrittfolgen zu prüfen, wird außerdem die Methode
     \texttt{boolean timelineRepeats(\ldots)} aufgerufen.
     Zur Ermittlung der Schnittmenge der zwei Schrittfolgen wird
@@ -641,7 +641,7 @@
 	In \hyperref[lst:sameTargetRoute]{\texttt{int[][] sameTargetRoute(\ldots)}} wird in der \texttt{if Abfrage}, durch 
 	\texttt{sashaTimeline.get(sashaTimeline.size() - 1).isEmpty() || mikaTimeline
     .get(mikaTimeline.size() - 1)
-    .isEmpty()} gefrüft, ob einer der beiden Spieler keine erreichbaren Knoten mehr hat.
+    .isEmpty()} geprüft, ob einer der beiden Spieler keine erreichbaren Knoten mehr hat.
     Hier ist diese Bedingung \texttt{true} womit \texttt{null} zurückgegeben wird.
     
      \begin{lstlisting}[frame=single, title=Programmausgabe Figur 7., breaklines=true]
